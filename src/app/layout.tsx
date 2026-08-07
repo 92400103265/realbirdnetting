@@ -135,7 +135,7 @@ export default function RootLayout({
     >
       <head>
         {/* Google tag (gtag.js) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18291286869"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18321817773"></script>
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -143,7 +143,7 @@ export default function RootLayout({
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
 
-              gtag('config', 'AW-18291286869');
+              gtag('config', 'AW-18321817773');
             `,
           }}
         />
@@ -158,7 +158,7 @@ export default function RootLayout({
                   }
                 };
                 gtag('event', 'conversion', {
-                    'send_to': 'AW-18291286869/gdBgCIWs38wcENXG-5FE',
+                    'send_to': 'AW-18321817773/gdBgCIWs38wcENXG-5FE',
                     'event_callback': callback
                 });
                 return false;
