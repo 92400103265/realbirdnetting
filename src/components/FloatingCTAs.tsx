@@ -26,7 +26,8 @@ export default function FloatingCTAs() {
     });
   };
 
-  const whatsappUrl = "https://wa.me/919686668224?text=Hi%20BMC%20Safety%20Nets%2C%20I%20want%20to%20book%20a%20free%20inspection%20for%20my%20balcony%20safety%20nets.";
+const whatsappUrl =
+  "https://wa.me/919354254539?text=Hi%20Real%20Bird%20Netting%2C%20I%20want%20to%20book%20a%20free%20inspection%20for%20bird%20net%20installation.%20Please%20contact%20me%20at%20my%20earliest%20convenience.";
 
   return (
     <>
@@ -53,18 +54,19 @@ export default function FloatingCTAs() {
         </motion.a>
 
         {/* Call Floating */}
-        <motion.a
-          href="tel:+919686668224"
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          className="flex items-center justify-center w-14 h-14 bg-call-red hover:bg-call-red-hover text-white rounded-full shadow-lg cursor-pointer transition-colors duration-200 group"
-          aria-label="Call Customer Care"
-        >
+         <motion.a
+  href="tel:+919354254539"
+  initial={{ scale: 0 }}
+  animate={{ scale: 1 }}
+  whileHover={{ scale: 1.1 }}
+  whileTap={{ scale: 0.9 }}
+  className="flex items-center justify-center w-14 h-14 bg-call-red hover:bg-call-red-hover text-white rounded-full shadow-lg cursor-pointer transition-colors duration-200 group"
+  aria-label="Call Real Bird Netting - +91 9354254539"
+  title="Call Real Bird Netting - +91 9354254539"
+>   
           <Phone className="w-6 h-6 fill-white" />
           <span className="absolute right-16 bg-slate-900 text-white text-xs px-2.5 py-1 rounded shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none">
-            Call BMC Safety Nets
+           Call real bird netting services
           </span>
         </motion.a>
 
@@ -89,7 +91,7 @@ export default function FloatingCTAs() {
       {/* Sticky Bottom Call + WhatsApp Bar (Mobile Only) */}
       <div className="sm:hidden fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] grid grid-cols-2 p-3 gap-3 z-50">
         <a
-          href="tel:+919686668224"
+          href="tel:+919354254539"
           className="flex items-center justify-center space-x-2 bg-[#f97316] text-white py-3.5 px-4 rounded-xl text-base font-bold active:scale-95 transition-transform min-h-[48px]"
         >
           <Phone className="w-5 h-5 fill-white" />

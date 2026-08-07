@@ -6,8 +6,8 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const faqs = [
   {
-    q: "How much do safety nets cost in Bangalore?",
-    a: "The price of safety nets in Bangalore starts from ₹12 to ₹35 per square foot. The exact rate depends on the mesh thickness, brand (like Garware), UV stabilization levels, and warranty period chosen (ranging from 1 to 5 years)."
+    q: "How much do safety nets cost in Gurugram?",
+    a: "The price of safety nets in Gurugram starts from ₹12 to ₹35 per square foot. The exact rate depends on the mesh thickness, brand (like Garware), UV stabilization levels, and warranty period chosen (ranging from 1 to 5 years)."
   },
   {
     q: "How long does the safety net installation process take?",
@@ -35,10 +35,10 @@ const faqs = [
   },
   {
     q: "Do you offer a free site inspection and measurements?",
-    a: "Yes, BMC Safety Nets offers a 100% free site inspection, measurement check, and cost estimation anywhere in Bangalore. There are no hidden call-out fees or charges if you choose not to proceed."
+    a: "Yes, Real bird netting services  offers a 100% free site inspection, measurement check, and cost estimation anywhere in Bangalore. There are no hidden call-out fees or charges if you choose not to proceed."
   },
   {
-    q: "Is same-day installation available in Bangalore?",
+    q: "Is same-day installation available in Gurugram?",
     a: "Yes, we offer same-day inspection and installation services across Bangalore. If you book an inspection before 12 PM, we can complete the installation on the same day."
   },
   {
@@ -81,10 +81,10 @@ const faqs = [
     q: "How do I maintain and clean the safety nets?",
     a: "Our nets require zero maintenance. They are dust-repellent and do not absorb water. If needed, you can lightly spray them with water or wipe them down with a damp cloth to clean off any accumulated dust."
   },
-  {
-    q: "What areas in Bangalore do you service?",
-    a: "We service all locations in Bangalore, including Whitefield, HSR Layout, Indiranagar, Electronic City, Jayanagar, Koramangala, Hebbal, Yeshwanthpur, Marathahalli, Bellandur, Bannerghatta Road, Malleshwaram, and surrounding suburbs."
-  }
+   {
+  q: "What areas do you service in Gurugram?",
+  a: "We provide Bird Netting, Pigeon Safety Nets, Invisible Grills, Balcony Safety Nets, Monkey Nets, Children Safety Nets, Sports Nets, and Bird Control Services across Gurugram, including Sector 33, Rajiv Chowk, Hans Enclave, Sector 14, Sector 15, Sector 17, Sector 22, Sector 23, Sector 29, Sector 31, Sector 40, Sector 45, DLF Phase 1, DLF Phase 2, DLF Phase 3, DLF Phase 4, DLF Phase 5, Sushant Lok, Sohna Road, Golf Course Road, Palam Vihar, MG Road, Cyber City, Udyog Vihar, and nearby areas. Our head office is located at Shop No.165F, Gali No.-7, Hans Enclave, Sector-33, Near Rajiv Chowk, Gurugram - 122001."
+}
 ];
 
 export default function FAQ() {
@@ -186,11 +186,11 @@ export default function FAQ() {
             Still have an unanswered question? Call us directly for immediate support!
           </p>
           <a
-            href="tel:+919686668224"
+               href="tel:+919354254539"
             className="inline-flex items-center space-x-1.5 text-primary hover:text-primary-light font-bold text-sm sm:text-base mt-2"
           >
             <span>Call Customer Support:</span>
-            <span className="underline">+91 96866 68224</span>
+            <span className="underline">+91 93542 54539</span>
           </a>
         </div>
 

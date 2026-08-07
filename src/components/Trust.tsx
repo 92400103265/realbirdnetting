@@ -7,8 +7,8 @@ import { Award, Shield, Clock, Zap, CheckCircle2, IndianRupee, Users, Sparkles, 
 const trustItems = [
   {
     icon: Award,
-    title: "10+ Years Experience",
-    desc: "A decade of providing quality protection across Bangalore."
+    title: "5+ Years Experience",
+    desc: "A decade of providing quality protection across Gurugram."
   },
   {
     icon: Sparkles,
@@ -102,7 +102,7 @@ export default function Trust() {
             viewport={{ once: true }}
             className="text-xs font-bold uppercase tracking-widest text-primary-light"
           >
-            Why BMC Safety Nets
+            Why  Real bird netting ?
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 15 }}
@@ -111,7 +111,7 @@ export default function Trust() {
             transition={{ delay: 0.1 }}
             className="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2 font-display"
           >
-            {"Bangalore's Most Trusted Protection Services"}
+            {"Premium Bird Netting & Invisible Grill Services in Gurugram"}
           </motion.h2>
           <motion.div
             initial={{ width: 0 }}

@@ -45,9 +45,9 @@ export default function Contact() {
       setIsSubmitted(false);
     }, 4000);
   };
-
-  const whatsappUrl = "https://wa.me/919686668224?text=Hi%20BMC%20Safety%20Nets%2C%20I%20want%20to%20get%20in%20touch%20with%20you%20for%20safety%20net%20installation.";
-
+const whatsappUrl =
+  "https://wa.me/919354254539?text=Hi%20Real%20Bird%20Netting%2C%20I%20want%20to%20get%20in%20touch%20with%20you%20for%20bird%20net%20installation.%20Please%20contact%20me.";
+   
   return (
     <section id="contact" className="py-20 bg-white relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -86,11 +86,11 @@ export default function Contact() {
             
             <div className="md:col-span-4 flex flex-col sm:flex-row md:flex-col gap-3 justify-center">
               <a
-                href="tel:+919686668224"
+                 href="tel:+919354254539"
                 className="flex items-center justify-center space-x-2 bg-white text-primary hover:bg-slate-100 py-4 px-6 rounded-xl font-extrabold text-base shadow-md transition-all active:scale-98"
               >
                 <Phone className="w-5 h-5 fill-primary" />
-                <span>Call +91 96866 68224</span>
+                 <span>Call +91 93542 54539</span>
               </a>
               <a
                 href={whatsappUrl}
@@ -112,7 +112,7 @@ export default function Contact() {
           <div className="lg:col-span-6 space-y-8">
             <div className="space-y-6">
               <h3 className="text-2xl font-bold text-slate-800 font-display">
-                BMC Safety Nets Head Office
+               Real bird netting ,Near Rajive chowk , Gurugram
               </h3>
               
               <div className="space-y-4">
@@ -120,7 +120,7 @@ export default function Contact() {
                   <MapPin className="w-5 h-5 text-primary shrink-0 mt-1" />
                   <div>
                     <span className="font-bold text-slate-800 block">Our Address</span>
-                    <span>No. 45, 2nd Main Road, Near Yeshwanthpur Metro Station, Bangalore, Karnataka - 560022</span>
+                    <span> Shop No.165F,Gali No.-7,Hans Enclave, Sector-33 Near Rajiv Chowk, Gurugram-122001</span>
                   </div>
                 </div>
 
@@ -136,8 +136,8 @@ export default function Contact() {
                   <Mail className="w-5 h-5 text-primary shrink-0 mt-1" />
                   <div>
                     <span className="font-bold text-slate-800 block">Email Address</span>
-                    <a href="mailto:info.bmcsafetynets@gmail.com" className="hover:text-primary transition-colors">
-                      info.bmcsafetynets@gmail.com
+                    <a href="mailto:sachin2006simra@gmail.com" className="hover:text-primary transition-colors">
+                      sachin2006simra@gmail.com
                     </a>
                   </div>
                 </div>
@@ -145,18 +145,18 @@ export default function Contact() {
             </div>
 
             {/* Map Iframe */}
-            <div className="relative w-full h-[280px] bg-slate-100 rounded-2xl overflow-hidden shadow-sm border border-slate-200">
-              <iframe
-                title="BMC Safety Nets Location Map"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d497699.9973874144!2d77.35073573610631!3d12.95384772557775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4fe0!2sBengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1719598200000!5m2!1sen!2sin"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
+             <div className="relative w-full h-[280px] bg-slate-100 rounded-2xl overflow-hidden shadow-sm border border-slate-200">
+  <iframe
+    title="Real Bird Netting Location Map"
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507.4386809320017!2d77.00839147528262!3d28.466332675756004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d19d5510a6911%3A0xb7e8ad02f2d36d86!2s165%2C%20Street%20No.%207%2C%20Krishna%20Colony%2C%20Sector%207%2C%20Gurugram%2C%20Haryana%20122001!5e0!3m2!1sen!2sin!4v1786126151203!5m2!1sen!2sin"
+    width="100%"
+    height="100%"
+    style={{ border: 0 }}
+    allowFullScreen
+    loading="lazy"
+    referrerPolicy="strict-origin-when-cross-origin"
+  />
+</div>
           </div>
 
           {/* Right Column: Enquiry Form */}

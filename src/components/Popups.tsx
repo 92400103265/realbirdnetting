@@ -27,11 +27,10 @@ export default function Popups() {
     "All Types of Safety Nets"
   ];
 
-  useEffect(() => {
-    // Check if user already submitted or dismissed the popup recently
-    const hasBeenShown = localStorage.getItem("bmc_popup_dismissed");
-    if (hasBeenShown === "true") return;
-
+   useEffect(() => {
+  // Check if user already submitted or dismissed the popup recently
+  const hasBeenShown = localStorage.getItem("realbirdnetting_popup_dismissed");
+  if (hasBeenShown === "true") return;
     // 1. Timed Popup after 20 seconds
     const timedTimer = setTimeout(() => {
       setFormType("timed");
@@ -58,7 +57,7 @@ export default function Popups() {
 
   const closePopup = () => {
     setIsOpen(false);
-    localStorage.setItem("bmc_popup_dismissed", "true");
+    localStorage.setItem("realbirdnetting_popup_dismissed", "true");
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -75,7 +74,7 @@ export default function Popups() {
     
     // Simulate API submission
     setIsSubmitted(true);
-    localStorage.setItem("bmc_popup_dismissed", "true");
+    localStorage.setItem("realbirdnetting_popup_dismissed", "true");
     
     // Clear fields
     setName("");
@@ -219,11 +218,11 @@ export default function Popups() {
                     <span className="text-xs text-slate-400">Or connect instantly via</span>
                     <div className="flex justify-center space-x-4 mt-2">
                       <a
-                        href="tel:+919686668224"
+                        href="tel:+919354254539"
                         className="flex items-center space-x-1 text-primary hover:text-primary-light font-bold text-xs"
                       >
                         <Phone className="w-3 h-3 fill-primary" />
-                        <span>Call +91 96866 68224</span>
+                        <span>Call +91 9354254539</span>
                       </a>
                     </div>
                   </div>

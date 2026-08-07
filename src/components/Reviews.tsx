@@ -5,86 +5,86 @@ import { Star, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 
 const reviews = [
-  {
-    name: "Rohan Gowda",
-    location: "HSR Layout, Bangalore",
-    rating: 5,
-    date: "1 week ago",
-    text: "Excellent service from BMC Safety Nets. I called them in the morning for bird nets in my balcony. Their team came by 2 PM, measured, quoted, and finished the installation by 4:30 PM. Very professional work and high quality nets."
-  },
-  {
-    name: "Priyanka Nair",
-    location: "Whitefield, Bangalore",
-    rating: 5,
-    date: "2 weeks ago",
-    text: "Highly recommend their invisible grills. We live on the 14th floor and were worried about kids' safety. The invisible grills look extremely elegant, do not block the balcony view at all, and feel incredibly sturdy. Thank you!"
-  },
-  {
-    name: "Anish Sharma",
-    location: "Indiranagar, Bangalore",
-    rating: 5,
-    date: "3 weeks ago",
-    text: "Excellent ceiling cloth hangers. The pulley system is very smooth and saves a lot of space in my utility area. The installation guy explained how to operate it clearly. Very neat work."
-  },
-  {
-    name: "Meera Deshpande",
-    location: "Jayanagar, Bangalore",
-    rating: 5,
-    date: "1 month ago",
-    text: "Best safety net services in Bangalore. The pricing is very reasonable compared to others. They used high-quality, thick UV-resistant nets for pigeon protection. Very polite team."
-  },
-  {
-    name: "Vikram Reddy",
-    location: "Bellandur, Bangalore",
-    rating: 5,
-    date: "1 month ago",
-    text: "BMC team installed monkey safety nets in our apartment. The nets are very thick and strong, and monkey intrusions have completely stopped. Best investment. Fast and clean installation."
-  },
+   {
+  name: "Umesh Kumar",
+  location: "Sector-33, Gurugram",
+  rating: 5,
+  date: "1 week ago",
+  text: "Excellent service from Real Bird Netting. I contacted them for bird net installation at my balcony in Sector-33, Gurugram. Their team arrived on time, completed the installation professionally, and used high-quality materials. I am very satisfied with their work and highly recommend Real Bird Netting."
+},
+   {
+  name: "Sonu Kumar",
+  location: "Sector-14, Gurugram",
+  rating: 5,
+  date: "2 weeks ago",
+  text: "I highly recommend Real Bird Netting for invisible grills and bird net installation. Their team was professional, completed the work on time, and used premium-quality materials. The installation looks neat, does not block the view, and provides excellent safety. Thank you, Real Bird Netting!"
+},
+   {
+  name: "Rohit Patel",
+  location: "DLF Phase 3, Gurugram",
+  rating: 5,
+  date: "3 weeks ago",
+  text: "Excellent service from Real Bird Netting. I installed bird safety nets for my balcony, and the team completed the work professionally using premium-quality materials. The installation was neat, affordable, and completed on time. I highly recommend Real Bird Netting to anyone in Gurugram."
+},
+   {
+  name: "Kajal Sharma",
+  location: "Palam Vihar, Gurugram",
+  rating: 5,
+  date: "1 month ago",
+  text: "Real Bird Netting provided excellent bird safety net installation at my home in Palam Vihar. The team was punctual, professional, and used high-quality UV-resistant bird nets. The installation was neat, affordable, and completed on time. I highly recommend Real Bird Netting for bird netting services in Gurugram."
+},
+   {
+  name: "Shilpa Rao",
+  location: "Rajiv Chowk, Gurugram",
+  rating: 5,
+  date: "1 month ago",
+  text: "I am very happy with the service provided by Real Bird Netting. Their team installed high-quality bird safety nets at my home near Rajiv Chowk, Gurugram. The installation was completed on time, the staff was professional, and the quality of the net is excellent. I highly recommend Real Bird Netting for bird netting and balcony safety solutions."
+},
   {
     name: "Shweta K.",
-    location: "Electronic City, Bangalore",
+    location: "EPIP, Gurugram",
     rating: 5,
     date: "1 month ago",
     text: "They installed cricket practice netting on our society terrace. The netting is very strong and absorbs heavy impact shots easily. Excellent workmanship and timely completion."
   },
   {
     name: "Sandeep Kumar",
-    location: "Hebbal, Bangalore",
+    location: "Rajiv Chowk, Gurugram",
     rating: 5,
     date: "2 months ago",
     text: "Professional safety net installation. Prompt response, quick measurement check, and neat installation. Rust-free steel hooks were used. Very satisfied with the service."
   },
   {
     name: "Karthik Raja",
-    location: "Marathahalli, Bangalore",
+    location: "Bahadurgarh, Gurugram",
     rating: 5,
     date: "2 months ago",
     text: "Very reliable and quick. Got balcony nets installed for my pets' safety. The mesh is small enough and tightly secured. Now my cat can roam the balcony safely."
   },
   {
     name: "Deepa Hegde",
-    location: "Bannerghatta Road, Bangalore",
+    location: "Gwal Pahari, Gurugram",
     rating: 5,
     date: "2 months ago",
     text: "Top-notch customer service. From booking the free site visit to the actual installation, everything was seamless. Transparent pricing and good warranty coverage."
   },
   {
     name: "Raghavendra Rao",
-    location: "Malleshwaram, Bangalore",
+    location: "Chakkarpur, Gurugram",
     rating: 5,
     date: "3 months ago",
     text: "Excellent work by the crew. We got invisible grills installed for our windows. They are clean, modern, and strong. Perfect safety solution for high rises."
   },
   {
     name: "Neha Gupta",
-    location: "Koramangala, Bangalore",
+    location: "Sikanderpur, Gurugram",
     rating: 5,
     date: "3 months ago",
-    text: "BMC Safety Nets is the best in Bangalore. Prompt service, transparent rates, and highly durable nets. We had pigeon issues for years, now it is completely resolved."
+    text: "Real Bird Netting is the best in Gurugram. Prompt service, transparent rates, and highly durable nets. We had pigeon issues for years, now it is completely resolved."
   },
   {
     name: "Sunil Murthy",
-    location: "Yeshwanthpur, Bangalore",
+    location: "Badshahpur, Gurugram",
     rating: 5,
     date: "3 months ago",
     text: "Very professional installation team. They followed all safety precautions while installing the nets in our duct area. Fast, affordable, and high-quality nets."
@@ -163,7 +163,7 @@ export default function Reviews() {
             Google Reviews from Happy Customers
           </h2>
           <p className="text-slate-600 mt-3 text-sm sm:text-base">
-            Read real feedback from homeowners across Bangalore who secured their spaces with us.
+            Read real feedback from homeowners across Gurugram  who secured their spaces with us.
           </p>
           <div className="h-1 bg-accent w-16 mx-auto mt-4 rounded" />
         </div>

@@ -22,18 +22,18 @@ export default function Footer() {
               <Logo height={56} theme="dark" />
             </div>
             <p className="text-slate-400 text-sm leading-relaxed mb-6">
-              {"Bangalore's trusted safety net installation experts. Protecting your family, balcony, pets, and children with 100% premium, UV-resistant, long-lasting materials."}
+              {"Real Bird Netting is Gurugram's trusted bird netting and safety solution provider, offering premium bird nets, invisible grills, balcony safety nets, and professional installation with high-quality, UV-resistant materials."}
             </p>
             <div className="flex space-x-3">
               <a
-                href="tel:+919686668224"
+                href="tel:+919354254539"
                 className="flex items-center justify-center w-12 h-12 rounded-full bg-slate-800 hover:bg-primary-light text-white transition-colors duration-200"
                 aria-label="Call Us"
               >
                 <Phone className="w-5 h-5 fill-white" />
               </a>
               <a
-                href="https://wa.me/919686668224?text=Hi%20BMC%20Safety%20Nets%2C%20I%20need%20more%20information%20about%20your%20services."
+                 href="https://wa.me/919354254539?text=Hi%20Real%20Bird%20Netting%2C%20I%20am%20looking%20for%20Bird%20Netting%2C%20Invisible%20Grills%2C%20or%20Balcony%20Safety%20Net%20services%20in%20Gurugram.%20Please%20share%20more%20information%20and%20arrange%20a%20free%20site%20inspection.%20Thank%20you."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center w-12 h-12 rounded-full bg-slate-800 hover:bg-accent hover:text-slate-900 text-white transition-colors duration-200"
@@ -136,18 +136,18 @@ export default function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-start space-x-2">
                 <MapPin className="w-5 h-5 text-primary-light shrink-0 mt-0.5" />
-                <span>No. 45, 2nd Main Road, Near Yeshwanthpur Metro, Bangalore, Karnataka - 560022</span>
+                <span> Shop No. 165F, Gali No. 7, Hans Enclave, Sector-33, Near Rajiv Chowk, Gurugram, Haryana - 122001</span>
               </li>
               <li className="flex items-center space-x-2">
                 <Phone className="w-4 h-4 text-primary-light shrink-0" />
-                <a href="tel:+919686668224" className="hover:text-white transition-colors font-semibold">
-                  +91 96866 68224
+                <a href="tel:+919354254539" className="hover:text-white transition-colors font-semibold">
+                  +91  9354254539
                 </a>
               </li>
               <li className="flex items-center space-x-2">
                 <Mail className="w-4 h-4 text-primary-light shrink-0" />
-                <a href="mailto:info.bmcsafetynets@gmail.com" className="hover:text-white transition-colors">
-                  info.bmcsafetynets@gmail.com
+                <a href="mailto:sachins006simra@gmail.com" className="hover:text-white transition-colors">
+                  sachins006simra@gmail.com
                 </a>
               </li>
               <li className="flex items-center space-x-2">
@@ -160,7 +160,7 @@ export default function Footer() {
 
         {/* Bottom Line */}
         <div className="border-t border-slate-800 pt-8 mt-8 flex flex-col md:flex-row items-center justify-between text-xs text-slate-400">
-          <p>© {new Date().getFullYear()} BMC Safety Nets Bangalore. All Rights Reserved.</p>
+          <p>© {new Date().getFullYear()} Real bird netting services. All Rights Reserved.</p>
           <div className="flex space-x-4 mt-4 md:mt-0">
             <a href="#" className="hover:text-slate-350 hover:underline">Privacy Policy</a>
             <a href="#" className="hover:text-slate-350 hover:underline">Terms & Conditions</a>

@@ -8,8 +8,8 @@ import Image from "next/image";
 const slides = [
   {
     image: "/images/carousel_pigeon_net.png",
-    title: "Bangalore's #1 Pigeon Safety Nets",
-    titlePrefix: "Bangalore's #1 ",
+    title: "Gurugram's #1 Pigeon Safety Nets",
+    titlePrefix: "Gurugram's #1 ",
     titleHighlight: "Pigeon Safety Nets",
     titleSuffix: "",
     subtitle: "Keep your balcony clean, hygienic, and pigeon-free with heavy-duty UV-resistant netting.",
@@ -163,8 +163,8 @@ export default function Hero() {
     }, 4000);
   };
 
-  const whatsappUrl = "https://wa.me/919686668224?text=Hi%20BMC%20Safety%20Nets%2C%20I%20want%20to%20book%20a%20free%20inspection%20and%20quote.";
-
+   const whatsappUrl =
+  "https://wa.me/919354254539?text=Hi%20Real%20Bird%20Netting%2C%20I%20am%20looking%20for%20Bird%20Netting%2C%20Invisible%20Grills%2C%20or%20Balcony%20Safety%20Net%20services%20in%20Gurugram.%20Please%20share%20more%20information%20and%20arrange%20a%20free%20site%20inspection.%20Thank%20you.";
   return (
     <>
       <section
@@ -423,7 +423,7 @@ export default function Hero() {
 
                   <div className="grid grid-cols-2 gap-3 pt-1">
                     <a
-                      href="tel:+919686668224"
+                      href="tel:+919354254539"
                       className="flex items-center justify-center space-x-1.5 bg-[#f97316] hover:bg-[#d96510] text-white py-2 rounded-lg text-xs font-semibold border border-white/10 transition-colors"
                     >
                       <Phone className="w-3.5 h-3.5 fill-white" />
@@ -556,7 +556,7 @@ export default function Hero() {
 
               <div className="grid grid-cols-2 gap-3 pt-1">
                 <a
-                  href="tel:+919686668224"
+                  href="tel:+919354254539"
                   className="flex items-center justify-center space-x-1.5 bg-[#f97316] hover:bg-[#d96510] text-white py-2.5 rounded-lg text-xs font-semibold border border-white/10 transition-colors"
                 >
                   <Phone className="w-3.5 h-3.5 fill-white" />

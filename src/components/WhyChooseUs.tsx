@@ -32,10 +32,10 @@ export default function WhyChooseUs() {
               Unmatched Standards
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold font-display leading-tight">
-              {"Why BMC is Bangalore's #1 Choice"}
+              {"Why Real Bird Netting is Gurugram's #1 Choice"}
             </h2>
             <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-              {"We don't believe in cheap temporary fixes. At BMC Safety Nets, we use marine-grade stainless steel wire ropes, 100% pure virgin HDPE netting, and heavy double-walled anchor expansions. Your family's safety is our highest priority."}
+              {"We don't believe in cheap temporary fixes. At Real Bird Netting, we use marine-grade stainless steel wire ropes, 100% pure virgin HDPE netting, and heavy double-walled anchor expansions. Your family's safety is our highest priority."}
             </p>
 
             {/* Graphic Trust Banner */}
@@ -62,11 +62,11 @@ export default function WhyChooseUs() {
 
             <div className="pt-2">
               <a
-                href="tel:+919686668224"
+                href="tel:+919354254539"
                 className="inline-flex items-center gap-2 bg-accent hover:bg-accent-dark text-white font-bold py-3 px-6 rounded-lg text-sm transition-all shadow-md"
               >
                 <PhoneCall className="w-4 h-4 fill-white" />
-                <span>Call +91 96866 68224</span>
+                <span>Call +91  9354254539</span>
               </a>
             </div>
           </div>

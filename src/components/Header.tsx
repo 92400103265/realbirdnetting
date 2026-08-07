@@ -126,16 +126,16 @@ export default function Header() {
             <span className="hidden md:inline text-slate-300">|</span>
             <span className="hidden md:flex items-center gap-1 text-slate-300">
               <MapPin className="w-3.5 h-3.5 text-accent" />
-              Serving All Bangalore
+              Serving All Gurugram
             </span>
           </div>
           <div className="flex items-center space-x-4">
             <a 
-              href="mailto:info.bmcsafetynets@gmail.com" 
+              href="mailto:sachin2006simra@gmail.com" 
               className="hover:text-white transition-colors flex items-center gap-1 text-slate-300"
             >
               <Mail className="w-3.5 h-3.5 text-accent" />
-              <span className="hidden sm:inline">info.bmcsafetynets@gmail.com</span>
+              <span className="hidden sm:inline">sachin2006simra@gmail.com</span>
             </a>
             <span className="text-slate-500">|</span>
             <span className="flex items-center gap-1 text-accent font-semibold">
@@ -207,16 +207,16 @@ export default function Header() {
             {/* Call / WhatsApp CTAs */}
             <div className="hidden sm:flex items-center space-x-1.5 xl:space-x-2.5">
               <a
-                href="tel:+919686668224"
+                href="tel:+919354254539"
                 className="group flex items-center space-x-1.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-2.5 py-2 xl:px-3.5 xl:py-2.5 rounded-xl text-xs xl:text-sm font-bold hover:shadow-md hover:shadow-orange-500/20 transition-all duration-300 hover:-translate-y-0.5 border border-white/10 whitespace-nowrap"
               >
                 <Phone className="w-3.5 h-3.5 fill-white group-hover:animate-bounce" />
-                <span className="hidden xl:inline">+91 96866 68224</span>
+                <span className="hidden xl:inline">+91 93542 54539</span>
                 <span className="inline xl:hidden">Call</span>
               </a>
 
               <a
-                href="https://wa.me/919686668224?text=Hi%20BMC%20Safety%20Nets%2C%20I%20am%20interested%20in%20a%20free%20inspection%20and%20quote%20for%20your%20services."
+                 href="https://wa.me/919354254539?text=Hi%20Real%20Bird%20Netting%2C%20I%20am%20looking%20for%20Bird%20Netting%2C%20Invisible%20Grills%2C%20or%20Balcony%20Safety%20Net%20services%20in%20Gurugram.%20Please%20share%20more%20information%20and%20arrange%20a%20free%20site%20inspection.%20Thank%20you."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center space-x-1.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-2.5 py-2 xl:px-3.5 xl:py-2.5 rounded-xl text-xs xl:text-sm font-bold hover:shadow-md hover:shadow-emerald-500/20 transition-all duration-300 hover:-translate-y-0.5 border border-white/10 whitespace-nowrap"
@@ -237,7 +237,7 @@ export default function Header() {
             {/* Mobile hamburger menu */}
             <div className="lg:hidden flex items-center space-x-2">
               <a
-                href="tel:+919686668224"
+                href="tel:+919354254539"
                 className="w-11 h-11 flex items-center justify-center rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:opacity-95 shadow-md transition-all active:scale-95"
                 aria-label="Call Customer Care"
               >
@@ -298,14 +298,14 @@ export default function Header() {
 
               <div className="grid grid-cols-2 gap-3 pt-3 border-t border-slate-100">
                 <a
-                  href="tel:+919686668224"
+                  href="tel:+919354254539"
                   className="flex items-center justify-center space-x-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3.5 rounded-xl text-sm font-bold shadow-md hover:opacity-90 transition-all active:scale-98"
                 >
                   <Phone className="w-4 h-4 fill-white" />
                   <span>Call Now</span>
                 </a>
                 <a
-                  href="https://wa.me/919686668224?text=Hi%20BMC%20Safety%20Nets%2C%20I%20am%20interested%20in%20a%20free%20inspection%20and%20quote%20for%20your%20services."
+                  href="https://wa.me/919354254539?text=Hi%20Real%20Bird%20Netting%2C%20I%20am%20looking%20for%20Bird%20Netting%2C%20Invisible%20Grills%2C%20or%20Balcony%20Safety%20Net%20services%20in%20Gurugram.%20Please%20share%20more%20information%20and%20arrange%20a%20free%20site%20inspection.%20Thank%20you."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center space-x-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white py-3.5 rounded-xl text-sm font-bold shadow-md hover:opacity-90 transition-all active:scale-98"
