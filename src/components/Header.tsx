@@ -1,6 +1,6 @@
  "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Phone,
   Menu,
@@ -9,6 +9,7 @@ import {
   MapPin,
   Sparkles,
   Search,
+  ArrowRight,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "./Logo";
@@ -28,15 +29,98 @@ const navItems = [
 
 type ServiceTab = "nets" | "grills" | "hangers";
 
+interface SearchItem {
+  name: string;
+  description: string;
+  target: string;
+  tab?: ServiceTab;
+}
+
+const searchItems: SearchItem[] = [
+  {
+    name: "Bird Netting",
+    description: "Balcony and window bird protection",
+    target: "#services",
+    tab: "nets",
+  },
+  {
+    name: "Safety Nets",
+    description: "Durable safety nets for balconies",
+    target: "#services",
+    tab: "nets",
+  },
+  {
+    name: "Pigeon Net",
+    description: "Pigeon and bird protection",
+    target: "#services",
+    tab: "nets",
+  },
+  {
+    name: "Invisible Grills",
+    description: "Modern balcony safety solution",
+    target: "#services",
+    tab: "grills",
+  },
+  {
+    name: "Cloth Hangers",
+    description: "Space-saving balcony cloth hangers",
+    target: "#services",
+    tab: "hangers",
+  },
+  {
+    name: "Why Us",
+    description: "Why choose Real Bird Netting",
+    target: "#why-choose-us",
+  },
+  {
+    name: "Gallery",
+    description: "View our completed work",
+    target: "#gallery",
+  },
+  {
+    name: "Reviews",
+    description: "Customer reviews and feedback",
+    target: "#reviews",
+  },
+  {
+    name: "FAQ",
+    description: "Frequently asked questions",
+    target: "#faq",
+  },
+  {
+    name: "Contact",
+    description: "Contact Real Bird Netting",
+    target: "#contact",
+  },
+  {
+    name: "Offers",
+    description: "Current offers and discounts",
+    target: "#offers",
+  },
+];
+
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
-  const [activeTab, setActiveTab] = useState<ServiceTab>("nets");
 
-  // -----------------------------------------
+  const [isMobileMenuOpen, setIsMobileMenuOpen] =
+    useState(false);
+
+  const [isSearchOpen, setIsSearchOpen] =
+    useState(false);
+
+  const [searchText, setSearchText] =
+    useState("");
+
+  const [activeSection, setActiveSection] =
+    useState("home");
+
+  const [activeTab, setActiveTab] =
+    useState<ServiceTab>("nets");
+
+  // =====================================================
   // Scroll listener
-  // -----------------------------------------
+  // =====================================================
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -49,16 +133,21 @@ export default function Header() {
     });
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener(
+        "scroll",
+        handleScroll
+      );
     };
   }, []);
 
-  // -----------------------------------------
-  // Listen for Services tab changes
-  // -----------------------------------------
+  // =====================================================
+  // Services tab listener
+  // =====================================================
+
   useEffect(() => {
     const handleTabChange = (event: Event) => {
-      const customEvent = event as CustomEvent<ServiceTab>;
+      const customEvent =
+        event as CustomEvent<ServiceTab>;
 
       if (customEvent.detail) {
         setActiveTab(customEvent.detail);
@@ -78,9 +167,10 @@ export default function Header() {
     };
   }, []);
 
-  // -----------------------------------------
+  // =====================================================
   // Scroll spy
-  // -----------------------------------------
+  // =====================================================
+
   useEffect(() => {
     const observerOptions: IntersectionObserverInit = {
       root: null,
@@ -93,7 +183,8 @@ export default function Header() {
     ) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          const id = entry.target.getAttribute("id");
+          const id =
+            entry.target.getAttribute("id");
 
           if (id) {
             setActiveSection(id);
@@ -102,10 +193,11 @@ export default function Header() {
       });
     };
 
-    const observer = new IntersectionObserver(
-      handleIntersection,
-      observerOptions
-    );
+    const observer =
+      new IntersectionObserver(
+        handleIntersection,
+        observerOptions
+      );
 
     const sections = [
       "home",
@@ -119,7 +211,8 @@ export default function Header() {
     ];
 
     sections.forEach((id) => {
-      const element = document.getElementById(id);
+      const element =
+        document.getElementById(id);
 
       if (element) {
         observer.observe(element);
@@ -128,7 +221,8 @@ export default function Header() {
 
     return () => {
       sections.forEach((id) => {
-        const element = document.getElementById(id);
+        const element =
+          document.getElementById(id);
 
         if (element) {
           observer.unobserve(element);
@@ -137,9 +231,10 @@ export default function Header() {
     };
   }, []);
 
-  // -----------------------------------------
-  // Navigation click
-  // -----------------------------------------
+  // =====================================================
+  // Navigation
+  // =====================================================
+
   const handleNavClick = (
     event: React.MouseEvent<HTMLAnchorElement>,
     href: string
@@ -148,7 +243,6 @@ export default function Header() {
 
     let targetId = href;
 
-    // Invisible Grills
     if (href === "#invisible-grills") {
       targetId = "#services";
 
@@ -157,10 +251,11 @@ export default function Header() {
           detail: "grills",
         })
       );
+
+      setActiveTab("grills");
     }
 
-    // Cloth Hangers
-    else if (href === "#cloth-hangers") {
+    if (href === "#cloth-hangers") {
       targetId = "#services";
 
       window.dispatchEvent(
@@ -168,18 +263,22 @@ export default function Header() {
           detail: "hangers",
         })
       );
+
+      setActiveTab("hangers");
     }
 
-    // Safety Nets
-    else if (href === "#services") {
+    if (href === "#services") {
       window.dispatchEvent(
         new CustomEvent("change-services-tab", {
           detail: "nets",
         })
       );
+
+      setActiveTab("nets");
     }
 
-    const target = document.querySelector(targetId);
+    const target =
+      document.querySelector(targetId);
 
     if (target) {
       target.scrollIntoView({
@@ -189,11 +288,13 @@ export default function Header() {
     }
 
     setIsMobileMenuOpen(false);
+    setIsSearchOpen(false);
   };
 
-  // -----------------------------------------
-  // Active navigation item
-  // -----------------------------------------
+  // =====================================================
+  // Active navigation
+  // =====================================================
+
   const getIsActive = (href: string) => {
     const hash = href.slice(1);
 
@@ -221,30 +322,98 @@ export default function Header() {
     return activeSection === hash;
   };
 
-  // -----------------------------------------
-  // Search button
-  // -----------------------------------------
-  const handleSearch = () => {
-    const searchElement =
-      document.getElementById("site-search");
+  // =====================================================
+  // Open / close search
+  // =====================================================
 
-    if (searchElement) {
-      searchElement.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-      });
-    } else {
-      console.warn(
-        'Search target "#site-search" was not found.'
+  const handleSearchToggle = () => {
+    setIsSearchOpen(
+      (previous) => !previous
+    );
+
+    setIsMobileMenuOpen(false);
+  };
+
+  // =====================================================
+  // Search filtering
+  // =====================================================
+
+  const filteredSearchItems =
+    searchText.trim().length === 0
+      ? searchItems.slice(0, 5)
+      : searchItems.filter((item) => {
+          const query =
+            searchText.toLowerCase().trim();
+
+          return (
+            item.name
+              .toLowerCase()
+              .includes(query) ||
+            item.description
+              .toLowerCase()
+              .includes(query)
+          );
+        });
+
+  // =====================================================
+  // Search result click
+  // =====================================================
+
+  const handleSearchResult = (
+    item: SearchItem
+  ) => {
+    if (item.tab) {
+      setActiveTab(item.tab);
+
+      window.dispatchEvent(
+        new CustomEvent("change-services-tab", {
+          detail: item.tab,
+        })
       );
+    }
+
+    const target =
+      document.querySelector(item.target);
+
+    if (target) {
+      target.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+
+    setSearchText("");
+    setIsSearchOpen(false);
+    setIsMobileMenuOpen(false);
+  };
+
+  // =====================================================
+  // Search submit
+  // =====================================================
+
+  const handleSearchSubmit = (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+
+    const firstResult =
+      filteredSearchItems[0];
+
+    if (firstResult) {
+      handleSearchResult(firstResult);
     }
   };
 
+  // =====================================================
+  // Render
+  // =====================================================
+
   return (
-    <header className="fixed top-0 left-0 z-50 w-full transition-all duration-300">
-      {/* =========================================
-          TOP ANNOUNCEMENT BAR
-      ========================================== */}
+    <header className="fixed left-0 top-0 z-50 w-full">
+      {/* =================================================
+          TOP BAR
+      ================================================== */}
+
       <div
         className={`overflow-hidden bg-gradient-to-r from-primary via-primary-light to-primary-dark text-xs text-slate-200 transition-all duration-500 ${
           isScrolled
@@ -258,6 +427,7 @@ export default function Header() {
             <span className="flex items-center gap-1.5 font-medium">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
               </span>
 
@@ -270,6 +440,7 @@ export default function Header() {
 
             <span className="hidden items-center gap-1 text-slate-300 md:flex">
               <MapPin className="h-3.5 w-3.5 text-accent" />
+
               Serving All Gurugram
             </span>
           </div>
@@ -287,19 +458,23 @@ export default function Header() {
               </span>
             </a>
 
-            <span className="text-slate-500">|</span>
+            <span className="text-slate-500">
+              |
+            </span>
 
             <span className="flex items-center gap-1 font-semibold text-accent">
               <Sparkles className="h-3.5 w-3.5 animate-pulse" />
+
               Same Day Installation
             </span>
           </div>
         </div>
       </div>
 
-      {/* =========================================
-          NAVBAR OUTER CONTAINER
-      ========================================== */}
+      {/* =================================================
+          NAVBAR
+      ================================================== */}
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div
           className={`transition-all duration-500 ${
@@ -308,38 +483,53 @@ export default function Header() {
               : "mt-4 rounded-2xl border border-white/40 bg-white/85 px-4 py-4 shadow-lg backdrop-blur-md sm:px-6"
           }`}
         >
-          {/* =========================================
-              MAIN NAVBAR ROW
-          ========================================== */}
-          <div className="flex items-center gap-3">
+          {/* =================================================
+              MAIN ROW
+          ================================================== */}
+
+          <div className="flex w-full items-center gap-3">
             {/* Logo */}
             <a
               href="#home"
               className="flex shrink-0 items-center"
               onClick={(event) =>
-                handleNavClick(event, "#home")
+                handleNavClick(
+                  event,
+                  "#home"
+                )
               }
               aria-label="Real Bird Netting Home"
             >
               <Logo
-                height={isScrolled ? 48 : 56}
+                height={
+                  isScrolled ? 48 : 56
+                }
                 isScrolled={true}
                 theme="adaptive"
                 className="transition-transform duration-200 hover:scale-105"
               />
             </a>
 
-            {/* Desktop Navigation */}
+            {/* =================================================
+                DESKTOP NAVIGATION
+            ================================================== */}
+
             <nav className="ml-auto hidden items-center space-x-0.5 lg:flex xl:space-x-1.5">
               {navItems.map((item) => {
-                const isActive = getIsActive(item.href);
+                const isActive =
+                  getIsActive(
+                    item.href
+                  );
 
                 return (
                   <a
                     key={item.name}
                     href={item.href}
                     onClick={(event) =>
-                      handleNavClick(event, item.href)
+                      handleNavClick(
+                        event,
+                        item.href
+                      )
                     }
                     className={`group relative cursor-pointer whitespace-nowrap rounded-xl px-1.5 py-2 text-xs font-semibold transition-all duration-300 xl:px-3 xl:text-sm ${
                       isActive
@@ -361,12 +551,15 @@ export default function Header() {
               })}
             </nav>
 
-            {/* Desktop Call / WhatsApp */}
-            <div className="hidden items-center space-x-1.5 sm:flex xl:space-x-2.5">
+            {/* =================================================
+                DESKTOP BUTTONS
+            ================================================== */}
+
+            <div className="hidden items-center gap-2 sm:flex">
               {/* Call */}
               <a
                 href="tel:+919354254539"
-                className="group flex items-center space-x-1.5 whitespace-nowrap rounded-xl border border-white/10 bg-gradient-to-r from-orange-500 to-orange-600 px-2.5 py-2 text-xs font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:shadow-orange-500/20 xl:px-3.5 xl:py-2.5 xl:text-sm"
+                className="group flex items-center gap-1.5 whitespace-nowrap rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-3 py-2 text-xs font-bold text-white shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg xl:px-3.5 xl:py-2.5 xl:text-sm"
                 aria-label="Call Real Bird Netting"
               >
                 <Phone className="h-3.5 w-3.5 fill-white group-hover:animate-bounce" />
@@ -382,24 +575,17 @@ export default function Header() {
 
               {/* WhatsApp */}
               <a
-                href="https://wa.me/919354254539?text=Hi%20Real%20Bird%20Netting%2C%20I%20am%20looking%20for%20Bird%20Netting%2C%20Invisible%20Grills%2C%20or%20Balcony%20Safety%20Net%20services%20in%20Gurugram.%20Please%20share%20more%20information%20and%20arrange%20a%20free%20site%20inspection.%20Thank%20you."
+                href="https://wa.me/919354254539?text=Hi%20Real%20Bird%20Netting%2C%20I%20am%20looking%20for%20Bird%20Netting%2C%20Invisible%20Grills%2C%20or%20Balcony%20Safety%20Net%20services%20in%20Gurugram.%20Please%20share%20more%20information."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center space-x-1.5 whitespace-nowrap rounded-xl border border-white/10 bg-gradient-to-r from-emerald-500 to-teal-600 px-2.5 py-2 text-xs font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:shadow-emerald-500/20 xl:px-3.5 xl:py-2.5 xl:text-sm"
-                aria-label="Contact Real Bird Netting on WhatsApp"
+                className="group flex items-center gap-1.5 whitespace-nowrap rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-3 py-2 text-xs font-bold text-white shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg xl:px-3.5 xl:py-2.5 xl:text-sm"
+                aria-label="WhatsApp Real Bird Netting"
               >
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75" />
+
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-white" />
                 </span>
-
-                <svg
-                  className="h-3.5 w-3.5 fill-white"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.248 8.477 3.517 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.625 1.451 5.403.002 9.803-4.381 9.805-9.786.002-2.618-1.01-5.074-2.854-6.921C16.38 2.052 13.933.996 11.999.996 6.596.996 2.197 5.379 2.195 10.785c-.001 1.512.409 2.99 1.182 4.298l-.994 3.63 3.731-.973-1.066.614zm11.332-6.52c-.274-.136-1.62-.8-1.87-.892-.252-.09-.435-.136-.617.137-.183.272-.708.892-.868 1.074-.16.183-.32.204-.593.068-1.579-.79-2.73-1.37-3.818-3.23-.288-.492.288-.456.822-1.52.091-.183.046-.343-.023-.48-.068-.136-.617-1.484-.846-2.033-.223-.536-.469-.463-.617-.47l-.527-.008c-.183 0-.48.069-.731.343-.252.274-.96.937-.96 2.285 0 1.348.982 2.651 1.119 2.833.137.183 1.933 2.951 4.682 4.141.654.282 1.165.451 1.564.578.658.209 1.258.18 1.732.109.528-.079 1.62-.663 1.85-1.302.23-.639.23-1.187.16-1.302-.07-.116-.275-.183-.55-.32z" />
-                </svg>
 
                 <span className="hidden xl:inline">
                   WhatsApp
@@ -411,25 +597,35 @@ export default function Header() {
               </a>
             </div>
 
-            {/* =========================================
+            {/* =================================================
                 MOBILE CONTROLS
-            ========================================== */}
+            ================================================== */}
+
             <div className="ml-auto flex items-center gap-2 lg:hidden">
               {/* Search */}
               <button
                 type="button"
-                onClick={handleSearch}
-                className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-800 shadow-sm transition-colors hover:bg-slate-100 active:scale-95"
-                aria-label="Search"
+                onClick={
+                  handleSearchToggle
+                }
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-800 shadow-sm transition-all hover:bg-slate-100 active:scale-95"
+                aria-label="Open search"
+                aria-expanded={
+                  isSearchOpen
+                }
               >
-                <Search className="h-5 w-5" />
+                {isSearchOpen ? (
+                  <X className="h-5 w-5" />
+                ) : (
+                  <Search className="h-5 w-5" />
+                )}
               </button>
 
               {/* Call */}
               <a
                 href="tel:+919354254539"
-                className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md transition-all hover:opacity-95 active:scale-95"
-                aria-label="Call Customer Care"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md transition-all hover:opacity-95 active:scale-95"
+                aria-label="Call Real Bird Netting"
               >
                 <Phone className="h-5 w-5 fill-white" />
               </a>
@@ -439,16 +635,19 @@ export default function Header() {
                 type="button"
                 onClick={() =>
                   setIsMobileMenuOpen(
-                    (previous) => !previous
+                    (previous) =>
+                      !previous
                   )
                 }
-                className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-800 shadow-sm transition-colors hover:bg-slate-100 active:scale-95"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-800 shadow-sm transition-all hover:bg-slate-100 active:scale-95"
                 aria-label={
                   isMobileMenuOpen
                     ? "Close menu"
                     : "Open menu"
                 }
-                aria-expanded={isMobileMenuOpen}
+                aria-expanded={
+                  isMobileMenuOpen
+                }
               >
                 {isMobileMenuOpen ? (
                   <X className="h-6 w-6" />
@@ -459,9 +658,165 @@ export default function Header() {
             </div>
           </div>
 
-          {/* =========================================
+          {/* =================================================
+              MOBILE SEARCH BOX
+          ================================================== */}
+
+          <AnimatePresence>
+            {isSearchOpen && (
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  height: 0,
+                  y: -10,
+                }}
+                animate={{
+                  opacity: 1,
+                  height: "auto",
+                  y: 0,
+                }}
+                exit={{
+                  opacity: 0,
+                  height: 0,
+                  y: -10,
+                }}
+                transition={{
+                  duration: 0.25,
+                  ease: "easeInOut",
+                }}
+                className="overflow-hidden lg:hidden"
+              >
+                <div className="mt-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl">
+                  <form
+                    onSubmit={
+                      handleSearchSubmit
+                    }
+                    className="flex items-center gap-2"
+                  >
+                    <div className="relative flex-1">
+                      <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
+
+                      <input
+                        type="search"
+                        value={searchText}
+                        onChange={(event) =>
+                          setSearchText(
+                            event.target.value
+                          )
+                        }
+                        placeholder="Search services..."
+                        autoFocus
+                        className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-10 pr-3 text-sm text-slate-800 outline-none transition-all placeholder:text-slate-400 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/10"
+                        aria-label="Search services"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="flex h-11 shrink-0 items-center justify-center gap-1 rounded-xl bg-primary px-4 text-sm font-bold text-white shadow-md transition-all hover:opacity-90 active:scale-95"
+                    >
+                      <Search className="h-4 w-4" />
+
+                      <span>Search</span>
+                    </button>
+                  </form>
+
+                  {/* Search Results */}
+                  {searchText.trim() !== "" && (
+                    <div className="mt-3 max-h-64 overflow-y-auto">
+                      {filteredSearchItems.length >
+                      0 ? (
+                        <div className="space-y-1">
+                          {filteredSearchItems.map(
+                            (item) => (
+                              <button
+                                key={
+                                  item.name
+                                }
+                                type="button"
+                                onClick={() =>
+                                  handleSearchResult(
+                                    item
+                                  )
+                                }
+                                className="flex w-full items-center justify-between rounded-xl p-3 text-left transition-colors hover:bg-slate-50"
+                              >
+                                <div>
+                                  <p className="text-sm font-bold text-slate-800">
+                                    {item.name}
+                                  </p>
+
+                                  <p className="mt-0.5 text-xs text-slate-500">
+                                    {
+                                      item.description
+                                    }
+                                  </p>
+                                </div>
+
+                                <ArrowRight className="h-4 w-4 shrink-0 text-primary" />
+                              </button>
+                            )
+                          )}
+                        </div>
+                      ) : (
+                        <div className="rounded-xl bg-slate-50 p-4 text-center">
+                          <p className="text-sm font-semibold text-slate-700">
+                            No result found
+                          </p>
+
+                          <p className="mt-1 text-xs text-slate-500">
+                            Try Bird Netting,
+                            Invisible Grills,
+                            Cloth Hangers,
+                            Offers or Gallery.
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Suggestions */}
+                  {searchText.trim() === "" && (
+                    <div className="mt-3">
+                      <p className="mb-2 text-xs font-bold uppercase tracking-wide text-slate-400">
+                        Popular Searches
+                      </p>
+
+                      <div className="flex flex-wrap gap-2">
+                        {[
+                          "Bird Netting",
+                          "Invisible Grills",
+                          "Cloth Hangers",
+                          "Offers",
+                          "Gallery",
+                        ].map(
+                          (item) => (
+                            <button
+                              key={item}
+                              type="button"
+                              onClick={() => {
+                                setSearchText(
+                                  item
+                                );
+                              }}
+                              className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:border-primary/20 hover:bg-primary/5 hover:text-primary"
+                            >
+                              {item}
+                            </button>
+                          )
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* =================================================
               MOBILE MENU
-          ========================================== */}
+          ================================================== */}
+
           <AnimatePresence>
             {isMobileMenuOpen && (
               <motion.div
@@ -489,65 +844,77 @@ export default function Header() {
                 <div className="mt-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl">
                   {/* Mobile Navigation */}
                   <div className="grid grid-cols-1 gap-1">
-                    {navItems.map((item, index) => {
-                      const isActive = getIsActive(
-                        item.href
-                      );
+                    {navItems.map(
+                      (item, index) => {
+                        const isActive =
+                          getIsActive(
+                            item.href
+                          );
 
-                      return (
-                        <motion.a
-                          key={item.name}
-                          initial={{
-                            opacity: 0,
-                            x: -10,
-                          }}
-                          animate={{
-                            opacity: 1,
-                            x: 0,
-                          }}
-                          transition={{
-                            delay: index * 0.03,
-                          }}
-                          href={item.href}
-                          onClick={(event) =>
-                            handleNavClick(
-                              event,
+                        return (
+                          <motion.a
+                            key={
+                              item.name
+                            }
+                            initial={{
+                              opacity: 0,
+                              x: -10,
+                            }}
+                            animate={{
+                              opacity: 1,
+                              x: 0,
+                            }}
+                            transition={{
+                              delay:
+                                index *
+                                0.03,
+                            }}
+                            href={
                               item.href
-                            )
-                          }
-                          className={`block rounded-xl px-4 py-3 text-base font-bold transition-all ${
-                            isActive
-                              ? "border-l-4 border-accent bg-primary/5 pl-3 text-primary"
-                              : "text-slate-700 hover:bg-slate-50 hover:text-primary"
-                          }`}
-                        >
-                          {item.name}
-                        </motion.a>
-                      );
-                    })}
+                            }
+                            onClick={(
+                              event
+                            ) =>
+                              handleNavClick(
+                                event,
+                                item.href
+                              )
+                            }
+                            className={`block rounded-xl px-4 py-3 text-base font-bold transition-all ${
+                              isActive
+                                ? "border-l-4 border-accent bg-primary/5 pl-3 text-primary"
+                                : "text-slate-700 hover:bg-slate-50 hover:text-primary"
+                            }`}
+                          >
+                            {
+                              item.name
+                            }
+                          </motion.a>
+                        );
+                      }
+                    )}
                   </div>
 
-                  {/* =====================================
-                      MOBILE BUTTONS
-                  ====================================== */}
+                  {/* Mobile Buttons */}
                   <div className="mt-4 grid grid-cols-2 gap-3 border-t border-slate-100 pt-4">
                     {/* Call */}
                     <a
                       href="tel:+919354254539"
                       className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 py-3.5 text-sm font-bold text-white shadow-md transition-all hover:opacity-90 active:scale-95"
-                      aria-label="Call Real Bird Netting"
                     >
                       <Phone className="h-4 w-4 fill-white" />
-                      <span>Call Now</span>
+
+                      <span>
+                        Call Now
+                      </span>
                     </a>
 
                     {/* WhatsApp */}
                     <a
-                      href="https://wa.me/919354254539?text=Hi%20Real%20Bird%20Netting%2C%20I%20am%20looking%20for%20Bird%20Netting%2C%20Invisible%20Grills%2C%20or%20Balcony%20Safety%20Net%20services%20in%20Gurugram.%20Please%20share%20more%20information%20and%20arrange%20a%20free%20site%20inspection.%20Thank%20you."
+                      href="https://wa.me/919354254539?text=Hi%20Real%20Bird%20Netting%2C%20I%20am%20looking%20for%20Bird%20Netting%2C%20Invisible%20Grills%2C%20or%20Balcony%20Safety%20Net%20services%20in%20Gurugram.%20Please%20share%20more%20information."
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 py-3.5 text-sm font-bold text-white shadow-md transition-all hover:opacity-90 active:scale-95"
-                      aria-label="Contact Real Bird Netting on WhatsApp"
                     >
                       <svg
                         className="h-4 w-4 fill-white"
@@ -557,7 +924,9 @@ export default function Header() {
                         <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.248 8.477 3.517 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.625 1.451 5.403.002 9.803-4.381 9.805-9.786.002-2.618-1.01-5.074-2.854-6.921C16.38 2.052 13.933.996 11.999.996 6.596.996 2.197 5.379 2.195 10.785c-.001 1.512.409 2.99 1.182 4.298l-.994 3.63 3.731-.973-1.066.614zm11.332-6.52c-.274-.136-1.62-.8-1.87-.892-.252-.09-.435-.136-.617.137-.183.272-.708.892-.868 1.074-.16.183-.32.204-.593.068-1.579-.79-2.73-1.37-3.818-3.23-.288-.492.288-.456.822-1.52.091-.183.046-.343-.023-.48-.068-.136-.617-1.484-.846-2.033-.223-.536-.469-.463-.617-.47l-.527-.008c-.183 0-.48.069-.731.343-.252.274-.96.937-.96 2.285 0 1.348.982 2.651 1.119 2.833.137.183 1.933 2.951 4.682 4.141.654.282 1.165.451 1.564.578.658.209 1.258.18 1.732.109.528-.079 1.62-.663 1.85-1.302.23-.639.23-1.187.16-1.302-.07-.116-.275-.183-.55-.32z" />
                       </svg>
 
-                      <span>WhatsApp</span>
+                      <span>
+                        WhatsApp
+                      </span>
                     </a>
                   </div>
                 </div>
