@@ -24,18 +24,35 @@ interface SearchItem {
   tab?: ServiceTab;
 }
 
+/* =========================================================
+   NAVIGATION ITEMS
+========================================================= */
+
 const navItems = [
   { name: "Home", href: "#home" },
   { name: "Safety Nets", href: "#services" },
-  { name: "Invisible Grills", href: "#invisible-grills" },
-  { name: "Cloth Hangers", href: "#cloth-hangers" },
-  { name: "Why Us", href: "#why-choose-us" },
+  {
+    name: "Invisible Grills",
+    href: "#invisible-grills",
+  },
+  {
+    name: "Cloth Hangers",
+    href: "#cloth-hangers",
+  },
+  {
+    name: "Why Us",
+    href: "#why-choose-us",
+  },
   { name: "Gallery", href: "#gallery" },
   { name: "Reviews", href: "#reviews" },
   { name: "FAQ", href: "#faq" },
   { name: "Contact", href: "#contact" },
   { name: "Offers", href: "#offers" },
 ];
+
+/* =========================================================
+   SEARCH ITEMS
+========================================================= */
 
 const searchItems: SearchItem[] = [
   {
@@ -47,6 +64,7 @@ const searchItems: SearchItem[] = [
     target: "#services",
     tab: "nets",
   },
+
   {
     name: "Safety Nets",
     keywords:
@@ -56,6 +74,7 @@ const searchItems: SearchItem[] = [
     target: "#services",
     tab: "nets",
   },
+
   {
     name: "Pigeon Net",
     keywords:
@@ -65,6 +84,7 @@ const searchItems: SearchItem[] = [
     target: "#services",
     tab: "nets",
   },
+
   {
     name: "Invisible Grills",
     keywords:
@@ -74,6 +94,7 @@ const searchItems: SearchItem[] = [
     target: "#services",
     tab: "grills",
   },
+
   {
     name: "Cloth Hangers",
     keywords:
@@ -83,6 +104,7 @@ const searchItems: SearchItem[] = [
     target: "#services",
     tab: "hangers",
   },
+
   {
     name: "Why Choose Us",
     keywords:
@@ -91,6 +113,7 @@ const searchItems: SearchItem[] = [
       "Learn why customers choose Real Bird Netting",
     target: "#why-choose-us",
   },
+
   {
     name: "Gallery",
     keywords:
@@ -99,6 +122,7 @@ const searchItems: SearchItem[] = [
       "View our completed installation work",
     target: "#gallery",
   },
+
   {
     name: "Reviews",
     keywords:
@@ -107,6 +131,7 @@ const searchItems: SearchItem[] = [
       "See customer reviews and feedback",
     target: "#reviews",
   },
+
   {
     name: "FAQ",
     keywords:
@@ -115,6 +140,7 @@ const searchItems: SearchItem[] = [
       "Frequently asked questions",
     target: "#faq",
   },
+
   {
     name: "Contact",
     keywords:
@@ -123,6 +149,7 @@ const searchItems: SearchItem[] = [
       "Contact Real Bird Netting",
     target: "#contact",
   },
+
   {
     name: "Offers",
     keywords:
@@ -133,8 +160,14 @@ const searchItems: SearchItem[] = [
   },
 ];
 
+/* =========================================================
+   HEADER
+========================================================= */
+
 export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] =
+    useState(false);
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] =
     useState(false);
 
@@ -152,7 +185,7 @@ export default function Header() {
 
   /* =========================================================
      SCROLL
-  ========================================================= */
+  ========================================================== */
 
   useEffect(() => {
     const handleScroll = () => {
@@ -177,7 +210,7 @@ export default function Header() {
 
   /* =========================================================
      SECTION OBSERVER
-  ========================================================= */
+  ========================================================== */
 
   useEffect(() => {
     const sectionIds = [
@@ -227,8 +260,8 @@ export default function Header() {
   }, []);
 
   /* =========================================================
-     SERVICES TAB
-  ========================================================= */
+     SERVICE TAB LISTENER
+  ========================================================== */
 
   useEffect(() => {
     const handleServiceTab = (
@@ -259,9 +292,11 @@ export default function Header() {
 
   /* =========================================================
      ACTIVE NAV
-  ========================================================= */
+  ========================================================== */
 
-  const isActive = (href: string) => {
+  const isActive = (
+    href: string
+  ) => {
     if (href === "#services") {
       return (
         activeSection === "services" &&
@@ -288,13 +323,14 @@ export default function Header() {
     }
 
     return (
-      activeSection === href.slice(1)
+      activeSection ===
+      href.slice(1)
     );
   };
 
   /* =========================================================
-     NAVIGATION
-  ========================================================= */
+     GO TO SECTION
+  ========================================================== */
 
   const goToSection = (
     target: string,
@@ -327,6 +363,10 @@ export default function Header() {
     setIsMobileMenuOpen(false);
     setSearchText("");
   };
+
+  /* =========================================================
+     NAVIGATION CLICK
+  ========================================================== */
 
   const handleNavClick = (
     event: React.MouseEvent<HTMLAnchorElement>,
@@ -367,7 +407,7 @@ export default function Header() {
 
   /* =========================================================
      SEARCH RESULTS
-  ========================================================= */
+  ========================================================== */
 
   const filteredResults = useMemo(() => {
     const query =
@@ -399,8 +439,8 @@ export default function Header() {
   }, [searchText]);
 
   /* =========================================================
-     SEARCH
-  ========================================================= */
+     SEARCH FUNCTIONS
+  ========================================================== */
 
   const openSearch = () => {
     setIsSearchOpen(true);
@@ -421,10 +461,6 @@ export default function Header() {
     );
   };
 
-  /* =========================================================
-     SEARCH INPUT
-  ========================================================= */
-
   const handleSearchChange = (
     value: string
   ) => {
@@ -433,7 +469,7 @@ export default function Header() {
 
   /* =========================================================
      RENDER
-  ========================================================= */
+  ========================================================== */
 
   return (
     <header className="fixed left-0 top-0 z-50 w-full">
@@ -469,7 +505,6 @@ export default function Header() {
 
             <span className="hidden items-center gap-1 text-slate-300 md:flex">
               <MapPin className="h-3.5 w-3.5 text-accent" />
-
               Serving All Gurugram
             </span>
 
@@ -482,7 +517,6 @@ export default function Header() {
               className="hidden items-center gap-1 text-slate-300 transition-colors hover:text-white sm:flex"
             >
               <Mail className="h-3.5 w-3.5 text-accent" />
-
               sachin2006simra@gmail.com
             </a>
 
@@ -492,7 +526,6 @@ export default function Header() {
 
             <span className="flex items-center gap-1 font-semibold text-accent">
               <Sparkles className="h-3.5 w-3.5" />
-
               Same Day Installation
             </span>
 
@@ -502,7 +535,7 @@ export default function Header() {
       </div>
 
       {/* =====================================================
-          NAVBAR CONTAINER
+          NAVBAR
       ===================================================== */}
 
       <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
@@ -547,8 +580,8 @@ export default function Header() {
             </a>
 
             {/* =================================================
-                DESKTOP NAVIGATION
-            ================================================= */}
+                DESKTOP NAV
+            ================================================== */}
 
             <nav className="ml-auto hidden items-center gap-1 lg:flex">
 
@@ -580,7 +613,7 @@ export default function Header() {
 
             {/* =================================================
                 DESKTOP SEARCH
-            ================================================= */}
+            ================================================== */}
 
             <div className="relative hidden lg:block">
 
@@ -627,6 +660,7 @@ export default function Header() {
                     }}
                     className="absolute right-0 top-12 z-[100] w-[360px] rounded-2xl border border-slate-200 bg-white p-3 shadow-2xl"
                   >
+
                     <div className="relative">
 
                       <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
@@ -649,9 +683,7 @@ export default function Header() {
                         <button
                           type="button"
                           onClick={() =>
-                            setSearchText(
-                              ""
-                            )
+                            setSearchText("")
                           }
                           className="absolute right-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100"
                           aria-label="Clear search"
@@ -661,8 +693,6 @@ export default function Header() {
                       )}
 
                     </div>
-
-                    {/* DESKTOP RESULTS */}
 
                     {searchText.trim() !== "" && (
                       <div className="mt-3 max-h-72 overflow-y-auto">
@@ -689,17 +719,15 @@ export default function Header() {
                                 </div>
 
                                 <div className="min-w-0 flex-1">
+
                                   <p className="text-sm font-bold text-slate-800">
-                                    {
-                                      item.name
-                                    }
+                                    {item.name}
                                   </p>
 
                                   <p className="text-xs text-slate-500">
-                                    {
-                                      item.description
-                                    }
+                                    {item.description}
                                   </p>
+
                                 </div>
 
                                 <ArrowRight className="h-4 w-4 text-primary" />
@@ -715,8 +743,6 @@ export default function Header() {
 
                       </div>
                     )}
-
-                    {/* DESKTOP POPULAR */}
 
                     {searchText.trim() === "" && (
                       <div className="mt-3">
@@ -751,6 +777,7 @@ export default function Header() {
                           )}
 
                         </div>
+
                       </div>
                     )}
 
@@ -761,8 +788,8 @@ export default function Header() {
             </div>
 
             {/* =================================================
-                DESKTOP CALL + WHATSAPP
-            ================================================= */}
+                DESKTOP CALL / WHATSAPP
+            ================================================== */}
 
             <div className="hidden items-center gap-2 sm:flex">
 
@@ -802,7 +829,7 @@ export default function Header() {
 
             {/* =================================================
                 MOBILE CONTROLS
-            ================================================= */}
+            ================================================== */}
 
             <div className="ml-auto flex items-center gap-2 lg:hidden">
 
@@ -810,17 +837,25 @@ export default function Header() {
 
               <button
                 type="button"
-                onClick={() => {
-                  if (
-                    isSearchOpen
-                  ) {
-                    closeSearch();
-                  } else {
-                    openSearch();
-                  }
+                onClick={(event) => {
+                  event.preventDefault();
+                  event.stopPropagation();
+
+                  setIsMobileMenuOpen(false);
+
+                  setIsSearchOpen(
+                    (value) => !value
+                  );
                 }}
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-800 shadow-sm transition-all hover:bg-slate-100 active:scale-95"
-                aria-label="Search"
+                className="relative z-[70] flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-800 shadow-sm transition-all hover:bg-slate-100 active:scale-95"
+                aria-label={
+                  isSearchOpen
+                    ? "Close search"
+                    : "Open search"
+                }
+                aria-expanded={
+                  isSearchOpen
+                }
               >
                 {isSearchOpen ? (
                   <X className="h-5 w-5" />
@@ -849,9 +884,14 @@ export default function Header() {
                   );
 
                   setIsSearchOpen(false);
+                  setSearchText("");
                 }}
                 className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-800 shadow-sm active:scale-95"
-                aria-label="Menu"
+                aria-label={
+                  isMobileMenuOpen
+                    ? "Close menu"
+                    : "Open menu"
+                }
               >
                 {isMobileMenuOpen ? (
                   <X className="h-6 w-6" />
@@ -865,188 +905,8 @@ export default function Header() {
           </div>
 
           {/* =================================================
-              MOBILE SEARCH
-          ================================================= */}
-
-          <AnimatePresence>
-            {isSearchOpen && (
-              <motion.div
-                initial={{
-                  opacity: 0,
-                  height: 0,
-                  y: -10,
-                }}
-                animate={{
-                  opacity: 1,
-                  height: "auto",
-                  y: 0,
-                }}
-                exit={{
-                  opacity: 0,
-                  height: 0,
-                  y: -10,
-                }}
-                transition={{
-                  duration: 0.2,
-                }}
-                className="lg:hidden"
-              >
-
-                <div className="mt-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl">
-
-                  {/* INPUT */}
-
-                  <div className="relative">
-
-                    <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
-
-                    <input
-                      type="search"
-                      value={searchText}
-                      onChange={(event) =>
-                        handleSearchChange(
-                          event.target.value
-                        )
-                      }
-                      placeholder="Search services..."
-                      autoFocus
-                      autoComplete="off"
-                      className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-10 pr-10 text-sm font-medium text-slate-800 outline-none placeholder:text-slate-400 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/10"
-                    />
-
-                    {searchText && (
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setSearchText(
-                            ""
-                          )
-                        }
-                        className="absolute right-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100"
-                        aria-label="Clear"
-                      >
-                        <X className="h-4 w-4" />
-                      </button>
-                    )}
-
-                  </div>
-
-                  {/* POPULAR */}
-
-                  {searchText.trim() === "" && (
-                    <div className="mt-3">
-
-                      <p className="mb-2 text-xs font-bold uppercase tracking-wide text-slate-400">
-                        Popular Searches
-                      </p>
-
-                      <div className="flex flex-wrap gap-2">
-
-                        {[
-                          "Bird Netting",
-                          "Invisible Grills",
-                          "Cloth Hangers",
-                          "Offers",
-                          "Gallery",
-                        ].map(
-                          (item) => (
-                            <button
-                              key={item}
-                              type="button"
-                              onClick={() =>
-                                setSearchText(
-                                  item
-                                )
-                              }
-                              className="rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-semibold text-slate-700 hover:border-primary hover:bg-primary/5 hover:text-primary active:scale-95"
-                            >
-                              {item}
-                            </button>
-                          )
-                        )}
-
-                      </div>
-                    </div>
-                  )}
-
-                  {/* RESULTS */}
-
-                  {searchText.trim() !== "" && (
-                    <div className="mt-3 max-h-72 overflow-y-auto">
-
-                      {filteredResults.length >
-                      0 ? (
-                        filteredResults.map(
-                          (item) => (
-                            <button
-                              key={
-                                item.name
-                              }
-                              type="button"
-                              onClick={() =>
-                                handleSearchResult(
-                                  item
-                                )
-                              }
-                              className="flex w-full items-center gap-3 rounded-xl p-3 text-left hover:bg-slate-50 active:bg-slate-100"
-                            >
-
-                              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/5 text-primary">
-                                <Search className="h-4 w-4" />
-                              </div>
-
-                              <div className="min-w-0 flex-1">
-
-                                <p className="text-sm font-bold text-slate-800">
-                                  {
-                                    item.name
-                                  }
-                                </p>
-
-                                <p className="mt-0.5 text-xs text-slate-500">
-                                  {
-                                    item.description
-                                  }
-                                </p>
-
-                              </div>
-
-                              <ArrowRight className="h-4 w-4 shrink-0 text-primary" />
-
-                            </button>
-                          )
-                        )
-                      ) : (
-                        <div className="rounded-xl bg-slate-50 p-5 text-center">
-
-                          <Search className="mx-auto h-6 w-6 text-slate-400" />
-
-                          <p className="mt-2 text-sm font-bold text-slate-700">
-                            No service found
-                          </p>
-
-                          <p className="mt-1 text-xs text-slate-500">
-                            Try Bird Netting,
-                            Invisible Grills,
-                            Cloth Hangers or
-                            Offers.
-                          </p>
-
-                        </div>
-                      )}
-
-                    </div>
-                  )}
-
-                </div>
-
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* =================================================
               MOBILE MENU
-          ================================================= */}
+          ================================================== */}
 
           <AnimatePresence>
             {isMobileMenuOpen && (
@@ -1096,8 +956,6 @@ export default function Header() {
 
                   </div>
 
-                  {/* MOBILE BUTTONS */}
-
                   <div className="mt-4 grid grid-cols-2 gap-3 border-t border-slate-100 pt-4">
 
                     <a
@@ -1128,6 +986,238 @@ export default function Header() {
 
         </div>
       </div>
+
+      {/* =====================================================
+          MOBILE SEARCH OVERLAY
+          IMPORTANT: OUTSIDE NAVBAR CONTAINER
+      ===================================================== */}
+
+      <AnimatePresence>
+        {isSearchOpen && (
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: -15,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            exit={{
+              opacity: 0,
+              y: -15,
+            }}
+            transition={{
+              duration: 0.2,
+            }}
+            className="fixed left-0 right-0 top-0 z-[60] lg:hidden"
+          >
+
+            <div className="mx-auto w-full max-w-7xl px-3 pt-3 sm:px-6">
+
+              <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-2xl">
+
+                {/* SEARCH TITLE */}
+
+                <div className="mb-3 flex items-center justify-between">
+
+                  <p className="text-sm font-bold text-slate-800">
+                    Search Services
+                  </p>
+
+                  <button
+                    type="button"
+                    onClick={closeSearch}
+                    className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+                    aria-label="Close search"
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
+
+                </div>
+
+                {/* INPUT */}
+
+                <div className="relative">
+
+                  <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
+
+                  <input
+                    type="search"
+                    value={searchText}
+                    onChange={(event) =>
+                      setSearchText(
+                        event.target.value
+                      )
+                    }
+                    onKeyDown={(event) => {
+                      if (
+                        event.key ===
+                        "Escape"
+                      ) {
+                        closeSearch();
+                      }
+
+                      if (
+                        event.key ===
+                          "Enter" &&
+                        filteredResults.length >
+                          0
+                      ) {
+                        handleSearchResult(
+                          filteredResults[0]
+                        );
+                      }
+                    }}
+                    placeholder="Search Bird Netting..."
+                    autoFocus
+                    autoComplete="off"
+                    className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 pl-10 pr-10 text-sm font-medium text-slate-800 outline-none placeholder:text-slate-400 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/10"
+                  />
+
+                  {searchText && (
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setSearchText("")
+                      }
+                      className="absolute right-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100"
+                      aria-label="Clear search"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  )}
+
+                </div>
+
+                {/* POPULAR SEARCHES */}
+
+                {searchText.trim() === "" && (
+                  <div className="mt-4">
+
+                    <p className="mb-2 text-xs font-bold uppercase tracking-wide text-slate-400">
+                      Popular Searches
+                    </p>
+
+                    <div className="flex flex-wrap gap-2">
+
+                      {[
+                        "Bird Netting",
+                        "Safety Nets",
+                        "Invisible Grills",
+                        "Cloth Hangers",
+                        "Offers",
+                      ].map(
+                        (item) => (
+                          <button
+                            key={item}
+                            type="button"
+                            onClick={() => {
+                              const result =
+                                searchItems.find(
+                                  (
+                                    searchItem
+                                  ) =>
+                                    searchItem.name ===
+                                    item
+                                );
+
+                              if (result) {
+                                handleSearchResult(
+                                  result
+                                );
+                              }
+                            }}
+                            className="rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-semibold text-slate-700 transition-all hover:border-primary hover:bg-primary/5 hover:text-primary active:scale-95"
+                          >
+                            {item}
+                          </button>
+                        )
+                      )}
+
+                    </div>
+
+                  </div>
+                )}
+
+                {/* RESULTS */}
+
+                {searchText.trim() !== "" && (
+                  <div className="mt-4 max-h-[55vh] overflow-y-auto">
+
+                    {filteredResults.length >
+                    0 ? (
+                      <div className="space-y-1">
+
+                        {filteredResults.map(
+                          (item) => (
+                            <button
+                              key={
+                                item.name
+                              }
+                              type="button"
+                              onClick={() =>
+                                handleSearchResult(
+                                  item
+                                )
+                              }
+                              className="flex w-full items-center gap-3 rounded-xl p-3 text-left transition-all hover:bg-slate-50 active:bg-slate-100"
+                            >
+
+                              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/5 text-primary">
+                                <Search className="h-4 w-4" />
+                              </div>
+
+                              <div className="min-w-0 flex-1">
+
+                                <p className="text-sm font-bold text-slate-800">
+                                  {item.name}
+                                </p>
+
+                                <p className="mt-0.5 text-xs text-slate-500">
+                                  {
+                                    item.description
+                                  }
+                                </p>
+
+                              </div>
+
+                              <ArrowRight className="h-4 w-4 shrink-0 text-primary" />
+
+                            </button>
+                          )
+                        )}
+
+                      </div>
+                    ) : (
+                      <div className="rounded-xl bg-slate-50 p-5 text-center">
+
+                        <Search className="mx-auto h-6 w-6 text-slate-400" />
+
+                        <p className="mt-2 text-sm font-bold text-slate-700">
+                          No service found
+                        </p>
+
+                        <p className="mt-1 text-xs text-slate-500">
+                          Try Bird Netting,
+                          Invisible Grills,
+                          Cloth Hangers
+                          or Offers.
+                        </p>
+
+                      </div>
+                    )}
+
+                  </div>
+                )}
+
+              </div>
+
+            </div>
+
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </header>
   );

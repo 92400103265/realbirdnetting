@@ -20,30 +20,19 @@ export default function Home() {
 
       <main className="flex-1">
         <Hero />
-
         <Trust />
-
         <Services />
-
         <Offers />
-
         <WhyChooseUs />
-
         <Gallery />
-
         <Process />
-
         <Reviews />
-
         <FAQ />
-
         <Contact />
       </main>
 
       <Footer />
-
       <FloatingCTAs />
-
       <Popups />
     </>
   );
