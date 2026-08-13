@@ -18,8 +18,9 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   title:
     "Real Bird Netting | Premium Balcony Safety Nets & Invisible Grills",
+
   description:
-    "Real Bird Netting is Gurugram's trusted provider of premium, UV-resistant bird safety nets, balcony safety nets, invisible grills, pigeon control and ceiling cloth hangers. Professional installation and free site inspection.",
+    "Real Bird Netting provides bird safety nets, balcony safety nets, invisible grills, pigeon control and ceiling cloth hangers in Gurugram. Professional installation and free site inspection.",
 
   keywords: [
     "Real Bird Netting Gurugram",
@@ -36,7 +37,12 @@ export const metadata: Metadata = {
     "Pigeon Control Gurugram",
   ],
 
-  authors: [{ name: "Real Bird Netting Gurugram" }],
+  authors: [
+    {
+      name: "Real Bird Netting Gurugram",
+    },
+  ],
+
   category: "Home Services",
 
   alternates: {
@@ -46,6 +52,7 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+
     googleBot: {
       index: true,
       follow: true,
@@ -58,12 +65,18 @@ export const metadata: Metadata = {
   openGraph: {
     title:
       "Real Bird Netting | Balcony Safety Nets & Invisible Grills",
+
     description:
-      "Gurugram's trusted safety net and invisible grill installation service. Professional installation and free site inspection.",
+      "Gurugram's trusted provider of bird safety nets, balcony safety nets and invisible grills. Professional installation and free site inspection.",
+
     url: "https://realbirdnetting.in",
+
     siteName: "Real Bird Netting",
+
     locale: "en_IN",
+
     type: "website",
+
     images: [
       {
         url: "https://realbirdnetting.in/images/balcony.webp",
@@ -76,15 +89,21 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
+
     title:
       "Real Bird Netting | Balcony Safety Nets & Invisible Grills",
+
     description:
       "Professional bird netting, balcony safety nets and invisible grills in Gurugram.",
-    images: ["https://realbirdnetting.in/images/balcony.webp"],
+
+    images: [
+      "https://realbirdnetting.in/images/balcony.webp",
+    ],
   },
 
   verification: {
-    google: "GiuYVwkg5ET-gVdnDQ_Bje9ZUTj2ULmGvCpqjeAU3ME",
+    google:
+      "GiuYVwkg5ET-gVdnDQ_Bje9ZUTj2ULmGvCpqjeAU3ME",
   },
 };
 
@@ -96,32 +115,48 @@ export default function RootLayout({
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
+
     name: "Real Bird Netting",
-    image: "https://realbirdnetting.in/images/balcony.webp",
-    "@id": "https://realbirdnetting.in/#localbusiness",
+
+    image:
+      "https://realbirdnetting.in/images/balcony.webp",
+
+    "@id":
+      "https://realbirdnetting.in/#localbusiness",
+
     url: "https://realbirdnetting.in",
+
     telephone: "+919354254539",
+
     priceRange: "$$",
 
     address: {
       "@type": "PostalAddress",
+
       streetAddress:
         "Shop No. 165F, Gali No. 7, Hans Enclave, Sector-33, Near Rajiv Chowk",
+
       addressLocality: "Gurugram",
+
       addressRegion: "Haryana",
+
       postalCode: "122001",
+
       addressCountry: "IN",
     },
 
     geo: {
       "@type": "GeoCoordinates",
+
       latitude: 28.4595,
+
       longitude: 77.0266,
     },
 
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
+
         dayOfWeek: [
           "Monday",
           "Tuesday",
@@ -131,7 +166,9 @@ export default function RootLayout({
           "Saturday",
           "Sunday",
         ],
+
         opens: "00:00",
+
         closes: "23:59",
       },
     ],
@@ -148,18 +185,20 @@ export default function RootLayout({
       className={`${inter.variable} ${outfit.variable} scroll-smooth h-full antialiased`}
     >
       <head>
-        {/* =========================================================
+        {/* =====================================================
             GOOGLE ADS GOOGLE TAG
-            New Google Ads account
-            ========================================================= */}
+            ===================================================== */}
 
         <Script
-          async
+          id="google-ads-script"
           src="https://www.googletagmanager.com/gtag/js?id=AW-18388085912"
           strategy="afterInteractive"
         />
 
-        <Script id="google-ads-tag" strategy="afterInteractive">
+        <Script
+          id="google-ads-config"
+          strategy="afterInteractive"
+        >
           {`
             window.dataLayer = window.dataLayer || [];
 
@@ -167,15 +206,15 @@ export default function RootLayout({
               window.dataLayer.push(arguments);
             }
 
-            gtag('js', new Date());
+            gtag("js", new Date());
 
-            gtag('config', 'AW-18388085912');
+            gtag("config", "AW-18388085912");
           `}
         </Script>
 
-        {/* =========================================================
+        {/* =====================================================
             LOCAL BUSINESS STRUCTURED DATA
-            ========================================================= */}
+            ===================================================== */}
 
         <script
           type="application/ld+json"
