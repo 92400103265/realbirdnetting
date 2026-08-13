@@ -11,7 +11,7 @@ import Contact from "@/components/Contact";
 import Offers from "@/components/Offers";
 import Footer from "@/components/Footer";
 import FloatingCTAs from "@/components/FloatingCTAs";
-import Popups from "@/components/Popups";
+ import Poppups from "@/components/Poppups";
 
 export default function Home() {
   return (
@@ -30,10 +30,10 @@ export default function Home() {
         <FAQ />
         <Contact />
       </main>
-
       <Footer />
       <FloatingCTAs />
-      <Popups />
+       <Poppups />
+       
     </>
   );
 }
