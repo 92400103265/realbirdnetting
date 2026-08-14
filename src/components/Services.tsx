@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 
 import { useState, useEffect } from "react";
 import { Phone, MessageCircle, Info, Check, ShieldCheck, X } from "lucide-react";
@@ -87,7 +87,7 @@ const servicesData = {
         img: "/images/balconygrill.webp",
         tags: ["SS 316 Grade", "Nylon Coated", "Modern View"],
         bulletPoints: ["Rust-proof stainless steel cables", "Does not block view or ventilation", "Can bear up to 400kg load", "Modern look for premium flats"],
-        description: "The ultimate modern replacement for bulky iron grills. Made from Marine Grade 316 Stainless Steel cables coated with nylon, these thin invisible grills provide full safety for kids and pets while maintaining an open, luxurious view of Bangalore."
+        description: "The ultimate modern replacement for bulky iron grills. Made from Marine Grade 316 Stainless Steel cables coated with nylon, these thin invisible grills provide full safety for kids and pets while maintaining an open, luxurious view of Gurugram."
       },
       {
         id: "window-grills",
@@ -116,8 +116,13 @@ const servicesData = {
         name: "Motorized Cloth Drying Systems",
         img: "/images/service-hanger-motor.jpg",
         tags: ["Remote Control", "UV Air Dryers", "Premium Luxury"],
-        bulletPoints: ["Wireless remote control operation", "Integrated warm air blower & UV", "Built-in LED lighting", "Saves time and manual labor"],
-        description: "Experience luxury and convenience with remote-controlled ceiling hangers. Features built-in warm air blowers and UV sanitizing lamps to speed up drying during rainy Bangalore monsoons. Heavy load-bearing capacity with obstacle detection."
+        bulletPoints: [
+          "Wireless remote control operation",
+          "Integrated warm air blower & UV drying",
+          "Built-in LED lighting",
+          "Saves time and manual labor"
+        ],
+        description: "Experience luxury and convenience with remote-controlled ceiling hangers. Features built-in warm air blowers and UV sanitizing lamps to speed up drying during rainy Gurugram monsoons. Heavy load-bearing capacity with obstacle detection."
       }
     ]
   }

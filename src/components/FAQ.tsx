@@ -27,7 +27,7 @@ const faqs = [
   },
   {
     q: "How long do premium safety nets typically last?",
-    a: "Premium UV-stabilized safety nets (like Garware HDPE nets) last between 5 to 8 years in Bangalore's weather conditions. Standard nets last around 2 to 3 years."
+    a: "Premium UV-stabilized safety nets (like Garware HDPE nets) last between 5 to 8 years in Gurugram's weather conditions. Standard nets last around 2 to 3 years."
   },
   {
     q: "Which type of safety net is best for balcony protection?",
@@ -39,7 +39,7 @@ const faqs = [
   },
   {
     q: "Is same-day installation available in Gurugram?",
-    a: "Yes, we offer same-day inspection and installation services across Bangalore. If you book an inspection before 12 PM, we can complete the installation on the same day."
+    a: "Yes, we offer same-day inspection and installation services across Gurugram. If you book an inspection before 12 PM, we can complete the installation on the same day."
   },
   {
     q: "Are invisible grills rust-proof?",

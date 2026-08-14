@@ -61,7 +61,7 @@ const whatsappUrl =
             Request a Free Inspection Today
           </h2>
           <p className="text-slate-600 mt-3 text-sm sm:text-base">
-            Get in touch with us via phone, WhatsApp, or the enquiry form. We serve all areas in Bangalore.
+            Get in touch with us via phone, WhatsApp, or the enquiry form. We serve all areas in Gurugram.
           </p>
           <div className="h-1 bg-accent w-16 mx-auto mt-4 rounded" />
         </div>

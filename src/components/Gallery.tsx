@@ -100,7 +100,7 @@ export default function Gallery() {
             Completed Projects Gallery
           </h2>
           <p className="text-slate-600 mt-3 text-sm sm:text-base">
-            Take a look at some of our premium safety net and invisible grill installations across Bangalore.
+            Take a look at some of our premium safety net and invisible grill installations across Gurugram
           </p>
           <div className="h-1 bg-accent w-16 mx-auto mt-4 rounded" />
         </div>
