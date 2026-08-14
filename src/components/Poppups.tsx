@@ -1,4 +1,4 @@
- "use client";
+  "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -642,6 +642,19 @@ export default function Poppups() {
             both;
         }
 
+        /* SERVICE IMAGE */
+
+        .rb-service-image {
+          transition:
+            transform 500ms ease,
+            filter 500ms ease;
+        }
+
+        .rb-service-icon:hover .rb-service-image {
+          transform: scale(1.07);
+          filter: brightness(1.05);
+        }
+
         /* WHATSAPP BUTTON */
 
         .rb-whatsapp-button {
@@ -847,7 +860,7 @@ export default function Poppups() {
                   text-gray-900
                 "
               >
-                Welcome to RealBirdNets!
+                Welcome to Realbirdnetting!
               </h3>
 
               <p
@@ -897,19 +910,22 @@ export default function Poppups() {
               >
                 <div
                   className="
+                    rb-service-card
+                    rb-service-icon
                     mb-2
-                    flex
-                    h-10
-                    w-10
-                    items-center
-                    justify-center
+                    h-16
+                    w-full
+                    overflow-hidden
                     rounded-xl
                     bg-white
-                    text-xl
                     shadow-sm
                   "
                 >
-                  🛡️
+                  <img
+                    src="/images/spikes.png"
+                    alt="Bird Spikes"
+                    className="rb-service-image h-full w-full object-cover"
+                  />
                 </div>
 
                 <p className="font-bold text-gray-900">
@@ -923,46 +939,56 @@ export default function Poppups() {
 
               {/* SERVICE 2 */}
 
-              <div
-                className="
-                  rb-card-2
-                  rounded-2xl
-                  border
-                  border-gray-100
-                  bg-gray-50
-                  p-4
-                  transition
-                  duration-300
-                  hover:-translate-y-1
-                  hover:bg-green-50
-                  hover:shadow-md
-                "
-              >
-                <div
-                  className="
-                    mb-2
-                    flex
-                    h-10
-                    w-10
-                    items-center
-                    justify-center
-                    rounded-xl
-                    bg-white
-                    text-xl
-                    shadow-sm
-                  "
-                >
-                  🏠
-                </div>
+<div
+  className="
+    rb-card-2
+    rb-service-card
+    rounded-2xl
+    border
+    border-gray-100
+    bg-gray-50
+    p-4
+    transition
+    duration-300
+    hover:-translate-y-1
+    hover:bg-green-50
+    hover:shadow-md
+  "
+>
+  {/* Bird Nets Image */}
+  <div
+    className="
+      mb-3
+      h-16
+      w-full
+      overflow-hidden
+      rounded-xl
+      bg-white
+      shadow-sm
+    "
+  >
+    <img
+      src="/images/bird-nets.png"
+      alt="Bird Nets installation"
+      className="
+        rb-service-image
+        h-full
+        w-full
+        object-cover
+      "
+    />
+  </div>
 
-                <p className="font-bold text-gray-900">
-                  Bird Nets
-                </p>
+  {/* Title */}
+  <p className="font-bold text-gray-900">
+    Bird Nets
+  </p>
 
-                <p className="mt-1 text-xs text-gray-500">
-                  Balcony protection
-                </p>
-              </div>
+  {/* Description */}
+  <p className="mt-1 text-xs text-gray-500">
+    Balcony protection
+  </p>
+</div>
 
               {/* SERVICE 3 */}
 
@@ -983,19 +1009,22 @@ export default function Poppups() {
               >
                 <div
                   className="
+                    rb-service-card
+                    rb-service-icon
                     mb-2
-                    flex
-                    h-10
-                    w-10
-                    items-center
-                    justify-center
+                    h-16
+                    w-full
+                    overflow-hidden
                     rounded-xl
                     bg-white
-                    text-xl
                     shadow-sm
                   "
                 >
-                  🔒
+                  <img
+                    src="/images/invisible-grill.png"
+                    alt="Invisible Grill"
+                    className="rb-service-image h-full w-full object-cover"
+                  />
                 </div>
 
                 <p className="font-bold text-gray-900">
@@ -1026,19 +1055,22 @@ export default function Poppups() {
               >
                 <div
                   className="
+                    rb-service-card
+                    rb-service-icon
                     mb-2
-                    flex
-                    h-10
-                    w-10
-                    items-center
-                    justify-center
+                    h-16
+                    w-full
+                    overflow-hidden
                     rounded-xl
                     bg-white
-                    text-xl
                     shadow-sm
                   "
                 >
-                  ☀️
+                  <img
+                    src="/images/solar.png"
+                    alt="Solar Protection"
+                    className="rb-service-image h-full w-full object-cover"
+                  />
                 </div>
 
                 <p className="font-bold text-gray-900">
@@ -1363,19 +1395,21 @@ export default function Poppups() {
               >
                 <div
                   className="
-                    flex
-                    h-9
-                    w-9
+                    rb-service-icon
+                    h-12
+                    w-12
                     shrink-0
-                    items-center
-                    justify-center
+                    overflow-hidden
                     rounded-lg
                     bg-white
-                    text-lg
                     shadow-sm
                   "
                 >
-                  🛡️
+                  <img
+                    src="/images/spikes.png"
+                    alt="Bird Spikes"
+                    className="rb-service-image h-full w-full object-cover"
+                  />
                 </div>
 
                 <div>
@@ -1445,19 +1479,21 @@ export default function Poppups() {
               >
                 <div
                   className="
-                    flex
-                    h-9
-                    w-9
+                    rb-service-icon
+                    h-12
+                    w-12
                     shrink-0
-                    items-center
-                    justify-center
+                    overflow-hidden
                     rounded-lg
                     bg-white
-                    text-lg
                     shadow-sm
                   "
                 >
-                  🔒
+                  <img
+                    src="/images/invisible-grill.png"
+                    alt="Invisible Grill"
+                    className="rb-service-image h-full w-full object-cover"
+                  />
                 </div>
 
                 <div>
@@ -1486,19 +1522,21 @@ export default function Poppups() {
               >
                 <div
                   className="
-                    flex
-                    h-9
-                    w-9
+                    rb-service-icon
+                    h-12
+                    w-12
                     shrink-0
-                    items-center
-                    justify-center
+                    overflow-hidden
                     rounded-lg
                     bg-white
-                    text-lg
                     shadow-sm
                   "
                 >
-                  ☀️
+                  <img
+                    src="/images/solar.png"
+                    alt="Solar Protection"
+                    className="rb-service-image h-full w-full object-cover"
+                  />
                 </div>
 
                 <div>
