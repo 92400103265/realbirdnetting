@@ -1,4 +1,4 @@
-  "use client";
+ "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -1372,73 +1372,129 @@ export default function Poppups() {
 
             {/* SERVICES */}
 
-             {/* MOBILE SERVICE 2 - BIRD NETS */}
-
-<div
-  className="
-    rb-card-2
-    flex
-    items-center
-    gap-2.5
-    rounded-xl
-    border
-    border-gray-100
-    bg-gray-50
-    p-3
-  "
->
-  <div
-    className="
-      rb-service-icon
-      h-12
-      w-12
-      shrink-0
-      overflow-hidden
-      rounded-lg
-      bg-white
-      shadow-sm
-    "
-  >
-    <img
-      src="/images/bird-nets.png"
-      alt="Bird Nets"
-      className="rb-service-image h-full w-full object-cover"
-    />
-  </div>
-
-  <div>
-    <p className="text-xs font-bold text-gray-900">
-      Bird Nets
-    </p>
-
-    <p className="mt-0.5 text-[10px] text-gray-500">
-      Balcony
-    </p>
-  </div>
-</div>
-<div>
-
+            <div
+              className="
+                mt-5
+                grid
+                grid-cols-2
+                gap-3
+              "
+            >
+              {/* MOBILE SERVICE 1 - BIRD SPIKES */}
               <div
                 className="
-                  rb-card-3
-                  flex
-                  items-center
-                  gap-2.5
-                  rounded-xl
+                  rb-card-1
+                  rounded-2xl
                   border
                   border-gray-100
                   bg-gray-50
                   p-3
+                  transition
+                  duration-300
+                  hover:-translate-y-1
+                  hover:bg-green-50
+                  hover:shadow-md
                 "
               >
                 <div
                   className="
+                    rb-service-card
                     rb-service-icon
-                    h-12
-                    w-12
-                    shrink-0
+                    mb-2
+                    h-16
+                    w-full
                     overflow-hidden
-                    rounded-lg
+                    rounded-xl
+                    bg-white
+                    shadow-sm
+                  "
+                >
+                  <img
+                    src="/images/spikes.png"
+                    alt="Bird Spikes"
+                    className="rb-service-image h-full w-full object-cover"
+                  />
+                </div>
+
+                <p className="font-bold text-gray-900">
+                  Bird Spikes
+                </p>
+
+                <p className="mt-1 text-xs text-gray-500">
+                  Professional installation
+                </p>
+              </div>
+
+              {/* MOBILE SERVICE 2 - BIRD NETS */}
+              <div
+                className="
+                  rb-card-2
+                  rounded-2xl
+                  border
+                  border-gray-100
+                  bg-gray-50
+                  p-3
+                  transition
+                  duration-300
+                  hover:-translate-y-1
+                  hover:bg-green-50
+                  hover:shadow-md
+                "
+              >
+                <div
+                  className="
+                    rb-service-card
+                    rb-service-icon
+                    mb-2
+                    h-16
+                    w-full
+                    overflow-hidden
+                    rounded-xl
+                    bg-white
+                    shadow-sm
+                  "
+                >
+                  <img
+                    src="/images/bird-nets.png"
+                    alt="Bird Nets"
+                    className="rb-service-image h-full w-full object-cover"
+                  />
+                </div>
+
+                <p className="font-bold text-gray-900">
+                  Bird Nets
+                </p>
+
+                <p className="mt-1 text-xs text-gray-500">
+                  Balcony protection
+                </p>
+              </div>
+
+              {/* MOBILE SERVICE 3 - INVISIBLE GRILL */}
+              <div
+                className="
+                  rb-card-3
+                  rounded-2xl
+                  border
+                  border-gray-100
+                  bg-gray-50
+                  p-3
+                  transition
+                  duration-300
+                  hover:-translate-y-1
+                  hover:bg-green-50
+                  hover:shadow-md
+                "
+              >
+                <div
+                  className="
+                    rb-service-card
+                    rb-service-icon
+                    mb-2
+                    h-16
+                    w-full
+                    overflow-hidden
+                    rounded-xl
                     bg-white
                     shadow-sm
                   "
@@ -1450,38 +1506,40 @@ export default function Poppups() {
                   />
                 </div>
 
-                <div>
-                  <p className="text-xs font-bold text-gray-900">
-                    Invisible Grill
-                  </p>
+                <p className="font-bold text-gray-900">
+                  Invisible Grill
+                </p>
 
-                  <p className="mt-0.5 text-[10px] text-gray-500">
-                    Safety
-                  </p>
-                </div>
+                <p className="mt-1 text-xs text-gray-500">
+                  Safety & protection
+                </p>
               </div>
 
+              {/* MOBILE SERVICE 4 - SOLAR PROTECTION */}
               <div
                 className="
                   rb-card-4
-                  flex
-                  items-center
-                  gap-2.5
-                  rounded-xl
+                  rounded-2xl
                   border
                   border-gray-100
                   bg-gray-50
                   p-3
+                  transition
+                  duration-300
+                  hover:-translate-y-1
+                  hover:bg-green-50
+                  hover:shadow-md
                 "
               >
                 <div
                   className="
+                    rb-service-card
                     rb-service-icon
-                    h-12
-                    w-12
-                    shrink-0
+                    mb-2
+                    h-16
+                    w-full
                     overflow-hidden
-                    rounded-lg
+                    rounded-xl
                     bg-white
                     shadow-sm
                   "
@@ -1493,15 +1551,13 @@ export default function Poppups() {
                   />
                 </div>
 
-                <div>
-                  <p className="text-xs font-bold text-gray-900">
-                    Solar Protection
-                  </p>
+                <p className="font-bold text-gray-900">
+                  Solar Protection
+                </p>
 
-                  <p className="mt-0.5 text-[10px] text-gray-500">
-                    Protection
-                  </p>
-                </div>
+                <p className="mt-1 text-xs text-gray-500">
+                  Bird protection
+                </p>
               </div>
             </div>
 
