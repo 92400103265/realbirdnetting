@@ -1,4 +1,4 @@
- "use client";
+  "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -1370,194 +1370,38 @@ export default function Poppups() {
               </p>
             </div>
 
-            {/* SERVICES */}
-
-            <div
-              className="
-                mt-5
-                grid
-                grid-cols-2
-                gap-3
-              "
-            >
-              {/* MOBILE SERVICE 1 - BIRD SPIKES */}
-              <div
-                className="
-                  rb-card-1
-                  rounded-2xl
-                  border
-                  border-gray-100
-                  bg-gray-50
-                  p-3
-                  transition
-                  duration-300
-                  hover:-translate-y-1
-                  hover:bg-green-50
-                  hover:shadow-md
-                "
-              >
-                <div
-                  className="
-                    rb-service-card
-                    rb-service-icon
-                    mb-2
-                    h-16
-                    w-full
-                    overflow-hidden
-                    rounded-xl
-                    bg-white
-                    shadow-sm
-                  "
-                >
-                  <img
-                    src="/images/spikes.png"
-                    alt="Bird Spikes"
-                    className="rb-service-image h-full w-full object-cover"
-                  />
+            {/* SERVICES - SAME DESIGN AS DESKTOP */}
+            <div className="mt-6 grid grid-cols-2 gap-3">
+              <div className="rb-card-1 rounded-2xl border border-gray-100 bg-gray-50 p-4 transition duration-300 hover:-translate-y-1 hover:bg-green-50 hover:shadow-md">
+                <div className="rb-service-card rb-service-icon mb-2 h-16 w-full overflow-hidden rounded-xl bg-white shadow-sm">
+                  <img src="/images/spikes.png" alt="Bird Spikes" className="rb-service-image h-full w-full object-cover" />
                 </div>
-
-                <p className="font-bold text-gray-900">
-                  Bird Spikes
-                </p>
-
-                <p className="mt-1 text-xs text-gray-500">
-                  Professional installation
-                </p>
+                <p className="font-bold text-gray-900">Bird Spikes</p>
+                <p className="mt-1 text-xs text-gray-500">Professional installation</p>
               </div>
 
-              {/* MOBILE SERVICE 2 - BIRD NETS */}
-              <div
-                className="
-                  rb-card-2
-                  rounded-2xl
-                  border
-                  border-gray-100
-                  bg-gray-50
-                  p-3
-                  transition
-                  duration-300
-                  hover:-translate-y-1
-                  hover:bg-green-50
-                  hover:shadow-md
-                "
-              >
-                <div
-                  className="
-                    rb-service-card
-                    rb-service-icon
-                    mb-2
-                    h-16
-                    w-full
-                    overflow-hidden
-                    rounded-xl
-                    bg-white
-                    shadow-sm
-                  "
-                >
-                  <img
-                    src="/images/bird-nets.png"
-                    alt="Bird Nets"
-                    className="rb-service-image h-full w-full object-cover"
-                  />
+              <div className="rb-card-2 rounded-2xl border border-gray-100 bg-gray-50 p-4 transition duration-300 hover:-translate-y-1 hover:bg-green-50 hover:shadow-md">
+                <div className="rb-service-card rb-service-icon mb-2 h-16 w-full overflow-hidden rounded-xl bg-white shadow-sm">
+                  <img src="/images/bird-nets.png" alt="Bird Nets" className="rb-service-image h-full w-full object-cover" />
                 </div>
-
-                <p className="font-bold text-gray-900">
-                  Bird Nets
-                </p>
-
-                <p className="mt-1 text-xs text-gray-500">
-                  Balcony protection
-                </p>
+                <p className="font-bold text-gray-900">Bird Nets</p>
+                <p className="mt-1 text-xs text-gray-500">Balcony protection</p>
               </div>
 
-              {/* MOBILE SERVICE 3 - INVISIBLE GRILL */}
-              <div
-                className="
-                  rb-card-3
-                  rounded-2xl
-                  border
-                  border-gray-100
-                  bg-gray-50
-                  p-3
-                  transition
-                  duration-300
-                  hover:-translate-y-1
-                  hover:bg-green-50
-                  hover:shadow-md
-                "
-              >
-                <div
-                  className="
-                    rb-service-card
-                    rb-service-icon
-                    mb-2
-                    h-16
-                    w-full
-                    overflow-hidden
-                    rounded-xl
-                    bg-white
-                    shadow-sm
-                  "
-                >
-                  <img
-                    src="/images/invisible-grill.png"
-                    alt="Invisible Grill"
-                    className="rb-service-image h-full w-full object-cover"
-                  />
+              <div className="rb-card-3 rounded-2xl border border-gray-100 bg-gray-50 p-4 transition duration-300 hover:-translate-y-1 hover:bg-green-50 hover:shadow-md">
+                <div className="rb-service-card rb-service-icon mb-2 h-16 w-full overflow-hidden rounded-xl bg-white shadow-sm">
+                  <img src="/images/invisible-grill.png" alt="Invisible Grill" className="rb-service-image h-full w-full object-cover" />
                 </div>
-
-                <p className="font-bold text-gray-900">
-                  Invisible Grill
-                </p>
-
-                <p className="mt-1 text-xs text-gray-500">
-                  Safety & protection
-                </p>
+                <p className="font-bold text-gray-900">Invisible Grill</p>
+                <p className="mt-1 text-xs text-gray-500">Safety &amp; protection</p>
               </div>
 
-              {/* MOBILE SERVICE 4 - SOLAR PROTECTION */}
-              <div
-                className="
-                  rb-card-4
-                  rounded-2xl
-                  border
-                  border-gray-100
-                  bg-gray-50
-                  p-3
-                  transition
-                  duration-300
-                  hover:-translate-y-1
-                  hover:bg-green-50
-                  hover:shadow-md
-                "
-              >
-                <div
-                  className="
-                    rb-service-card
-                    rb-service-icon
-                    mb-2
-                    h-16
-                    w-full
-                    overflow-hidden
-                    rounded-xl
-                    bg-white
-                    shadow-sm
-                  "
-                >
-                  <img
-                    src="/images/solar.png"
-                    alt="Solar Protection"
-                    className="rb-service-image h-full w-full object-cover"
-                  />
+              <div className="rb-card-4 rounded-2xl border border-gray-100 bg-gray-50 p-4 transition duration-300 hover:-translate-y-1 hover:bg-green-50 hover:shadow-md">
+                <div className="rb-service-card rb-service-icon mb-2 h-16 w-full overflow-hidden rounded-xl bg-white shadow-sm">
+                  <img src="/images/solar.png" alt="Solar Protection" className="rb-service-image h-full w-full object-cover" />
                 </div>
-
-                <p className="font-bold text-gray-900">
-                  Solar Protection
-                </p>
-
-                <p className="mt-1 text-xs text-gray-500">
-                  Bird protection
-                </p>
+                <p className="font-bold text-gray-900">Solar Protection</p>
+                <p className="mt-1 text-xs text-gray-500">Bird protection</p>
               </div>
             </div>
 
