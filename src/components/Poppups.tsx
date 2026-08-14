@@ -1317,7 +1317,7 @@ export default function Poppups() {
                 font-extrabold
               "
             >
-              RealBirdNets
+              Realbirdnetting
             </h2>
 
             <p
@@ -1354,7 +1354,7 @@ export default function Poppups() {
                   text-gray-900
                 "
               >
-                Welcome to RealBirdNets!
+                Welcome to Realbirdnetting!
               </h3>
 
               <p
@@ -1372,97 +1372,51 @@ export default function Poppups() {
 
             {/* SERVICES */}
 
-            <div
-              className="
-                mt-5
-                grid
-                grid-cols-2
-                gap-2.5
-              "
-            >
-              <div
-                className="
-                  rb-card-1
-                  flex
-                  items-center
-                  gap-2.5
-                  rounded-xl
-                  border
-                  border-gray-100
-                  bg-gray-50
-                  p-3
-                "
-              >
-                <div
-                  className="
-                    rb-service-icon
-                    h-12
-                    w-12
-                    shrink-0
-                    overflow-hidden
-                    rounded-lg
-                    bg-white
-                    shadow-sm
-                  "
-                >
-                  <img
-                    src="/images/spikes.png"
-                    alt="Bird Spikes"
-                    className="rb-service-image h-full w-full object-cover"
-                  />
-                </div>
+             {/* MOBILE SERVICE 2 - BIRD NETS */}
 
-                <div>
-                  <p className="text-xs font-bold text-gray-900">
-                    Bird Spikes
-                  </p>
+<div
+  className="
+    rb-card-2
+    flex
+    items-center
+    gap-2.5
+    rounded-xl
+    border
+    border-gray-100
+    bg-gray-50
+    p-3
+  "
+>
+  <div
+    className="
+      rb-service-icon
+      h-12
+      w-12
+      shrink-0
+      overflow-hidden
+      rounded-lg
+      bg-white
+      shadow-sm
+    "
+  >
+    <img
+      src="/images/bird-nets.png"
+      alt="Bird Nets"
+      className="rb-service-image h-full w-full object-cover"
+    />
+  </div>
 
-                  <p className="mt-0.5 text-[10px] text-gray-500">
-                    Installation
-                  </p>
-                </div>
-              </div>
+  <div>
+    <p className="text-xs font-bold text-gray-900">
+      Bird Nets
+    </p>
 
-              <div
-                className="
-                  rb-card-2
-                  flex
-                  items-center
-                  gap-2.5
-                  rounded-xl
-                  border
-                  border-gray-100
-                  bg-gray-50
-                  p-3
-                "
-              >
-                <div
-                  className="
-                    flex
-                    h-9
-                    w-9
-                    shrink-0
-                    items-center
-                    justify-center
-                    rounded-lg
-                    bg-white
-                    text-lg
-                    shadow-sm
-                  "
-                >
-                  🏠
-                </div>
-
-                <div>
-                  <p className="text-xs font-bold text-gray-900">
-                    Bird Nets
-                  </p>
-
-                  <p className="mt-0.5 text-[10px] text-gray-500">
-                    Balcony
-                  </p>
-                </div>
-              </div>
+    <p className="mt-0.5 text-[10px] text-gray-500">
+      Balcony
+    </p>
+  </div>
+</div>
+<div>
 
               <div
                 className="
