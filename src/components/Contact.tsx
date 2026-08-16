@@ -1,4 +1,4 @@
- "use client";
+"use client";
 
 import { useState } from "react";
 import {
@@ -7,7 +7,6 @@ import {
   MapPin,
   Mail,
   Clock,
-  Send,
   CheckCircle,
 } from "lucide-react";
 
@@ -22,6 +21,7 @@ declare global {
    Conversion ID: 18388085912
    Conversion Label: RunlCKU9ouICEjZjZ8BE
    ========================================================= */
+
 const trackContactConversion = () => {
   if (
     typeof window !== "undefined" &&
@@ -59,12 +59,14 @@ export default function Contact() {
   /* =========================================================
      FORM SUBMIT
      ========================================================= */
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     /* -------------------------------------------------------
        1. Validate required fields
        ------------------------------------------------------- */
+
     if (!name.trim() || !phone.trim()) {
       alert("Name and Phone number are required.");
       return;
@@ -73,11 +75,13 @@ export default function Contact() {
     /* -------------------------------------------------------
        2. Google Ads conversion
        ------------------------------------------------------- */
+
     trackContactConversion();
 
     /* -------------------------------------------------------
        3. Create WhatsApp message
        ------------------------------------------------------- */
+
     const whatsappMessage = `
 Hello Real Bird Netting,
 
@@ -97,22 +101,26 @@ https://realbirdnetting.in
     /* -------------------------------------------------------
        4. Encode WhatsApp message
        ------------------------------------------------------- */
+
     const encodedMessage = encodeURIComponent(whatsappMessage);
 
     /* -------------------------------------------------------
-       5. Your WhatsApp number
+       5. WhatsApp number
        ------------------------------------------------------- */
+
     const whatsappUrl =
       `https://wa.me/919354254539?text=${encodedMessage}`;
 
     /* -------------------------------------------------------
        6. Open WhatsApp
        ------------------------------------------------------- */
+
     window.location.href = whatsappUrl;
 
     /* -------------------------------------------------------
        7. Clear form
        ------------------------------------------------------- */
+
     setName("");
     setPhone("");
     setService("Balcony Safety Nets");
@@ -121,6 +129,7 @@ https://realbirdnetting.in
     /* -------------------------------------------------------
        8. Show success state
        ------------------------------------------------------- */
+
     setIsSubmitted(true);
 
     setTimeout(() => {
@@ -131,6 +140,7 @@ https://realbirdnetting.in
   /* =========================================================
      DIRECT WHATSAPP BUTTON
      ========================================================= */
+
   const directWhatsappMessage = encodeURIComponent(
     "Hi Real Bird Netting, I want to get in touch with you regarding bird netting and safety solutions. Please contact me."
   );
@@ -148,8 +158,8 @@ https://realbirdnetting.in
         {/* =====================================================
             HEADING
         ===================================================== */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
 
+        <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-xs font-bold uppercase tracking-widest text-primary-light">
             Contact Us
           </span>
@@ -169,12 +179,11 @@ https://realbirdnetting.in
         {/* =====================================================
             DIRECT BOOKING
         ===================================================== */}
-        <div className="bg-primary text-white rounded-3xl p-8 sm:p-12 shadow-xl mb-16 relative overflow-hidden border border-slate-800 text-center md:text-left">
 
+        <div className="bg-primary text-white rounded-3xl p-8 sm:p-12 shadow-xl mb-16 relative overflow-hidden border border-slate-800 text-center md:text-left">
           <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
 
             <div className="md:col-span-8 space-y-4">
-
               <span className="bg-accent text-white text-[10px] sm:text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">
                 Direct Booking Hotline
               </span>
@@ -187,12 +196,12 @@ https://realbirdnetting.in
                 Call now or text us on WhatsApp to lock in the promotional
                 discount and get a same-day free site visit.
               </p>
-
             </div>
 
             <div className="md:col-span-4 flex flex-col sm:flex-row md:flex-col gap-3 justify-center">
 
               {/* CALL BUTTON */}
+
               <a
                 href="tel:+919354254539"
                 className="flex items-center justify-center space-x-2 bg-white text-primary hover:bg-slate-100 py-4 px-6 rounded-xl font-extrabold text-base shadow-md transition-all"
@@ -202,6 +211,7 @@ https://realbirdnetting.in
               </a>
 
               {/* WHATSAPP BUTTON */}
+
               <a
                 href={whatsappUrl}
                 target="_blank"
@@ -213,18 +223,19 @@ https://realbirdnetting.in
               </a>
 
             </div>
-
           </div>
         </div>
 
         {/* =====================================================
             CONTACT GRID
         ===================================================== */}
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
 
           {/* ===================================================
               LEFT SIDE
           =================================================== */}
+
           <div className="lg:col-span-6 space-y-8">
 
             <div className="space-y-6">
@@ -236,12 +247,12 @@ https://realbirdnetting.in
               <div className="space-y-4">
 
                 {/* ADDRESS */}
+
                 <div className="flex items-start space-x-3 text-slate-600 text-sm sm:text-base">
 
                   <MapPin className="w-5 h-5 text-primary shrink-0 mt-1" />
 
                   <div>
-
                     <span className="font-bold text-slate-800 block">
                       Our Address
                     </span>
@@ -250,18 +261,17 @@ https://realbirdnetting.in
                       Shop No.165F, Gali No.-7, Hans Enclave, Sector-33,
                       Near Rajiv Chowk, Gurugram-122001
                     </span>
-
                   </div>
 
                 </div>
 
                 {/* BUSINESS HOURS */}
+
                 <div className="flex items-start space-x-3 text-slate-600 text-sm sm:text-base">
 
                   <Clock className="w-5 h-5 text-primary shrink-0 mt-1" />
 
                   <div>
-
                     <span className="font-bold text-slate-800 block">
                       Business Hours
                     </span>
@@ -269,18 +279,17 @@ https://realbirdnetting.in
                     <span>
                       Open 24 Hours / 7 Days a week
                     </span>
-
                   </div>
 
                 </div>
 
                 {/* EMAIL */}
+
                 <div className="flex items-start space-x-3 text-slate-600 text-sm sm:text-base">
 
                   <Mail className="w-5 h-5 text-primary shrink-0 mt-1" />
 
                   <div>
-
                     <span className="font-bold text-slate-800 block">
                       Email Address
                     </span>
@@ -291,7 +300,6 @@ https://realbirdnetting.in
                     >
                       sachin2006simra@gmail.com
                     </a>
-
                   </div>
 
                 </div>
@@ -300,19 +308,20 @@ https://realbirdnetting.in
             </div>
 
             {/* =================================================
-                GOOGLE MAP
+                GOOGLE MAP - FIXED
             ================================================= */}
+
             <div className="relative w-full h-[280px] bg-slate-100 rounded-2xl overflow-hidden shadow-sm border border-slate-200">
 
               <iframe
                 title="Real Bird Netting Location Map"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507.4386809320017!2d77.00839147528262!3d28.466332675756004"
+                src="https://www.google.com/maps?q=Shop+No.+165F,+Gali+No.+7,+Hans+Enclave,+Sector-33,+Gurugram,+Haryana+122001&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
-                referrerPolicy="strict-origin-when-cross-origin"
+                referrerPolicy="no-referrer-when-downgrade"
               />
 
             </div>
@@ -322,6 +331,7 @@ https://realbirdnetting.in
           {/* ===================================================
               RIGHT SIDE - CONTACT FORM
           =================================================== */}
+
           <div className="lg:col-span-6">
 
             <div className="bg-slate-50 border border-slate-150 rounded-2xl p-6 sm:p-8 shadow-sm">
@@ -334,8 +344,8 @@ https://realbirdnetting.in
                 >
 
                   {/* FORM TITLE */}
-                  <div>
 
+                  <div>
                     <h3 className="text-xl font-bold text-slate-800 font-display">
                       Send a Quick Message
                     </h3>
@@ -344,14 +354,11 @@ https://realbirdnetting.in
                       Fill in your details and WhatsApp will open with
                       your enquiry automatically prepared.
                     </p>
-
                   </div>
 
-                  {/* =================================================
-                      NAME
-                  ================================================= */}
-                  <div>
+                  {/* NAME */}
 
+                  <div>
                     <label
                       htmlFor="contact-name"
                       className="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1"
@@ -368,17 +375,15 @@ https://realbirdnetting.in
                       onChange={(e) => setName(e.target.value)}
                       className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                     />
-
                   </div>
 
-                  {/* =================================================
-                      PHONE + SERVICE
-                  ================================================= */}
+                  {/* PHONE + SERVICE */}
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
                     {/* PHONE */}
-                    <div>
 
+                    <div>
                       <label
                         htmlFor="contact-phone"
                         className="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1"
@@ -395,12 +400,11 @@ https://realbirdnetting.in
                         onChange={(e) => setPhone(e.target.value)}
                         className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                       />
-
                     </div>
 
                     {/* SERVICE */}
-                    <div>
 
+                    <div>
                       <label
                         htmlFor="contact-service"
                         className="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1"
@@ -414,7 +418,6 @@ https://realbirdnetting.in
                         onChange={(e) => setService(e.target.value)}
                         className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                       >
-
                         {servicesList.map((srv) => (
                           <option
                             key={srv}
@@ -423,18 +426,14 @@ https://realbirdnetting.in
                             {srv}
                           </option>
                         ))}
-
                       </select>
-
                     </div>
 
                   </div>
 
-                  {/* =================================================
-                      MESSAGE
-                  ================================================= */}
-                  <div>
+                  {/* MESSAGE */}
 
+                  <div>
                     <label
                       htmlFor="contact-message"
                       className="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1"
@@ -450,23 +449,19 @@ https://realbirdnetting.in
                       onChange={(e) => setMessage(e.target.value)}
                       className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none"
                     />
-
                   </div>
 
-                  {/* =================================================
-                      SUBMIT
-                  ================================================= */}
+                  {/* SUBMIT */}
+
                   <button
                     type="submit"
                     className="w-full bg-accent hover:bg-accent-dark text-slate-900 py-3 rounded-lg text-sm font-bold flex items-center justify-center space-x-2 shadow-md hover:shadow-lg transition-all cursor-pointer"
                   >
-
                     <MessageCircle className="w-4 h-4" />
 
                     <span>
                       Submit & Continue to WhatsApp
                     </span>
-
                   </button>
 
                   <p className="text-center text-xs text-slate-500">
@@ -478,9 +473,8 @@ https://realbirdnetting.in
 
               ) : (
 
-                /* =================================================
-                   SUCCESS
-                ================================================= */
+                /* SUCCESS */
+
                 <div className="py-16 text-center space-y-4">
 
                   <CheckCircle className="w-16 h-16 text-accent mx-auto animate-bounce" />
