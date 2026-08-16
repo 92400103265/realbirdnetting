@@ -1,4 +1,4 @@
-  "use client";
+ "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -9,8 +9,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 const WHATSAPP_NUMBER = "919354254539";
 
 const INITIAL_DELAY = 800;
-const REOPEN_DELAY = 5000;
 const CLOSE_ANIMATION = 400;
+
+const POPUP_STORAGE_KEY = "realbirdnetting_popup_shown";
 
 const WHATSAPP_MESSAGE =
   "Hello RealBirdNets Control Service, I would like to know more about your services.";
@@ -72,7 +73,7 @@ function WhatsAppIcon({
         .58-.09 1.77-.72 2.02-1.42
         .25-.7.25-1.3.17-1.42
         -.07-.12-.27-.2-.57-.35Z
-      "
+        "
       />
     </svg>
   );
@@ -92,27 +93,18 @@ export default function Poppups() {
     null
   );
 
-  const reopenTimer = useRef<ReturnType<typeof setTimeout> | null>(
-    null
-  );
-
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(
     null
   );
 
   /* =========================================================
-     CLEAR TIMERS
+     CLEAR TIMER
      ========================================================= */
 
-  const clearTimers = useCallback(() => {
+  const clearTimer = useCallback(() => {
     if (initialTimer.current !== null) {
       clearTimeout(initialTimer.current);
       initialTimer.current = null;
-    }
-
-    if (reopenTimer.current !== null) {
-      clearTimeout(reopenTimer.current);
-      reopenTimer.current = null;
     }
 
     if (closeTimer.current !== null) {
@@ -143,35 +135,40 @@ export default function Poppups() {
 
   /* =========================================================
      CLOSE POPUP
+     NO REOPEN TIMER
      ========================================================= */
 
-  const closePopup = useCallback(
-    (reopen = true) => {
-      if (!isOpen) {
-        return;
-      }
+  const closePopup = useCallback(() => {
+    if (!isOpen) {
+      return;
+    }
 
-      if (closeTimer.current !== null) {
-        clearTimeout(closeTimer.current);
-      }
+    /*
+     * Save immediately.
+     *
+     * This means:
+     * - Close button
+     * - Continue to website
+     * - WhatsApp
+     * - Escape
+     * - Backdrop click
+     *
+     * will all prevent the popup from appearing again.
+     */
+    localStorage.setItem(POPUP_STORAGE_KEY, "true");
 
-      setPopupState("closing");
+    if (closeTimer.current !== null) {
+      clearTimeout(closeTimer.current);
+    }
 
-      closeTimer.current = setTimeout(() => {
-        setIsOpen(false);
-        setPopupState("hidden");
-        closeTimer.current = null;
+    setPopupState("closing");
 
-        if (reopen) {
-          reopenTimer.current = setTimeout(() => {
-            openPopup();
-            reopenTimer.current = null;
-          }, REOPEN_DELAY);
-        }
-      }, CLOSE_ANIMATION);
-    },
-    [isOpen, openPopup]
-  );
+    closeTimer.current = setTimeout(() => {
+      setIsOpen(false);
+      setPopupState("hidden");
+      closeTimer.current = null;
+    }, CLOSE_ANIMATION);
+  }, [isOpen]);
 
   /* =========================================================
      INITIAL LOAD
@@ -180,15 +177,34 @@ export default function Poppups() {
   useEffect(() => {
     setMounted(true);
 
+    /*
+     * Check whether this visitor has already seen
+     * the popup.
+     */
+    const alreadyShown =
+      localStorage.getItem(POPUP_STORAGE_KEY) === "true";
+
+    if (alreadyShown) {
+      return;
+    }
+
+    /*
+     * Mark as shown BEFORE opening.
+     *
+     * This also prevents duplicate popup opening
+     * in React Strict Mode.
+     */
+    localStorage.setItem(POPUP_STORAGE_KEY, "true");
+
     initialTimer.current = setTimeout(() => {
       openPopup();
       initialTimer.current = null;
     }, INITIAL_DELAY);
 
     return () => {
-      clearTimers();
+      clearTimer();
     };
-  }, [clearTimers, openPopup]);
+  }, [clearTimer, openPopup]);
 
   /* =========================================================
      ESC KEY
@@ -201,7 +217,7 @@ export default function Poppups() {
 
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape" && isOpen) {
-        closePopup(true);
+        closePopup();
       }
     };
 
@@ -242,13 +258,18 @@ export default function Poppups() {
     const url =
       `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
 
+    /*
+     * Popup is permanently marked as shown.
+     */
+    localStorage.setItem(POPUP_STORAGE_KEY, "true");
+
     window.open(
       url,
       "_blank",
       "noopener,noreferrer"
     );
 
-    closePopup(true);
+    closePopup();
   };
 
   /* =========================================================
@@ -259,7 +280,7 @@ export default function Poppups() {
     event: React.MouseEvent<HTMLDivElement>
   ) => {
     if (event.target === event.currentTarget) {
-      closePopup(true);
+      closePopup();
     }
   };
 
@@ -277,12 +298,10 @@ export default function Poppups() {
 
   return (
     <>
-      {/* =====================================================
-          ANIMATIONS
-          ===================================================== */}
-
       <style>{`
-        /* BACKDROP */
+        /* =====================================================
+           BACKDROP
+           ===================================================== */
 
         @keyframes rbBackdropIn {
           from {
@@ -304,7 +323,26 @@ export default function Poppups() {
           }
         }
 
-        /* DESKTOP POPUP */
+        .rb-backdrop.opening,
+        .rb-backdrop.visible {
+          animation:
+            rbBackdropIn
+            400ms
+            ease-out
+            forwards;
+        }
+
+        .rb-backdrop.closing {
+          animation:
+            rbBackdropOut
+            400ms
+            ease-in
+            forwards;
+        }
+
+        /* =====================================================
+           DESKTOP POPUP
+           ===================================================== */
 
         @keyframes rbDesktopIn {
           0% {
@@ -353,7 +391,37 @@ export default function Poppups() {
           }
         }
 
-        /* MOBILE POPUP */
+        .rb-desktop.opening {
+          animation:
+            rbDesktopIn
+            500ms
+            cubic-bezier(
+              0.175,
+              0.885,
+              0.32,
+              1.275
+            )
+            forwards;
+        }
+
+        .rb-desktop.visible {
+          opacity: 1;
+          transform:
+            translateY(0)
+            scale(1);
+        }
+
+        .rb-desktop.closing {
+          animation:
+            rbDesktopOut
+            400ms
+            ease-in
+            forwards;
+        }
+
+        /* =====================================================
+           MOBILE POPUP
+           ===================================================== */
 
         @keyframes rbMobileIn {
           0% {
@@ -388,7 +456,35 @@ export default function Poppups() {
           }
         }
 
-        /* WHATSAPP HEADER ICON */
+        .rb-mobile.opening {
+          animation:
+            rbMobileIn
+            500ms
+            cubic-bezier(
+              0.175,
+              0.885,
+              0.32,
+              1.275
+            )
+            forwards;
+        }
+
+        .rb-mobile.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .rb-mobile.closing {
+          animation:
+            rbMobileOut
+            400ms
+            ease-in
+            forwards;
+        }
+
+        /* =====================================================
+           WHATSAPP HEADER ICON
+           ===================================================== */
 
         @keyframes rbWhatsAppIcon {
           0% {
@@ -419,7 +515,23 @@ export default function Poppups() {
           }
         }
 
-        /* SERVICE CARDS */
+        .rb-header-whatsapp {
+          animation:
+            rbWhatsAppIcon
+            650ms
+            cubic-bezier(
+              0.175,
+              0.885,
+              0.32,
+              1.275
+            )
+            120ms
+            both;
+        }
+
+        /* =====================================================
+           SERVICE CARDS
+           ===================================================== */
 
         @keyframes rbCardIn {
           from {
@@ -436,175 +548,6 @@ export default function Poppups() {
               scale(1);
           }
         }
-
-        /* TEXT */
-
-        @keyframes rbTextIn {
-          from {
-            opacity: 0;
-            transform: translateY(15px);
-          }
-
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        /* WHATSAPP PULSE */
-
-        @keyframes rbWhatsAppPulse {
-          0% {
-            box-shadow:
-              0 0 0 0
-              rgba(34, 197, 94, 0.55);
-          }
-
-          70% {
-            box-shadow:
-              0 0 0 15px
-              rgba(34, 197, 94, 0);
-          }
-
-          100% {
-            box-shadow:
-              0 0 0 0
-              rgba(34, 197, 94, 0);
-          }
-        }
-
-        /* WHATSAPP ICON BOUNCE */
-
-        @keyframes rbIconBounce {
-          0%,
-          100% {
-            transform: scale(1);
-          }
-
-          50% {
-            transform: scale(1.15);
-          }
-        }
-
-        /* SHINE */
-
-        @keyframes rbShine {
-          from {
-            transform: translateX(-130%)
-              skewX(-20deg);
-          }
-
-          to {
-            transform: translateX(130%)
-              skewX(-20deg);
-          }
-        }
-
-        /* BACKDROP */
-
-        .rb-backdrop.opening,
-        .rb-backdrop.visible {
-          animation:
-            rbBackdropIn
-            400ms
-            ease-out
-            forwards;
-        }
-
-        .rb-backdrop.closing {
-          animation:
-            rbBackdropOut
-            400ms
-            ease-in
-            forwards;
-        }
-
-        /* DESKTOP */
-
-        .rb-desktop.opening {
-          animation:
-            rbDesktopIn
-            500ms
-            cubic-bezier(
-              0.175,
-              0.885,
-              0.32,
-              1.275
-            )
-            forwards;
-        }
-
-        .rb-desktop.visible {
-          opacity: 1;
-          transform:
-            translateY(0)
-            scale(1);
-        }
-
-        .rb-desktop.closing {
-          animation:
-            rbDesktopOut
-            400ms
-            ease-in
-            forwards;
-        }
-
-        /* MOBILE */
-
-        .rb-mobile.opening {
-          animation:
-            rbMobileIn
-            500ms
-            cubic-bezier(
-              0.175,
-              0.885,
-              0.32,
-              1.275
-            )
-            forwards;
-        }
-
-        .rb-mobile.visible {
-          opacity: 1;
-          transform: translateY(0);
-        }
-
-        .rb-mobile.closing {
-          animation:
-            rbMobileOut
-            400ms
-            ease-in
-            forwards;
-        }
-
-        /* HEADER WHATSAPP */
-
-        .rb-header-whatsapp {
-          animation:
-            rbWhatsAppIcon
-            650ms
-            cubic-bezier(
-              0.175,
-              0.885,
-              0.32,
-              1.275
-            )
-            120ms
-            both;
-        }
-
-        /* TEXT */
-
-        .rb-text {
-          animation:
-            rbTextIn
-            500ms
-            ease-out
-            180ms
-            both;
-        }
-
-        /* CARDS */
 
         .rb-card-1 {
           animation:
@@ -642,20 +585,54 @@ export default function Poppups() {
             both;
         }
 
-        /* SERVICE IMAGE */
+        /* =====================================================
+           TEXT
+           ===================================================== */
 
-        .rb-service-image {
-          transition:
-            transform 500ms ease,
-            filter 500ms ease;
+        @keyframes rbTextIn {
+          from {
+            opacity: 0;
+            transform: translateY(15px);
+          }
+
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
 
-        .rb-service-icon:hover .rb-service-image {
-          transform: scale(1.07);
-          filter: brightness(1.05);
+        .rb-text {
+          animation:
+            rbTextIn
+            500ms
+            ease-out
+            180ms
+            both;
         }
 
-        /* WHATSAPP BUTTON */
+        /* =====================================================
+           WHATSAPP PULSE
+           ===================================================== */
+
+        @keyframes rbWhatsAppPulse {
+          0% {
+            box-shadow:
+              0 0 0 0
+              rgba(34, 197, 94, 0.55);
+          }
+
+          70% {
+            box-shadow:
+              0 0 0 15px
+              rgba(34, 197, 94, 0);
+          }
+
+          100% {
+            box-shadow:
+              0 0 0 0
+              rgba(34, 197, 94, 0);
+          }
+        }
 
         .rb-whatsapp-button {
           position: relative;
@@ -664,6 +641,46 @@ export default function Poppups() {
             rbWhatsAppPulse
             2.2s
             infinite;
+        }
+
+        /* =====================================================
+           WHATSAPP ICON BOUNCE
+           ===================================================== */
+
+        @keyframes rbIconBounce {
+          0%,
+          100% {
+            transform: scale(1);
+          }
+
+          50% {
+            transform: scale(1.15);
+          }
+        }
+
+        .rb-whatsapp-button:hover .rb-button-icon {
+          animation:
+            rbIconBounce
+            500ms
+            ease-in-out;
+        }
+
+        /* =====================================================
+           SHINE
+           ===================================================== */
+
+        @keyframes rbShine {
+          from {
+            transform:
+              translateX(-130%)
+              skewX(-20deg);
+          }
+
+          to {
+            transform:
+              translateX(130%)
+              skewX(-20deg);
+          }
         }
 
         .rb-whatsapp-button::before {
@@ -690,14 +707,9 @@ export default function Poppups() {
             ease-in-out;
         }
 
-        .rb-whatsapp-button:hover .rb-button-icon {
-          animation:
-            rbIconBounce
-            500ms
-            ease-in-out;
-        }
-
-        /* REDUCE MOTION */
+        /* =====================================================
+           REDUCE MOTION
+           ===================================================== */
 
         @media (prefers-reduced-motion: reduce) {
           *,
@@ -733,14 +745,15 @@ export default function Poppups() {
             popupState +
             " relative w-full max-w-xl " +
             "max-h-[90vh] overflow-y-auto " +
-            "rounded-[28px] bg-white shadow-[0_30px_100px_rgba(0,0,0,0.35)]"
+            "rounded-[28px] bg-white " +
+            "shadow-[0_30px_100px_rgba(0,0,0,0.35)]"
           }
         >
           {/* CLOSE */}
 
           <button
             type="button"
-            onClick={() => closePopup(true)}
+            onClick={closePopup}
             aria-label="Close popup"
             className="
               absolute right-4 top-4 z-50
@@ -758,9 +771,7 @@ export default function Poppups() {
             ×
           </button>
 
-          {/* =================================================
-              HEADER
-              ================================================= */}
+          {/* HEADER */}
 
           <div
             className="
@@ -773,8 +784,6 @@ export default function Poppups() {
               text-center text-white
             "
           >
-            {/* Decorative circle */}
-
             <div
               className="
                 absolute -left-16 -top-16
@@ -790,8 +799,6 @@ export default function Poppups() {
                 bg-white/10
               "
             />
-
-            {/* WHATSAPP LOGO */}
 
             <div
               className="
@@ -845,11 +852,10 @@ export default function Poppups() {
             </div>
           </div>
 
-          {/* =================================================
-              CONTENT
-              ================================================= */}
+          {/* CONTENT */}
 
           <div className="px-7 py-6 sm:px-8 sm:py-7">
+
             {/* WELCOME */}
 
             <div className="rb-text text-center">
@@ -879,9 +885,7 @@ export default function Poppups() {
               </p>
             </div>
 
-            {/* =================================================
-                SERVICES
-                ================================================= */}
+            {/* SERVICES */}
 
             <div
               className="
@@ -910,7 +914,6 @@ export default function Poppups() {
               >
                 <div
                   className="
-                    rb-service-card
                     rb-service-icon
                     mb-2
                     h-16
@@ -924,7 +927,11 @@ export default function Poppups() {
                   <img
                     src="/images/spikes.png"
                     alt="Bird Spikes"
-                    className="rb-service-image h-full w-full object-cover"
+                    className="
+                      h-full
+                      w-full
+                      object-cover
+                    "
                   />
                 </div>
 
@@ -939,56 +946,52 @@ export default function Poppups() {
 
               {/* SERVICE 2 */}
 
-<div
-  className="
-    rb-card-2
-    rb-service-card
-    rounded-2xl
-    border
-    border-gray-100
-    bg-gray-50
-    p-4
-    transition
-    duration-300
-    hover:-translate-y-1
-    hover:bg-green-50
-    hover:shadow-md
-  "
->
-  {/* Bird Nets Image */}
-  <div
-    className="
-      mb-3
-      h-16
-      w-full
-      overflow-hidden
-      rounded-xl
-      bg-white
-      shadow-sm
-    "
-  >
-    <img
-      src="/images/bird-nets.png"
-      alt="Bird Nets installation"
-      className="
-        rb-service-image
-        h-full
-        w-full
-        object-cover
-      "
-    />
-  </div>
+              <div
+                className="
+                  rb-card-2
+                  rounded-2xl
+                  border
+                  border-gray-100
+                  bg-gray-50
+                  p-4
+                  transition
+                  duration-300
+                  hover:-translate-y-1
+                  hover:bg-green-50
+                  hover:shadow-md
+                "
+              >
+                <div
+                  className="
+                    rb-service-icon
+                    mb-2
+                    h-16
+                    w-full
+                    overflow-hidden
+                    rounded-xl
+                    bg-white
+                    shadow-sm
+                  "
+                >
+                  <img
+                    src="/images/bird-nets.png"
+                    alt="Bird Nets"
+                    className="
+                      h-full
+                      w-full
+                      object-cover
+                    "
+                  />
+                </div>
 
-  {/* Title */}
-  <p className="font-bold text-gray-900">
-    Bird Nets
-  </p>
+                <p className="font-bold text-gray-900">
+                  Bird Nets
+                </p>
 
-  {/* Description */}
-  <p className="mt-1 text-xs text-gray-500">
-    Balcony protection
-  </p>
-</div>
+                <p className="mt-1 text-xs text-gray-500">
+                  Balcony protection
+                </p>
+              </div>
 
               {/* SERVICE 3 */}
 
@@ -1009,7 +1012,6 @@ export default function Poppups() {
               >
                 <div
                   className="
-                    rb-service-card
                     rb-service-icon
                     mb-2
                     h-16
@@ -1023,7 +1025,11 @@ export default function Poppups() {
                   <img
                     src="/images/invisible-grill.png"
                     alt="Invisible Grill"
-                    className="rb-service-image h-full w-full object-cover"
+                    className="
+                      h-full
+                      w-full
+                      object-cover
+                    "
                   />
                 </div>
 
@@ -1055,7 +1061,6 @@ export default function Poppups() {
               >
                 <div
                   className="
-                    rb-service-card
                     rb-service-icon
                     mb-2
                     h-16
@@ -1069,7 +1074,11 @@ export default function Poppups() {
                   <img
                     src="/images/solar.png"
                     alt="Solar Protection"
-                    className="rb-service-image h-full w-full object-cover"
+                    className="
+                      h-full
+                      w-full
+                      object-cover
+                    "
                   />
                 </div>
 
@@ -1083,9 +1092,7 @@ export default function Poppups() {
               </div>
             </div>
 
-            {/* =================================================
-                WHATSAPP BUTTON
-                ================================================= */}
+            {/* WHATSAPP BUTTON */}
 
             <button
               type="button"
@@ -1111,7 +1118,6 @@ export default function Poppups() {
                 hover:-translate-y-1
                 hover:bg-[#20bd5a]
                 hover:shadow-xl
-                active:translate-y-0
                 active:scale-[0.98]
               "
             >
@@ -1123,8 +1129,6 @@ export default function Poppups() {
                 Chat on WhatsApp
               </span>
             </button>
-
-            {/* PHONE */}
 
             <p
               className="
@@ -1141,7 +1145,7 @@ export default function Poppups() {
 
             <button
               type="button"
-              onClick={() => closePopup(true)}
+              onClick={closePopup}
               className="
                 mx-auto
                 mt-4
@@ -1167,7 +1171,7 @@ export default function Poppups() {
                 text-gray-400
               "
             >
-              Popup will appear again after 5 seconds.
+              You won't see this popup again.
             </p>
           </div>
         </div>
@@ -1218,7 +1222,7 @@ export default function Poppups() {
 
           <button
             type="button"
-            onClick={() => closePopup(true)}
+            onClick={closePopup}
             aria-label="Close popup"
             className="
               absolute
@@ -1287,8 +1291,6 @@ export default function Poppups() {
               "
             />
 
-            {/* MOBILE WHATSAPP LOGO */}
-
             <div
               className="
                 rb-header-whatsapp
@@ -1346,6 +1348,7 @@ export default function Poppups() {
           {/* MOBILE CONTENT */}
 
           <div className="px-4 pb-6 pt-5">
+
             <div className="rb-text text-center">
               <h3
                 className="
@@ -1370,38 +1373,196 @@ export default function Poppups() {
               </p>
             </div>
 
-            {/* SERVICES - SAME DESIGN AS DESKTOP */}
+            {/* SERVICES */}
+
             <div className="mt-6 grid grid-cols-2 gap-3">
-              <div className="rb-card-1 rounded-2xl border border-gray-100 bg-gray-50 p-4 transition duration-300 hover:-translate-y-1 hover:bg-green-50 hover:shadow-md">
-                <div className="rb-service-card rb-service-icon mb-2 h-16 w-full overflow-hidden rounded-xl bg-white shadow-sm">
-                  <img src="/images/spikes.png" alt="Bird Spikes" className="rb-service-image h-full w-full object-cover" />
+
+              <div
+                className="
+                  rb-card-1
+                  rounded-2xl
+                  border
+                  border-gray-100
+                  bg-gray-50
+                  p-4
+                  transition
+                  duration-300
+                  hover:-translate-y-1
+                  hover:bg-green-50
+                  hover:shadow-md
+                "
+              >
+                <div
+                  className="
+                    rb-service-icon
+                    mb-2
+                    h-16
+                    w-full
+                    overflow-hidden
+                    rounded-xl
+                    bg-white
+                    shadow-sm
+                  "
+                >
+                  <img
+                    src="/images/spikes.png"
+                    alt="Bird Spikes"
+                    className="
+                      h-full
+                      w-full
+                      object-cover
+                    "
+                  />
                 </div>
-                <p className="font-bold text-gray-900">Bird Spikes</p>
-                <p className="mt-1 text-xs text-gray-500">Professional installation</p>
+
+                <p className="font-bold text-gray-900">
+                  Bird Spikes
+                </p>
+
+                <p className="mt-1 text-xs text-gray-500">
+                  Professional installation
+                </p>
               </div>
 
-              <div className="rb-card-2 rounded-2xl border border-gray-100 bg-gray-50 p-4 transition duration-300 hover:-translate-y-1 hover:bg-green-50 hover:shadow-md">
-                <div className="rb-service-card rb-service-icon mb-2 h-16 w-full overflow-hidden rounded-xl bg-white shadow-sm">
-                  <img src="/images/bird-nets.png" alt="Bird Nets" className="rb-service-image h-full w-full object-cover" />
+              <div
+                className="
+                  rb-card-2
+                  rounded-2xl
+                  border
+                  border-gray-100
+                  bg-gray-50
+                  p-4
+                  transition
+                  duration-300
+                  hover:-translate-y-1
+                  hover:bg-green-50
+                  hover:shadow-md
+                "
+              >
+                <div
+                  className="
+                    rb-service-icon
+                    mb-2
+                    h-16
+                    w-full
+                    overflow-hidden
+                    rounded-xl
+                    bg-white
+                    shadow-sm
+                  "
+                >
+                  <img
+                    src="/images/bird-nets.png"
+                    alt="Bird Nets"
+                    className="
+                      h-full
+                      w-full
+                      object-cover
+                    "
+                  />
                 </div>
-                <p className="font-bold text-gray-900">Bird Nets</p>
-                <p className="mt-1 text-xs text-gray-500">Balcony protection</p>
+
+                <p className="font-bold text-gray-900">
+                  Bird Nets
+                </p>
+
+                <p className="mt-1 text-xs text-gray-500">
+                  Balcony protection
+                </p>
               </div>
 
-              <div className="rb-card-3 rounded-2xl border border-gray-100 bg-gray-50 p-4 transition duration-300 hover:-translate-y-1 hover:bg-green-50 hover:shadow-md">
-                <div className="rb-service-card rb-service-icon mb-2 h-16 w-full overflow-hidden rounded-xl bg-white shadow-sm">
-                  <img src="/images/invisible-grill.png" alt="Invisible Grill" className="rb-service-image h-full w-full object-cover" />
+              <div
+                className="
+                  rb-card-3
+                  rounded-2xl
+                  border
+                  border-gray-100
+                  bg-gray-50
+                  p-4
+                  transition
+                  duration-300
+                  hover:-translate-y-1
+                  hover:bg-green-50
+                  hover:shadow-md
+                "
+              >
+                <div
+                  className="
+                    rb-service-icon
+                    mb-2
+                    h-16
+                    w-full
+                    overflow-hidden
+                    rounded-xl
+                    bg-white
+                    shadow-sm
+                  "
+                >
+                  <img
+                    src="/images/invisible-grill.png"
+                    alt="Invisible Grill"
+                    className="
+                      h-full
+                      w-full
+                      object-cover
+                    "
+                  />
                 </div>
-                <p className="font-bold text-gray-900">Invisible Grill</p>
-                <p className="mt-1 text-xs text-gray-500">Safety &amp; protection</p>
+
+                <p className="font-bold text-gray-900">
+                  Invisible Grill
+                </p>
+
+                <p className="mt-1 text-xs text-gray-500">
+                  Safety & protection
+                </p>
               </div>
 
-              <div className="rb-card-4 rounded-2xl border border-gray-100 bg-gray-50 p-4 transition duration-300 hover:-translate-y-1 hover:bg-green-50 hover:shadow-md">
-                <div className="rb-service-card rb-service-icon mb-2 h-16 w-full overflow-hidden rounded-xl bg-white shadow-sm">
-                  <img src="/images/solar.png" alt="Solar Protection" className="rb-service-image h-full w-full object-cover" />
+              <div
+                className="
+                  rb-card-4
+                  rounded-2xl
+                  border
+                  border-gray-100
+                  bg-gray-50
+                  p-4
+                  transition
+                  duration-300
+                  hover:-translate-y-1
+                  hover:bg-green-50
+                  hover:shadow-md
+                "
+              >
+                <div
+                  className="
+                    rb-service-icon
+                    mb-2
+                    h-16
+                    w-full
+                    overflow-hidden
+                    rounded-xl
+                    bg-white
+                    shadow-sm
+                  "
+                >
+                  <img
+                    src="/images/solar.png"
+                    alt="Solar Protection"
+                    className="
+                      h-full
+                      w-full
+                      object-cover
+                    "
+                  />
                 </div>
-                <p className="font-bold text-gray-900">Solar Protection</p>
-                <p className="mt-1 text-xs text-gray-500">Bird protection</p>
+
+                <p className="font-bold text-gray-900">
+                  Solar Protection
+                </p>
+
+                <p className="mt-1 text-xs text-gray-500">
+                  Bird protection
+                </p>
               </div>
             </div>
 
@@ -1453,9 +1614,11 @@ export default function Poppups() {
               +91 93542 54539
             </p>
 
+            {/* CONTINUE */}
+
             <button
               type="button"
-              onClick={() => closePopup(true)}
+              onClick={closePopup}
               className="
                 mx-auto
                 mt-3
@@ -1480,7 +1643,7 @@ export default function Poppups() {
                 text-gray-400
               "
             >
-              Popup will appear again after 5 seconds.
+              You won't see this popup again.
             </p>
           </div>
         </div>

@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   category: "Home Services",
 
   alternates: {
-    canonical: "https://realbirdnetting.in",
+    canonical: "https://www.realbirdnetting.in",
   },
 
   robots: {
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
     description:
       "Gurugram's trusted provider of bird safety nets, balcony safety nets and invisible grills. Professional installation and free site inspection.",
 
-    url: "https://realbirdnetting.in",
+    url: "https://www.realbirdnetting.in",
 
     siteName: "Real Bird Netting",
 
@@ -79,7 +79,7 @@ export const metadata: Metadata = {
 
     images: [
       {
-        url: "https://realbirdnetting.in/images/balcony.webp",
+        url: "https://www.realbirdnetting.in/images/balcony.webp",
         width: 1200,
         height: 630,
         alt: "Real Bird Netting balcony safety installation in Gurugram",
@@ -97,7 +97,7 @@ export const metadata: Metadata = {
       "Professional bird netting, balcony safety nets and invisible grills in Gurugram.",
 
     images: [
-      "https://realbirdnetting.in/images/balcony.webp",
+      "https://www.realbirdnetting.in/images/balcony.webp",
     ],
   },
 
@@ -119,12 +119,12 @@ export default function RootLayout({
     name: "Real Bird Netting",
 
     image:
-      "https://realbirdnetting.in/images/balcony.webp",
+      "https://www.realbirdnetting.in/images/balcony.webp",
 
     "@id":
-      "https://realbirdnetting.in/#localbusiness",
+      "https://www.realbirdnetting.in/#localbusiness",
 
-    url: "https://realbirdnetting.in",
+    url: "https://www.realbirdnetting.in",
 
     telephone: "+919354254539",
 
@@ -185,6 +185,7 @@ export default function RootLayout({
       className={`${inter.variable} ${outfit.variable} scroll-smooth h-full antialiased`}
     >
       <head>
+
         {/* =====================================================
             GOOGLE ADS GOOGLE TAG
             ===================================================== */}
@@ -222,6 +223,7 @@ export default function RootLayout({
             __html: JSON.stringify(localBusinessSchema),
           }}
         />
+
       </head>
 
       <body className="min-h-full bg-slate-50 text-slate-900 flex flex-col font-sans">
