@@ -25,9 +25,8 @@ declare global {
 /* =========================================================
    GOOGLE ADS CONTACT CONVERSION
    ========================================================= */
-
 const GOOGLE_ADS_CONVERSION_ID = "18388085912";
-const GOOGLE_ADS_CONVERSION_LABEL = "RunLCKu9oulcEjZj8BE";
+const GOOGLE_ADS_CONVERSION_LABEL = "RunLCKu9ouIcEJjZj8BE";
 
 const trackContactConversion = () => {
   if (
@@ -40,14 +39,12 @@ const trackContactConversion = () => {
       currency: "INR",
     });
 
-    console.log("Google Ads contact conversion sent.");
+    console.log("Google Ads conversion fired");
   } else {
-    console.warn(
-      "Google Ads gtag was not found. Check your layout.tsx Google tag."
-    );
+    console.error("Google Ads gtag is not available");
   }
 };
-
+ 
 /* =========================================================
    CONTACT COMPONENT
    ========================================================= */
