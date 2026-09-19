@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
 import {
@@ -52,7 +52,7 @@ const navItems = [
 ];
 
 /* =========================================================
-   SEARCH ITEMS
+   SEARCH
 ========================================================= */
 
 const searchItems: SearchItem[] = [
@@ -157,10 +157,17 @@ const searchItems: SearchItem[] = [
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] =
+    useState(false);
+
+  const [isSearchOpen, setIsSearchOpen] =
+    useState(false);
+
   const [searchText, setSearchText] = useState("");
-  const [activeSection, setActiveSection] = useState("home");
+
+  const [activeSection, setActiveSection] =
+    useState("home");
+
   const [activeTab, setActiveTab] =
     useState<ServiceTab>("nets");
 
@@ -200,7 +207,10 @@ export default function Header() {
       }
     };
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener(
+      "resize",
+      handleResize
+    );
 
     return () => {
       window.removeEventListener(
@@ -211,7 +221,7 @@ export default function Header() {
   }, []);
 
   /* =========================================================
-     SECTION OBSERVER
+     ACTIVE SECTION OBSERVER
   ========================================================= */
 
   useEffect(() => {
@@ -234,12 +244,15 @@ export default function Header() {
             entry.isIntersecting &&
             entry.target.id
           ) {
-            setActiveSection(entry.target.id);
+            setActiveSection(
+              entry.target.id
+            );
           }
         });
       },
       {
-        rootMargin: "-20% 0px -60% 0px",
+        rootMargin:
+          "-20% 0px -60% 0px",
         threshold: 0.01,
       }
     );
@@ -263,12 +276,16 @@ export default function Header() {
   ========================================================= */
 
   useEffect(() => {
-    const handleServiceTab = (event: Event) => {
+    const handleServiceTab = (
+      event: Event
+    ) => {
       const customEvent =
         event as CustomEvent<ServiceTab>;
 
       if (customEvent.detail) {
-        setActiveTab(customEvent.detail);
+        setActiveTab(
+          customEvent.detail
+        );
       }
     };
 
@@ -297,21 +314,28 @@ export default function Header() {
       );
     }
 
-    if (href === "#invisible-grills") {
+    if (
+      href === "#invisible-grills"
+    ) {
       return (
         activeSection === "services" &&
         activeTab === "grills"
       );
     }
 
-    if (href === "#cloth-hangers") {
+    if (
+      href === "#cloth-hangers"
+    ) {
       return (
         activeSection === "services" &&
         activeTab === "hangers"
       );
     }
 
-    return activeSection === href.slice(1);
+    return (
+      activeSection ===
+      href.replace("#", "")
+    );
   };
 
   /* =========================================================
@@ -322,11 +346,12 @@ export default function Header() {
     target: string,
     tab?: ServiceTab
   ) => {
+    /* Change service tab */
     if (tab) {
       setActiveTab(tab);
 
       window.dispatchEvent(
-        new CustomEvent(
+        new CustomEvent<ServiceTab>(
           "change-services-tab",
           {
             detail: tab,
@@ -335,19 +360,78 @@ export default function Header() {
       );
     }
 
-    const element =
-      document.querySelector(target);
+    /* Close mobile menu */
+    setIsMobileMenuOpen(false);
 
-    if (element) {
-      element.scrollIntoView({
+    /* Close search */
+    setIsSearchOpen(false);
+
+    /* Clear search */
+    setSearchText("");
+
+    /* HOME */
+    if (target === "#home") {
+      window.scrollTo({
+        top: 0,
         behavior: "smooth",
-        block: "start",
       });
+
+      setActiveSection("home");
+
+      window.history.replaceState(
+        null,
+        "",
+        "#home"
+      );
+
+      return;
     }
 
-    setIsSearchOpen(false);
-    setIsMobileMenuOpen(false);
-    setSearchText("");
+    /* Find section */
+    const id = target.replace(
+      "#",
+      ""
+    );
+
+    const element =
+      document.getElementById(id);
+
+    /* Section not found */
+    if (!element) {
+      console.warn(
+        `Section not found: ${id}`
+      );
+
+      return;
+    }
+
+    /* Header offset */
+    const headerOffset =
+      window.innerWidth < 1024
+        ? 90
+        : 110;
+
+    const elementTop =
+      element.getBoundingClientRect()
+        .top +
+      window.scrollY;
+
+    window.scrollTo({
+      top: Math.max(
+        0,
+        elementTop -
+          headerOffset
+      ),
+      behavior: "smooth",
+    });
+
+    setActiveSection(id);
+
+    window.history.replaceState(
+      null,
+      "",
+      target
+    );
   };
 
   /* =========================================================
@@ -355,12 +439,17 @@ export default function Header() {
   ========================================================= */
 
   const handleNavClick = (
-    event: React.MouseEvent<HTMLAnchorElement>,
+    event: React.MouseEvent<
+      HTMLAnchorElement
+    >,
     href: string
   ) => {
     event.preventDefault();
 
-    if (href === "#invisible-grills") {
+    /* Invisible Grills */
+    if (
+      href === "#invisible-grills"
+    ) {
       goToSection(
         "#services",
         "grills"
@@ -368,7 +457,10 @@ export default function Header() {
       return;
     }
 
-    if (href === "#cloth-hangers") {
+    /* Cloth Hangers */
+    if (
+      href === "#cloth-hangers"
+    ) {
       goToSection(
         "#services",
         "hangers"
@@ -376,7 +468,10 @@ export default function Header() {
       return;
     }
 
-    if (href === "#services") {
+    /* Safety Nets */
+    if (
+      href === "#services"
+    ) {
       goToSection(
         "#services",
         "nets"
@@ -384,6 +479,7 @@ export default function Header() {
       return;
     }
 
+    /* Normal links */
     goToSection(href);
   };
 
@@ -393,23 +489,31 @@ export default function Header() {
 
   const filteredResults = useMemo(() => {
     const query =
-      searchText.toLowerCase().trim();
+      searchText
+        .toLowerCase()
+        .trim();
 
     if (!query) {
       return [];
     }
 
-    const words = query.split(/\s+/);
+    const words =
+      query.split(/\s+/);
 
-    return searchItems.filter((item) => {
-      const searchableText =
-        `${item.name} ${item.keywords} ${item.description}`
-          .toLowerCase();
+    return searchItems.filter(
+      (item) => {
+        const searchableText =
+          `${item.name} ${item.keywords} ${item.description}`
+            .toLowerCase();
 
-      return words.every((word) =>
-        searchableText.includes(word)
-      );
-    });
+        return words.every(
+          (word) =>
+            searchableText.includes(
+              word
+            )
+        );
+      }
+    );
   }, [searchText]);
 
   const openSearch = () => {
@@ -451,7 +555,6 @@ export default function Header() {
       >
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 
-          {/* LEFT */}
           <div className="flex items-center gap-3">
 
             <span className="flex items-center gap-1.5 font-medium">
@@ -474,7 +577,6 @@ export default function Header() {
             </span>
           </div>
 
-          {/* RIGHT */}
           <div className="flex items-center gap-3">
 
             <a
@@ -498,7 +600,7 @@ export default function Header() {
       </div>
 
       {/* =====================================================
-          NAVBAR CONTAINER
+          NAVBAR
       ===================================================== */}
 
       <div className="mx-auto max-w-7xl px-2.5 sm:px-5 lg:px-8">
@@ -535,7 +637,6 @@ export default function Header() {
               <Logo
                 height={64}
                 theme="light"
-                className="transition-transform duration-200 hover:scale-[1.02]"
               />
             </a>
 
@@ -585,6 +686,7 @@ export default function Header() {
                   {item.name}
                 </a>
               ))}
+
             </nav>
 
             {/* =================================================
@@ -612,8 +714,6 @@ export default function Header() {
                 )}
               </button>
 
-              {/* DESKTOP SEARCH DROPDOWN */}
-
               <AnimatePresence>
                 {isSearchOpen && (
                   <motion.div
@@ -634,7 +734,6 @@ export default function Header() {
                     }}
                     className="absolute right-0 top-12 z-[100] w-[360px] rounded-2xl border border-slate-200 bg-white p-3 shadow-2xl"
                   >
-
                     <div className="relative">
 
                       <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
@@ -653,18 +752,6 @@ export default function Header() {
                         className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-10 pr-10 text-sm text-slate-800 outline-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/10"
                       />
 
-                      {searchText && (
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setSearchText("")
-                          }
-                          className="absolute right-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100"
-                          aria-label="Clear search"
-                        >
-                          <X className="h-4 w-4" />
-                        </button>
-                      )}
                     </div>
 
                     {searchText.trim() !== "" && (
@@ -683,9 +770,7 @@ export default function Header() {
                                 }
                                 className="flex w-full items-center gap-3 rounded-xl p-3 text-left transition-colors hover:bg-slate-50"
                               >
-                                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/5 text-primary">
-                                  <Search className="h-4 w-4" />
-                                </div>
+                                <Search className="h-4 w-4 text-primary" />
 
                                 <div className="min-w-0 flex-1">
                                   <p className="text-sm font-bold text-slate-800">
@@ -706,43 +791,13 @@ export default function Header() {
                             No service found.
                           </div>
                         )}
-                      </div>
-                    )}
 
-                    {searchText.trim() === "" && (
-                      <div className="mt-3">
-
-                        <p className="mb-2 text-xs font-bold uppercase tracking-wide text-slate-400">
-                          Popular Searches
-                        </p>
-
-                        <div className="flex flex-wrap gap-2">
-
-                          {[
-                            "Bird Netting",
-                            "Invisible Grills",
-                            "Cloth Hangers",
-                            "Offers",
-                            "Gallery",
-                          ].map((item) => (
-                            <button
-                              key={item}
-                              type="button"
-                              onClick={() =>
-                                setSearchText(item)
-                              }
-                              className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:border-primary hover:bg-primary/5 hover:text-primary"
-                            >
-                              {item}
-                            </button>
-                          ))}
-
-                        </div>
                       </div>
                     )}
                   </motion.div>
                 )}
               </AnimatePresence>
+
             </div>
 
             {/* =================================================
@@ -753,7 +808,7 @@ export default function Header() {
 
               <a
                 href="tel:+919354254539"
-                className="flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-3 py-2 text-sm font-bold text-white shadow-md transition-all hover:-translate-y-0.5"
+                className="flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-3 py-2 text-sm font-bold text-white shadow-md"
               >
                 <Phone className="h-4 w-4 fill-white" />
 
@@ -766,7 +821,7 @@ export default function Header() {
                 href="https://wa.me/919354254539"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-3 py-2 text-sm font-bold text-white shadow-md transition-all hover:-translate-y-0.5"
+                className="flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-3 py-2 text-sm font-bold text-white shadow-md"
               >
                 <span className="h-2 w-2 animate-pulse rounded-full bg-white" />
 
@@ -777,6 +832,7 @@ export default function Header() {
 
             {/* =================================================
                 MOBILE CONTROLS
+                [Logo] Real Bird NETTING   🔍 📞 ☰
             ================================================= */}
 
             <div className="ml-auto flex shrink-0 items-center gap-1.5 lg:hidden">
@@ -787,16 +843,13 @@ export default function Header() {
                 type="button"
                 onClick={() => {
                   setIsMobileMenuOpen(false);
+
                   setIsSearchOpen(
                     (value) => !value
                   );
                 }}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-800 shadow-sm active:scale-95"
-                aria-label={
-                  isSearchOpen
-                    ? "Close search"
-                    : "Open search"
-                }
+                className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-800 shadow-sm active:scale-95"
+                aria-label="Search"
               >
                 {isSearchOpen ? (
                   <X className="h-5 w-5" />
@@ -809,8 +862,8 @@ export default function Header() {
 
               <a
                 href="tel:+919354254539"
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md active:scale-95"
-                aria-label="Call"
+                className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md active:scale-95"
+                aria-label="Call Real Bird Netting"
               >
                 <Phone className="h-5 w-5 fill-white" />
               </a>
@@ -827,7 +880,7 @@ export default function Header() {
                   setIsSearchOpen(false);
                   setSearchText("");
                 }}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-800 shadow-sm active:scale-95"
+                className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-800 shadow-sm active:scale-95"
                 aria-label={
                   isMobileMenuOpen
                     ? "Close menu"
@@ -850,6 +903,7 @@ export default function Header() {
           ================================================= */}
 
           <AnimatePresence>
+
             {isMobileMenuOpen && (
               <motion.div
                 initial={{
@@ -899,7 +953,7 @@ export default function Header() {
 
                     <a
                       href="tel:+919354254539"
-                      className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 py-3 text-sm font-bold text-white shadow-md active:scale-95"
+                      className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 py-3 text-sm font-bold text-white shadow-md"
                     >
                       <Phone className="h-4 w-4 fill-white" />
                       Call Now
@@ -909,7 +963,7 @@ export default function Header() {
                       href="https://wa.me/919354254539"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 py-3 text-sm font-bold text-white shadow-md active:scale-95"
+                      className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 py-3 text-sm font-bold text-white shadow-md"
                     >
                       <span className="h-2 w-2 rounded-full bg-white" />
                       WhatsApp
@@ -921,9 +975,11 @@ export default function Header() {
 
               </motion.div>
             )}
+
           </AnimatePresence>
 
         </div>
+
       </div>
 
       {/* =====================================================
@@ -931,6 +987,7 @@ export default function Header() {
       ===================================================== */}
 
       <AnimatePresence>
+
         {isSearchOpen && (
           <motion.div
             initial={{
@@ -944,9 +1001,6 @@ export default function Header() {
             exit={{
               opacity: 0,
               y: -15,
-            }}
-            transition={{
-              duration: 0.2,
             }}
             className="fixed left-0 right-0 top-0 z-[60] lg:hidden"
           >
@@ -995,7 +1049,8 @@ export default function Header() {
                       if (
                         event.key ===
                           "Enter" &&
-                        filteredResults.length > 0
+                        filteredResults.length >
+                          0
                       ) {
                         handleSearchResult(
                           filteredResults[0]
@@ -1023,57 +1078,11 @@ export default function Header() {
 
                 </div>
 
-                {/* POPULAR */}
-
-                {searchText.trim() === "" && (
-                  <div className="mt-4">
-
-                    <p className="mb-2 text-xs font-bold uppercase tracking-wide text-slate-400">
-                      Popular Searches
-                    </p>
-
-                    <div className="flex flex-wrap gap-2">
-
-                      {[
-                        "Bird Netting",
-                        "Safety Nets",
-                        "Invisible Grills",
-                        "Cloth Hangers",
-                        "Offers",
-                      ].map((item) => (
-                        <button
-                          key={item}
-                          type="button"
-                          onClick={() => {
-                            const result =
-                              searchItems.find(
-                                (searchItem) =>
-                                  searchItem.name ===
-                                  item
-                              );
-
-                            if (result) {
-                              handleSearchResult(
-                                result
-                              );
-                            }
-                          }}
-                          className="rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-semibold text-slate-700 transition-all hover:border-primary hover:bg-primary/5 hover:text-primary active:scale-95"
-                        >
-                          {item}
-                        </button>
-                      ))}
-
-                    </div>
-                  </div>
-                )}
-
-                {/* RESULTS */}
-
                 {searchText.trim() !== "" && (
                   <div className="mt-4 max-h-[55vh] overflow-y-auto">
 
-                    {filteredResults.length > 0 ? (
+                    {filteredResults.length >
+                    0 ? (
                       <div className="space-y-1">
 
                         {filteredResults.map(
@@ -1086,27 +1095,21 @@ export default function Header() {
                                   item
                                 )
                               }
-                              className="flex w-full items-center gap-3 rounded-xl p-3 text-left transition-all hover:bg-slate-50 active:bg-slate-100"
+                              className="flex w-full items-center gap-3 rounded-xl p-3 text-left hover:bg-slate-50"
                             >
-
-                              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/5 text-primary">
-                                <Search className="h-4 w-4" />
-                              </div>
+                              <Search className="h-4 w-4 text-primary" />
 
                               <div className="min-w-0 flex-1">
-
                                 <p className="text-sm font-bold text-slate-800">
                                   {item.name}
                                 </p>
 
-                                <p className="mt-0.5 text-xs text-slate-500">
+                                <p className="text-xs text-slate-500">
                                   {item.description}
                                 </p>
-
                               </div>
 
-                              <ArrowRight className="h-4 w-4 shrink-0 text-primary" />
-
+                              <ArrowRight className="h-4 w-4 text-primary" />
                             </button>
                           )
                         )}
@@ -1121,13 +1124,6 @@ export default function Header() {
                           No service found
                         </p>
 
-                        <p className="mt-1 text-xs text-slate-500">
-                          Try Bird Netting,
-                          Invisible Grills,
-                          Cloth Hangers
-                          or Offers.
-                        </p>
-
                       </div>
                     )}
 
@@ -1135,9 +1131,12 @@ export default function Header() {
                 )}
 
               </div>
+
             </div>
+
           </motion.div>
         )}
+
       </AnimatePresence>
 
     </header>
