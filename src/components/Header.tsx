@@ -554,21 +554,21 @@ export default function Header() {
 
           <div className="flex w-full items-center gap-2 sm:gap-3">
 
-            {/* LOGO */}
-
-            <a
-              href="#home"
-              onClick={(event) =>
-                handleNavClick(
-                  event,
-                  "#home"
-                )
-              }
-              className="flex shrink-0 items-center"
-              aria-label="Real Bird Netting Home"
-            >
-              <Logo height={70} theme="dark" />
-            </a>
+             {/* LOGO */}
+<a
+  href="#home"
+  onClick={(event) =>
+    handleNavClick(event, "#home")
+  }
+  className="flex shrink-0 items-center"
+  aria-label="Real Bird Netting Home"
+>
+  <Logo
+    height={76}
+    theme="light"
+    className="transition-transform duration-200 hover:scale-105"
+  />
+</a>
 
             {/* =================================================
                 DESKTOP NAV

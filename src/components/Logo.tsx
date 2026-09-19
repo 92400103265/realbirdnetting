@@ -33,29 +33,26 @@ export default function Logo({
         height: parsedHeight,
       }}
     >
-      {/* ==============================
-          ACTUAL LOGO IMAGE
-      =============================== */}
-      <div
-        className="relative flex-shrink-0 overflow-hidden"
-        style={{
-          width: 92,
-          height: 64,
-        }}
-      >
-        <Image
-          src="/images/logo_icon.png"
-          alt="Real Bird Netting"
-          fill
-          priority
-          sizes="92px"
-          className="object-contain"
-          style={{
-            transform: "scale(1.45)",
-          }}
-        />
-      </div>
-
+       {/* LOGO IMAGE */}
+<div
+  className="relative flex-shrink-0 overflow-hidden"
+  style={{
+    width: 125,
+    height: 72,
+  }}
+>
+  <Image
+    src="/images/logo_icon.png"
+    alt="Real Bird Netting"
+    fill
+    priority
+    sizes="125px"
+    className="object-contain"
+    style={{
+      transform: "scale(1.75)",
+    }}
+  />
+</div>
       {/* ==============================
           DIVIDER
       =============================== */}
