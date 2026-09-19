@@ -19,7 +19,7 @@ export default function Footer() {
           {/* Company Bio */}
           <div>
             <div className="flex items-center mb-4">
-              <Logo height={56} theme="dark" />
+              <Logo height={80} theme="dark" />
             </div>
             <p className="text-slate-400 text-sm leading-relaxed mb-6">
               {"Real Bird Netting is Gurugram's trusted bird netting and safety solution provider, offering premium bird nets, invisible grills, balcony safety nets, and professional installation with high-quality, UV-resistant materials."}

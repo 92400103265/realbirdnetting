@@ -567,16 +567,7 @@ export default function Header() {
               className="flex shrink-0 items-center"
               aria-label="Real Bird Netting Home"
             >
-              <Logo
-                height={
-                  isScrolled
-                    ? 48
-                    : 56
-                }
-                isScrolled={true}
-                theme="adaptive"
-                className="transition-transform duration-200 hover:scale-105"
-              />
+              <Logo height={70} theme="dark" />
             </a>
 
             {/* =================================================
