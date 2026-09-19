@@ -1,4 +1,4 @@
- "use client";
+"use client";
 
 import React from "react";
 import Image from "next/image";
@@ -16,7 +16,6 @@ export default function Logo({
   isScrolled = false,
   theme = "adaptive",
 }: LogoProps) {
-  // Always use dark brand text on the white navbar
   const brandColor = "#0B2545";
   const subTextColor = "#10B981";
   const dividerColor = "rgba(11, 37, 69, 0.20)";
@@ -26,6 +25,21 @@ export default function Logo({
       ? height
       : parseInt(height) || 64;
 
+  // Responsive sizes
+  const isMobile = parsedHeight <= 48;
+
+  const logoWidth = isMobile ? 78 : 105;
+  const logoHeight = isMobile ? 46 : 60;
+  const logoScale = isMobile ? 1.25 : 1.55;
+
+  const dividerHeight = isMobile ? 30 : 38;
+
+  const brandFontSize = isMobile ? 17 : 22;
+  const brandLineHeight = isMobile ? 20 : 25;
+
+  const subFontSize = isMobile ? 8 : 11;
+  const subLetterSpacing = isMobile ? "2.5px" : "4px";
+
   return (
     <div
       className={`flex items-center select-none ${className}`}
@@ -33,53 +47,56 @@ export default function Logo({
         height: parsedHeight,
       }}
     >
-       {/* LOGO IMAGE */}
-<div
-  className="relative flex-shrink-0 overflow-hidden"
-  style={{
-    width: 125,
-    height: 72,
-  }}
->
-  <Image
-    src="/images/logo_icon.png"
-    alt="Real Bird Netting"
-    fill
-    priority
-    sizes="125px"
-    className="object-contain"
-    style={{
-      transform: "scale(1.75)",
-    }}
-  />
-</div>
-      {/* ==============================
-          DIVIDER
-      =============================== */}
+      {/* =========================================
+          LOGO IMAGE
+      ========================================== */}
       <div
-        className="mx-3"
+        className="relative flex-shrink-0 overflow-hidden"
+        style={{
+          width: logoWidth,
+          height: logoHeight,
+        }}
+      >
+        <Image
+          src="/images/logo_icon.png"
+          alt="Real Bird Netting"
+          fill
+          priority
+          sizes={isMobile ? "78px" : "105px"}
+          className="object-contain"
+          style={{
+            transform: `scale(${logoScale})`,
+          }}
+        />
+      </div>
+
+      {/* =========================================
+          DIVIDER
+      ========================================== */}
+      <div
+        className={isMobile ? "mx-2" : "mx-3"}
         style={{
           width: "1px",
-          height: "38px",
+          height: dividerHeight,
           backgroundColor: dividerColor,
         }}
       />
 
-      {/* ==============================
+      {/* =========================================
           BRAND NAME
-      =============================== */}
+      ========================================== */}
       <div
         className="flex flex-col justify-center"
         style={{
-          minWidth: "125px",
+          minWidth: isMobile ? "88px" : "125px",
         }}
       >
         <div
           style={{
             color: brandColor,
-            fontSize: "22px",
+            fontSize: `${brandFontSize}px`,
             fontWeight: 800,
-            lineHeight: "25px",
+            lineHeight: `${brandLineHeight}px`,
             whiteSpace: "nowrap",
             fontFamily:
               "var(--font-display), 'Outfit', 'Inter', sans-serif",
@@ -91,10 +108,10 @@ export default function Logo({
         <div
           style={{
             color: subTextColor,
-            fontSize: "11px",
+            fontSize: `${subFontSize}px`,
             fontWeight: 700,
-            lineHeight: "17px",
-            letterSpacing: "4px",
+            lineHeight: isMobile ? "13px" : "17px",
+            letterSpacing: subLetterSpacing,
             whiteSpace: "nowrap",
           }}
         >
