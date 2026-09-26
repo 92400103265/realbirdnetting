@@ -1,4 +1,5 @@
  import type { Metadata } from "next";
+ import Chatbot from "@/components/Chatbot";
 import { Inter, Outfit } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
@@ -192,43 +193,43 @@ export default function RootLayout({
 
         <Script
           id="google-ads-script"
-          src="https://www.googletagmanager.com/gtag/js?id=AW-18388085912"
-          strategy="afterInteractive"
-        />
-
-        <Script
-          id="google-ads-config"
-          strategy="afterInteractive"
-        >
-          {`
-            window.dataLayer = window.dataLayer || [];
-
-            function gtag() {
-              window.dataLayer.push(arguments);
-            }
-
-            gtag("js", new Date());
-
-            gtag("config", "AW-18388085912");
-          `}
-        </Script>
-
-        {/* =====================================================
-            LOCAL BUSINESS STRUCTURED DATA
-            ===================================================== */}
-
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(localBusinessSchema),
-          }}
-        />
-
-      </head>
-
-      <body className="min-h-full bg-slate-50 text-slate-900 flex flex-col font-sans">
-        {children}
-      </body>
-    </html>
-  );
+          src="https://www.googletagmanager.com/gtag/js?id=AW-18388085912" 
+          strategy="afterInteractive" 
+        /> 
+ 
+        <Script 
+          id="google-ads-config" 
+          strategy="afterInteractive" 
+        > 
+          {` 
+            window.dataLayer = window.dataLayer || []; 
+ 
+            function gtag() { 
+              window.dataLayer.push(arguments); 
+            } 
+ 
+            gtag("js", new Date()); 
+ 
+            gtag("config", "AW-18388085912"); 
+          `} 
+        </Script> 
+ 
+        {/* ===================================================== 
+            LOCAL BUSINESS STRUCTURED DATA 
+            ===================================================== */} 
+ 
+        <script 
+          type="application/ld+json" 
+          dangerouslySetInnerHTML={{ 
+            __html: JSON.stringify(localBusinessSchema), 
+          }} 
+        /> 
+ 
+      </head> 
+ 
+      <body className="min-h-full bg-slate-50 text-slate-900 flex flex-col font-sans"> 
+        {children} 
+      </body> 
+    </html> 
+  ); 
 }
