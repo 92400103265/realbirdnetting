@@ -1,43 +1,37 @@
 
 import type { MetadataRoute } from "next";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://realbirdnetting.in";
+const BASE_URL = "https://www.realbirdnetting.in";
 
+export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: `${baseUrl}/`,
-      lastModified: new Date(),
+      url: `${BASE_URL}/`,
       changeFrequency: "monthly",
       priority: 1.0,
     },
     {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
+      url: `${BASE_URL}/about`,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/services`,
-      lastModified: new Date(),
+      url: `${BASE_URL}/services`,
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/contact`,
-      lastModified: new Date(),
+      url: `${BASE_URL}/contact`,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/gallery`,
-      lastModified: new Date(),
+      url: `${BASE_URL}/gallery`,
       changeFrequency: "weekly",
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/blog`,
-      lastModified: new Date(),
+      url: `${BASE_URL}/blog`,
       changeFrequency: "weekly",
       priority: 0.7,
     },
