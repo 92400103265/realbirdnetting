@@ -1,8 +1,13 @@
- import type { Metadata } from "next";
- import Chatbot from "@/components/Chatbot";
+
+import type { Metadata } from "next";
+import Chatbot from "@/components/Chatbot";
 import { Inter, Outfit } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
+
+// =====================================================
+// GOOGLE FONTS
+// =====================================================
 
 const inter = Inter({
   variable: "--font-sans",
@@ -15,6 +20,10 @@ const outfit = Outfit({
   subsets: ["latin"],
   display: "swap",
 });
+
+// =====================================================
+// SEO METADATA
+// =====================================================
 
 export const metadata: Metadata = {
   title:
@@ -46,10 +55,12 @@ export const metadata: Metadata = {
 
   category: "Home Services",
 
+  // Canonical URL
   alternates: {
-    canonical: "https://www.realbirdnetting.in",
+    canonical: "https://realbirdnetting.in/",
   },
 
+  // Search engine indexing
   robots: {
     index: true,
     follow: true,
@@ -63,6 +74,12 @@ export const metadata: Metadata = {
     },
   },
 
+  // Google Search Console verification
+  verification: {
+    google: "6dFaXAk1RmNkt0Ma5J6smMiSMo2wSwUQzUBhTyfkYKc",
+  },
+
+  // Open Graph metadata
   openGraph: {
     title:
       "Real Bird Netting | Balcony Safety Nets & Invisible Grills",
@@ -70,7 +87,7 @@ export const metadata: Metadata = {
     description:
       "Gurugram's trusted provider of bird safety nets, balcony safety nets and invisible grills. Professional installation and free site inspection.",
 
-    url: "https://www.realbirdnetting.in",
+    url: "https://realbirdnetting.in/",
 
     siteName: "Real Bird Netting",
 
@@ -80,7 +97,7 @@ export const metadata: Metadata = {
 
     images: [
       {
-        url: "https://www.realbirdnetting.in/images/balcony.webp",
+        url: "https://realbirdnetting.in/images/balcony.webp",
         width: 1200,
         height: 630,
         alt: "Real Bird Netting balcony safety installation in Gurugram",
@@ -88,6 +105,7 @@ export const metadata: Metadata = {
     ],
   },
 
+  // Twitter metadata
   twitter: {
     card: "summary_large_image",
 
@@ -98,21 +116,25 @@ export const metadata: Metadata = {
       "Professional bird netting, balcony safety nets and invisible grills in Gurugram.",
 
     images: [
-      "https://www.realbirdnetting.in/images/balcony.webp",
+      "https://realbirdnetting.in/images/balcony.webp",
     ],
   },
-
-  verification: {
-    google:
-      "GiuYVwkg5ET-gVdnDQ_Bje9ZUTj2ULmGvCpqjeAU3ME",
-  },
 };
+
+// =====================================================
+// ROOT LAYOUT
+// =====================================================
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  // =====================================================
+  // LOCAL BUSINESS STRUCTURED DATA
+  // =====================================================
+
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -120,12 +142,12 @@ export default function RootLayout({
     name: "Real Bird Netting",
 
     image:
-      "https://www.realbirdnetting.in/images/balcony.webp",
+      "https://realbirdnetting.in/images/balcony.webp",
 
     "@id":
-      "https://www.realbirdnetting.in/#localbusiness",
+      "https://realbirdnetting.in/#localbusiness",
 
-    url: "https://www.realbirdnetting.in",
+    url: "https://realbirdnetting.in/",
 
     telephone: "+919354254539",
 
@@ -180,6 +202,10 @@ export default function RootLayout({
     ],
   };
 
+  // =====================================================
+  // PAGE STRUCTURE
+  // =====================================================
+
   return (
     <html
       lang="en"
@@ -187,49 +213,54 @@ export default function RootLayout({
     >
       <head>
 
-        {/* =====================================================
-            GOOGLE ADS GOOGLE TAG
-            ===================================================== */}
+        {/* =============================================
+            GOOGLE ADS TRACKING
+            ============================================= */}
 
         <Script
           id="google-ads-script"
-          src="https://www.googletagmanager.com/gtag/js?id=AW-18388085912" 
-          strategy="afterInteractive" 
-        /> 
- 
-        <Script 
-          id="google-ads-config" 
-          strategy="afterInteractive" 
-        > 
-          {` 
-            window.dataLayer = window.dataLayer || []; 
- 
-            function gtag() { 
-              window.dataLayer.push(arguments); 
-            } 
- 
-            gtag("js", new Date()); 
- 
-            gtag("config", "AW-18388085912"); 
-          `} 
-        </Script> 
- 
-        {/* ===================================================== 
-            LOCAL BUSINESS STRUCTURED DATA 
-            ===================================================== */} 
- 
-        <script 
-          type="application/ld+json" 
-          dangerouslySetInnerHTML={{ 
-            __html: JSON.stringify(localBusinessSchema), 
-          }} 
-        /> 
- 
-      </head> 
- 
-      <body className="min-h-full bg-slate-50 text-slate-900 flex flex-col font-sans"> 
-        {children} 
-      </body> 
-    </html> 
-  ); 
+          src="https://www.googletagmanager.com/gtag/js?id=AW-18388085912"
+          strategy="afterInteractive"
+        />
+
+        <Script
+          id="google-ads-config"
+          strategy="afterInteractive"
+        >
+          {`
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+              window.dataLayer.push(arguments);
+            }
+
+            gtag("js", new Date());
+
+            gtag("config", "AW-18388085912");
+          `}
+        </Script>
+
+        {/* =============================================
+            LOCAL BUSINESS STRUCTURED DATA
+            ============================================= */}
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(localBusinessSchema),
+          }}
+        />
+
+      </head>
+
+      <body className="min-h-full bg-slate-50 text-slate-900 flex flex-col font-sans">
+
+        {children}
+
+        {/* Website Chatbot */}
+        <Chatbot />
+
+      </body>
+    </html>
+  );
 }
