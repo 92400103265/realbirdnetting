@@ -320,6 +320,47 @@ export default function Header() {
   }, []);
 
   /* =========================================================
+     RESTORE SERVICE TAB AFTER NAVIGATING BACK TO HOME
+  ========================================================= */
+
+  useEffect(() => {
+    if (pathname !== "/") return;
+
+    const params = new URLSearchParams(window.location.search);
+    const requestedTab = params.get("serviceTab");
+
+    if (
+      requestedTab !== "nets" &&
+      requestedTab !== "grills" &&
+      requestedTab !== "hangers"
+    ) {
+      return;
+    }
+
+    const tab = requestedTab as ServiceTab;
+    setActiveTab(tab);
+
+    // Dispatch after the homepage has mounted so the Services component can receive it.
+    window.requestAnimationFrame(() => {
+      window.dispatchEvent(
+        new CustomEvent<ServiceTab>("change-services-tab", {
+          detail: tab,
+        })
+      );
+
+      const services = document.getElementById("services");
+      if (services) {
+        const offset = window.innerWidth < 1024 ? 90 : 110;
+        const top = services.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+      }
+
+      // Remove the temporary query parameter while keeping the section URL.
+      window.history.replaceState(null, "", "/#services");
+    });
+  }, [pathname]);
+
+  /* =========================================================
      ACTIVE NAV
   ========================================================= */
 
@@ -476,45 +517,44 @@ export default function Header() {
       return;
     }
 
-    // Section links must return to the homepage when clicked from a service page.
+    // From a service page, return to the homepage and preserve the requested service tab.
     if (pathname !== "/" && href.startsWith("#")) {
       setIsMobileMenuOpen(false);
       setIsSearchOpen(false);
       setSearchText("");
-      router.push(`/${href}`);
+
+      const requestedTab: ServiceTab | undefined =
+        href === "#invisible-grills"
+          ? "grills"
+          : href === "#cloth-hangers"
+            ? "hangers"
+            : href === "#services"
+              ? "nets"
+              : undefined;
+
+      const destination = requestedTab
+        ? `/?serviceTab=${requestedTab}#services`
+        : `/${href}`;
+
+      router.push(destination);
       return;
     }
 
     /* Invisible Grills */
-    if (
-      href === "#invisible-grills"
-    ) {
-      goToSection(
-        "#services",
-        "grills"
-      );
+    if (href === "#invisible-grills") {
+      goToSection("#services", "grills");
       return;
     }
 
     /* Cloth Hangers */
-    if (
-      href === "#cloth-hangers"
-    ) {
-      goToSection(
-        "#services",
-        "hangers"
-      );
+    if (href === "#cloth-hangers") {
+      goToSection("#services", "hangers");
       return;
     }
 
     /* Safety Nets */
-    if (
-      href === "#services"
-    ) {
-      goToSection(
-        "#services",
-        "nets"
-      );
+    if (href === "#services") {
+      goToSection("#services", "nets");
       return;
     }
 
