@@ -1,6 +1,7 @@
- "use client";
+  "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Phone,
   Menu,
@@ -37,6 +38,11 @@ const navItems = [
     href: "#invisible-grills",
   },
   {
+    name: "Balcony Safety Nets",
+    href: "/balcony-safety-nets",
+  },
+
+  {
     name: "Cloth Hangers",
     href: "#cloth-hangers",
   },
@@ -64,6 +70,14 @@ const searchItems: SearchItem[] = [
       "Bird and pigeon protection for balconies and windows",
     target: "#services",
     tab: "nets",
+  },
+  {
+    name: "Balcony Safety Nets",
+    keywords:
+      "balcony safety nets child safety pet safety balcony net installation gurugram",
+    description:
+      "Balcony safety net installation in Gurugram",
+    target: "/balcony-safety-nets",
   },
   {
     name: "Safety Nets",
@@ -156,6 +170,9 @@ const searchItems: SearchItem[] = [
 ========================================================= */
 
 export default function Header() {
+  const router = useRouter();
+  const pathname = usePathname();
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] =
     useState(false);
@@ -307,6 +324,10 @@ export default function Header() {
   ========================================================= */
 
   const isActive = (href: string) => {
+    if (href.startsWith("/")) {
+      return pathname === href;
+    }
+
     if (href === "#services") {
       return (
         activeSection === "services" &&
@@ -446,6 +467,24 @@ export default function Header() {
   ) => {
     event.preventDefault();
 
+    // Navigate to a real Next.js route instead of treating it as a page section.
+    if (href.startsWith("/")) {
+      setIsMobileMenuOpen(false);
+      setIsSearchOpen(false);
+      setSearchText("");
+      router.push(href);
+      return;
+    }
+
+    // Section links must return to the homepage when clicked from a service page.
+    if (pathname !== "/" && href.startsWith("#")) {
+      setIsMobileMenuOpen(false);
+      setIsSearchOpen(false);
+      setSearchText("");
+      router.push(`/${href}`);
+      return;
+    }
+
     /* Invisible Grills */
     if (
       href === "#invisible-grills"
@@ -529,10 +568,22 @@ export default function Header() {
   const handleSearchResult = (
     item: SearchItem
   ) => {
-    goToSection(
-      item.target,
-      item.tab
-    );
+    if (
+      item.target.startsWith("/") ||
+      (pathname !== "/" && item.target.startsWith("#"))
+    ) {
+      setIsMobileMenuOpen(false);
+      setIsSearchOpen(false);
+      setSearchText("");
+      router.push(
+        item.target.startsWith("/")
+          ? item.target
+          : `/${item.target}`
+      );
+      return;
+    }
+
+    goToSection(item.target, item.tab);
   };
 
   /* =========================================================
@@ -1138,6 +1189,8 @@ export default function Header() {
         )}
 
       </AnimatePresence>
+      
+ 
 
     </header>
   );

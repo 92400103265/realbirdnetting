@@ -1,7 +1,17 @@
 
 "use client";
 
-import { useState, type FormEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type FormEvent,
+} from "react";
+
+/* =========================================================
+   REAL BIRD NETTING CHATBOT
+   Bilingual customer support assistant
+   ========================================================= */
 
 type Language = "en" | "hi";
 type Sender = "bot" | "user";
@@ -16,212 +26,468 @@ type ChatbotProps = {
   phoneNumber?: string;
 };
 
+type Service = {
+  id: string;
+  name: string;
+  hindi: string;
+  description: string;
+  keywords: string[];
+};
+
 const BUSINESS = {
   name: "Real Bird Netting",
   phone: "919354254539",
   areas: ["Gurugram", "Faridabad"],
-  services: [
-    "Pigeon Net Installation",
-    "Balcony Bird Nets",
-    "Bird Spikes Installation",
-    "Invisible Grill Installation",
-    "Balcony Invisible Grill",
-    "Bird Control Services",
-    "Solar Panel Bird Protection",
-    "Professional Installation",
-  ],
+  tagline: "Professional Bird Protection & Safety Solutions",
 };
 
-const TEXT = {
+/* =========================================================
+   SERVICE DATABASE
+   ========================================================= */
+
+const SERVICES: Service[] = [
+  {
+    id: "pigeon-net",
+    name: "Pigeon Net Installation",
+    hindi: "कबूतर रोकने के लिए पिजन नेट",
+    description:
+      "Professional pigeon net installation for balconies, windows, and open areas.",
+    keywords: [
+      "pigeon",
+      "pigeons",
+      "pigeon net",
+      "pigeon nets",
+      "kabutar",
+      "kabootar",
+      "कबूतर",
+      "पिजन नेट",
+    ],
+  },
+  {
+    id: "balcony-net",
+    name: "Balcony Bird Net",
+    hindi: "बालकनी बर्ड नेट",
+    description:
+      "Bird netting solutions for balconies and open spaces.",
+    keywords: [
+      "balcony net",
+      "balcony bird net",
+      "bird net",
+      "balcony",
+      "बालकनी नेट",
+      "बालकनी जाली",
+    ],
+  },
+  {
+    id: "children-safety",
+    name: "Children Safety Nets",
+    hindi: "बच्चों की सुरक्षा के लिए सेफ्टी नेट",
+    description:
+      "Safety net installation for balconies, windows, and suitable open areas.",
+    keywords: [
+      "children safety",
+      "child safety",
+      "kids safety",
+      "children net",
+      "child net",
+      "baby safety",
+      "बच्चों की सुरक्षा",
+      "बच्चों का नेट",
+      "सेफ्टी नेट",
+    ],
+  },
+  {
+    id: "balcony-safety",
+    name: "Balcony Safety Nets",
+    hindi: "बालकनी सेफ्टी नेट",
+    description:
+      "Balcony safety net solutions based on site measurements and requirements.",
+    keywords: [
+      "balcony safety",
+      "safety balcony",
+      "safety net",
+      "balcony protection",
+      "बालकनी सेफ्टी",
+      "बालकनी सुरक्षा",
+    ],
+  },
+  {
+    id: "window-net",
+    name: "Window Safety Nets",
+    hindi: "खिड़की सेफ्टी नेट",
+    description:
+      "Netting for windows and suitable ventilation openings.",
+    keywords: [
+      "window net",
+      "window safety",
+      "window bird net",
+      "खिड़की नेट",
+      "खिड़की जाली",
+    ],
+  },
+  {
+    id: "invisible-grill",
+    name: "Invisible Grill Installation",
+    hindi: "इनविजिबल ग्रिल इंस्टॉलेशन",
+    description:
+      "Professional invisible grill installation for balconies and windows.",
+    keywords: [
+      "invisible grill",
+      "invisible grille",
+      "balcony grill",
+      "balcony grille",
+      "safety grill",
+      "इनविजिबल ग्रिल",
+      "बालकनी ग्रिल",
+    ],
+  },
+  {
+    id: "bird-spikes",
+    name: "Bird Spikes Installation",
+    hindi: "बर्ड स्पाइक्स इंस्टॉलेशन",
+    description:
+      "Bird spikes for suitable ledges, parapets, and bird-landing locations.",
+    keywords: [
+      "bird spikes",
+      "bird spike",
+      "pigeon spikes",
+      "anti bird spikes",
+      "spikes",
+      "बर्ड स्पाइक्स",
+      "कबूतर स्पाइक्स",
+    ],
+  },
+  {
+    id: "solar-protection",
+    name: "Solar Panel Bird Protection",
+    hindi: "सोलर पैनल बर्ड प्रोटेक्शन",
+    description:
+      "Bird protection solutions for suitable solar panel installations.",
+    keywords: [
+      "solar panel",
+      "solar bird",
+      "solar protection",
+      "सोलर पैनल",
+    ],
+  },
+  {
+    id: "terrace-net",
+    name: "Terrace and Duct Nets",
+    hindi: "टेरेस और डक्ट नेट",
+    description:
+      "Netting solutions for suitable terrace, duct, and open areas.",
+    keywords: [
+      "terrace net",
+      "duct net",
+      "shaft net",
+      "terrace",
+      "duct",
+      "टेरेस नेट",
+      "डक्ट नेट",
+    ],
+  },
+  {
+    id: "bird-control",
+    name: "Bird Control Services",
+    hindi: "बर्ड कंट्रोल सर्विस",
+    description:
+      "Bird management solutions using suitable netting and deterrent systems.",
+    keywords: [
+      "bird control",
+      "pigeon control",
+      "bird problem",
+      "bird protection",
+      "बर्ड कंट्रोल",
+      "कबूतर कंट्रोल",
+    ],
+  },
+];
+
+ 
+/* =========================================================
+   REAL BIRD NETTING
+   BILINGUAL CHATBOT CONTENT
+   English + Hindi
+   ========================================================= */
+
+type ChatLanguage = "en" | "hi";
+
+type ChatContent = {
+  title: string;
+  subtitle: string;
+  welcome: string;
+  online: string;
+  placeholder: string;
+  send: string;
+  whatsapp: string;
+  call: string;
+  typing: string;
+  clear: string;
+  close: string;
+  open: string;
+  services: string;
+  priceLabel: string;
+  location: string;
+  photos: string;
+  contact: string;
+  greeting: string;
+  serviceAnswer: string;
+  area: string;
+  pigeon: string;
+  children: string;
+  balcony: string;
+  spikes: string;
+  invisible: string;
+  birdControl: string;
+  solar: string;
+  price: string;
+  professional: string;
+  thanks: string;
+  goodbye: string;
+  fallback: string;
+};
+
+const CONTENT: Record<ChatLanguage, ChatContent> = {
+
+  // =======================================================
+  // ENGLISH
+  // =======================================================
+
   en: {
     title: "Real Bird Netting",
-    subtitle: "Customer Support",
+    subtitle: "Professional Customer Support",
+
     welcome:
       "Hello sir! Welcome to Real Bird Netting. How can I help you today?",
+
+    online: "Online • Ready to help",
     placeholder: "Type your message...",
     send: "Send",
     whatsapp: "WhatsApp",
     call: "Call Us",
-    online: "Online • Ready to help",
+    typing: "Typing...",
+    clear: "Clear chat",
+    close: "Close chat",
+    open: "Open chat",
+
+    services: "Our Services",
+
+    // Button label (renamed to prevent duplicate key)
+    priceLabel: "Price / Quotation",
+
+    location: "Service Areas",
+    photos: "Send Photos",
+    contact: "Contact Us",
+
+    // =====================================================
+    // CUSTOMER RESPONSES
+    // =====================================================
+
     greeting:
-      "Hello sir! How can I help you today? We provide professional bird netting, bird spikes, invisible grills, and bird control services.",
-    services:
-      "We provide professional installation of Pigeon Nets, Balcony Bird Nets, Bird Spikes, Invisible Grills, Balcony Safety Grills, and Solar Panel Bird Protection.",
+      "Hello sir! How can I help you today? We provide professional pigeon nets, balcony safety nets, children safety nets, bird spikes, invisible grills, and bird control services.",
+
+    serviceAnswer:
+      "We provide professional installation of pigeon nets, balcony bird nets, children safety nets, window safety nets, invisible grills, bird spikes, terrace nets, and solar panel bird protection.",
+
     area:
       "We provide services in Gurugram and Faridabad. Which area do you need service in, sir? Please share your location or sector.",
+
     pigeon:
-      "Yes sir! We provide professional Pigeon Net Installation and Balcony Bird Net services. Please send us your balcony photos, location, and approximate measurements on WhatsApp. Our team can review your requirements and provide a quotation.",
+      "Yes sir! We provide professional Pigeon Net Installation and Balcony Bird Net services. Please send us 2–3 clear balcony photos, your location, and approximate measurements on WhatsApp. Our team will review your requirements and provide a quotation.",
+
+    children:
+      "Yes sir! We provide Children Safety Nets and Balcony Safety Nets for suitable locations. Please share your balcony or window photos, location, and approximate measurements so our team can suggest a suitable solution.",
+
+    balcony:
+      "Yes sir! We provide Balcony Bird Nets and Balcony Safety Nets. Please send us your balcony photos and location on WhatsApp for a quotation.",
+
     spikes:
-      "Yes sir! We provide Bird Spikes Installation for suitable areas such as ledges and other bird-landing points. Please share photos and your location so we can understand your requirements.",
+      "Yes sir! We provide professional Bird Spikes Installation for suitable ledges, parapets, and bird-landing areas. Please share photos and your location so our team can review the requirements.",
+
     invisible:
       "Yes sir! We provide Invisible Grill and Balcony Invisible Grill installation. Please share your balcony photos, approximate measurements, and location for a quotation.",
+
+    birdControl:
+      "We provide bird control solutions using suitable bird nets, bird spikes, and other protection systems. Please share photos of the affected area and your location.",
+
+    solar:
+      "We provide bird protection solutions for suitable solar panel installations. Please share photos of your solar panel area and location for an assessment.",
+
+    // Actual price response
     price:
       "Our price depends on the area, measurements, material, and installation requirements. Sir, please send your balcony photos, approximate width and height, and location on WhatsApp. We will review your requirements and provide a quotation.",
-    photo:
-      "Sir, please send 2–3 clear photos of your balcony, window, or installation area on WhatsApp. Also share your location (Gurugram or Faridabad) and approximate measurements. This will help us understand your requirements.",
+
+    photos:
+      "Sir, please send 2–3 clear photos of your balcony, window, terrace, or installation area on WhatsApp. Also share your location (Gurugram or Faridabad) and approximate measurements.",
+
     professional:
       "Yes sir! We provide professional installation services. Our team can review your site photos, location, and requirements before confirming the installation details.",
+
     contact:
       "You can contact our team by WhatsApp or phone using the buttons below. Please share your name, location, service required, and photos.",
+
     thanks:
       "You're welcome sir! Thank you for contacting Real Bird Netting. We look forward to helping you.",
+
     goodbye:
       "Thank you for contacting Real Bird Netting. Have a great day, sir!",
+
     fallback:
-      "Thank you for your message, sir. Could you please tell me which service you need: Pigeon Net, Bird Spikes, Invisible Grill, or Bird Control? You can also share your location and balcony photos on WhatsApp.",
-    quickServices: "Our Services",
-    quickPrice: "Price / Quotation",
-    quickArea: "Service Areas",
-    quickContact: "Contact Us",
-    quickPhoto: "Send Photos",
+      "Thank you for your enquiry, sir. Are you looking for Pigeon Nets, Children Safety Nets, Balcony Safety Nets, Bird Spikes, Invisible Grills, or Bird Control Services? Please tell me your location and service requirement."
   },
+
+  // =======================================================
+  // HINDI
+  // =======================================================
 
   hi: {
     title: "Real Bird Netting",
-    subtitle: "ग्राहक सहायता",
+    subtitle: "प्रोफेशनल ग्राहक सहायता",
+
     welcome:
       "नमस्ते सर! Real Bird Netting में आपका स्वागत है। मैं आपकी क्या सहायता कर सकता हूँ?",
+
+    online: "ऑनलाइन • सहायता के लिए उपलब्ध",
     placeholder: "अपना संदेश लिखें...",
     send: "भेजें",
     whatsapp: "WhatsApp",
     call: "कॉल करें",
-    online: "ऑनलाइन • सहायता के लिए उपलब्ध",
+    typing: "लिख रहा है...",
+    clear: "चैट साफ करें",
+    close: "चैट बंद करें",
+    open: "चैट खोलें",
+
+    services: "हमारी सर्विस",
+
+    // Button label
+    priceLabel: "कीमत / कोटेशन",
+
+    location: "सर्विस एरिया",
+    photos: "फोटो भेजें",
+    contact: "संपर्क करें",
+
+    // =====================================================
+    // CUSTOMER RESPONSES
+    // =====================================================
+
     greeting:
-      "नमस्ते सर! मैं आपकी क्या सहायता कर सकता हूँ? हम प्रोफेशनल पिजन नेट, बर्ड स्पाइक्स, इनविजिबल ग्रिल और बर्ड कंट्रोल सर्विस प्रदान करते हैं।",
-    services:
-      "हम पिजन नेट, बालकनी बर्ड नेट, बर्ड स्पाइक्स, इनविजिबल ग्रिल, बालकनी सेफ्टी ग्रिल और सोलर पैनल बर्ड प्रोटेक्शन की प्रोफेशनल इंस्टॉलेशन करते हैं।",
+      "नमस्ते सर! मैं आपकी क्या सहायता कर सकता हूँ? हम प्रोफेशनल पिजन नेट, बालकनी सेफ्टी नेट, बच्चों के सेफ्टी नेट, बर्ड स्पाइक्स, इनविजिबल ग्रिल और बर्ड कंट्रोल सर्विस प्रदान करते हैं।",
+
+    serviceAnswer:
+      "हम पिजन नेट, बालकनी बर्ड नेट, बच्चों के सेफ्टी नेट, विंडो नेट, इनविजिबल ग्रिल, बर्ड स्पाइक्स, टेरेस नेट और सोलर पैनल बर्ड प्रोटेक्शन की प्रोफेशनल इंस्टॉलेशन करते हैं।",
+
     area:
       "हम गुरुग्राम और फरीदाबाद में सर्विस प्रदान करते हैं। सर, आपको किस एरिया में सर्विस चाहिए? कृपया अपनी लोकेशन या सेक्टर बताएं।",
+
     pigeon:
-      "जी सर! हम प्रोफेशनल पिजन नेट और बालकनी बर्ड नेट इंस्टॉलेशन करते हैं। कृपया अपनी बालकनी की फोटो, लोकेशन और अनुमानित माप WhatsApp पर भेजें। हमारी टीम आपकी जरूरत देखकर कोटेशन देगी।",
+      "जी सर! हम प्रोफेशनल पिजन नेट और बालकनी बर्ड नेट इंस्टॉलेशन करते हैं। कृपया अपनी बालकनी की 2–3 साफ फोटो, लोकेशन और अनुमानित माप WhatsApp पर भेजें। हमारी टीम आपकी जरूरत देखकर कोटेशन देगी।",
+
+    children:
+      "जी सर! हम बच्चों की सुरक्षा के लिए चिल्ड्रन सेफ्टी नेट और बालकनी सेफ्टी नेट इंस्टॉलेशन करते हैं। कृपया बालकनी या खिड़की की फोटो, लोकेशन और अनुमानित माप भेजें।",
+
+    balcony:
+      "जी सर! हम बालकनी बर्ड नेट और बालकनी सेफ्टी नेट इंस्टॉलेशन करते हैं। कृपया अपनी बालकनी की फोटो और लोकेशन WhatsApp पर भेजें।",
+
     spikes:
       "जी सर! हम बालकनी की मुंडेर, किनारों और पक्षियों के बैठने वाली उपयुक्त जगहों पर बर्ड स्पाइक्स इंस्टॉलेशन करते हैं। कृपया फोटो और लोकेशन WhatsApp पर भेजें।",
+
     invisible:
       "जी सर! हम इनविजिबल ग्रिल और बालकनी इनविजिबल ग्रिल की प्रोफेशनल इंस्टॉलेशन करते हैं। कृपया बालकनी की फोटो, अनुमानित माप और लोकेशन भेजें।",
+
+    birdControl:
+      "हम बर्ड कंट्रोल के लिए उपयुक्त बर्ड नेट, बर्ड स्पाइक्स और अन्य प्रोटेक्शन सिस्टम प्रदान करते हैं। कृपया प्रभावित जगह की फोटो और लोकेशन भेजें।",
+
+    solar:
+      "हम उपयुक्त सोलर पैनल इंस्टॉलेशन के लिए बर्ड प्रोटेक्शन समाधान प्रदान करते हैं। कृपया सोलर पैनल की फोटो और लोकेशन भेजें।",
+
+    // Actual price response
     price:
       "सर, कीमत एरिया, माप, मटेरियल और इंस्टॉलेशन की जरूरत पर निर्भर करती है। कृपया अपनी बालकनी की फोटो, अनुमानित चौड़ाई और ऊंचाई तथा लोकेशन WhatsApp पर भेजें। हम आपकी जरूरत देखकर कोटेशन देंगे।",
-    photo:
-      "सर, कृपया अपनी बालकनी, खिड़की या इंस्टॉलेशन वाली जगह की 2–3 साफ फोटो WhatsApp पर भेजें। साथ में गुरुग्राम या फरीदाबाद की लोकेशन और अनुमानित माप भी बताएं।",
+
+    photos:
+      "सर, कृपया अपनी बालकनी, खिड़की, टेरेस या इंस्टॉलेशन वाली जगह की 2–3 साफ फोटो WhatsApp पर भेजें। साथ में गुरुग्राम या फरीदाबाद की लोकेशन और अनुमानित माप भी बताएं।",
+
     professional:
       "जी सर! हम प्रोफेशनल इंस्टॉलेशन सर्विस प्रदान करते हैं। इंस्टॉलेशन की जानकारी तय करने से पहले हमारी टीम आपकी फोटो, लोकेशन और जरूरत देख सकती है।",
+
     contact:
       "सर, नीचे दिए गए WhatsApp या कॉल बटन से हमारी टीम से संपर्क करें। कृपया अपना नाम, लोकेशन, सर्विस और फोटो साझा करें।",
+
     thanks:
       "आपका स्वागत है सर! Real Bird Netting से संपर्क करने के लिए धन्यवाद। हम आपकी सहायता करके खुश होंगे।",
+
     goodbye:
       "Real Bird Netting से संपर्क करने के लिए धन्यवाद सर! आपका दिन शुभ हो।",
+
     fallback:
-      "धन्यवाद सर! कृपया बताएं कि आपको कौन-सी सर्विस चाहिए: पिजन नेट, बर्ड स्पाइक्स, इनविजिबल ग्रिल या बर्ड कंट्रोल? आप WhatsApp पर अपनी लोकेशन और बालकनी की फोटो भी भेज सकते हैं।",
-    quickServices: "हमारी सर्विस",
-    quickPrice: "कीमत / कोटेशन",
-    quickArea: "सर्विस एरिया",
-    quickContact: "संपर्क करें",
-    quickPhoto: "फोटो भेजें",
-  },
+      "धन्यवाद सर! कृपया बताएं कि आपको कौन-सी सर्विस चाहिए: पिजन नेट, बच्चों का सेफ्टी नेट, बालकनी सेफ्टी नेट, बर्ड स्पाइक्स, इनविजिबल ग्रिल या बर्ड कंट्रोल? कृपया अपनी लोकेशन भी बताएं।"
+  }
 };
 
-function detectLanguage(message: string): Language {
-  return /[\u0900-\u097F]/.test(message) ? "hi" : "en";
+// =========================================================
+// END OF BILINGUAL CHATBOT CONTENT
+// =========================================================
+ 
+/* =========================================================
+   LANGUAGE DETECTION
+   ========================================================= */
+
+function detectLanguage(
+  message: string,
+  selectedLanguage: Language
+): Language {
+  const containsHindi = /[\u0900-\u097F]/.test(message);
+
+  return containsHindi ? "hi" : selectedLanguage;
 }
 
-function getResponse(message: string, language: Language): string {
-  const value = message.toLowerCase().trim();
+/* =========================================================
+   KEYWORD MATCHING
+   ========================================================= */
 
-  const has = (...words: string[]) =>
-    words.some((word) => value.includes(word));
+function includesAny(
+  text: string,
+  keywords: string[]
+): boolean {
+  return keywords.some((keyword) =>
+    text.includes(keyword.toLowerCase())
+  );
+}
+
+function findService(message: string): Service | undefined {
+  const normalized = message.toLowerCase().trim();
+
+  return SERVICES.find((service) =>
+    includesAny(normalized, service.keywords)
+  );
+}
+
+/* =========================================================
+   RESPONSE ENGINE
+   ========================================================= */
+
+function getBotResponse(
+  message: string,
+  language: Language
+): string {
+  const text = message.toLowerCase().trim();
+  const response = CONTENT[language];
 
   if (
-    has("hello", "hi", "hey", "नमस्ते", "नमस्कार", "हेलो")
+    includesAny(text, [
+      "hello",
+      "hi",
+      "hey",
+      "नमस्ते",
+      "नमस्कार",
+      "हेलो",
+    ])
   ) {
-    return TEXT[language].greeting;
+    return response.greeting;
   }
 
   if (
-    has(
-      "service",
-      "services",
-      "what do you provide",
-      "क्या सर्विस",
-      "कौन सी सर्विस",
-      "सेवाएं"
-    )
-  ) {
-    return TEXT[language].services;
-  }
-
-  if (
-    has(
-      "gurugram",
-      "gurgaon",
-      "faridabad",
-      "location",
-      "area",
-      "sector",
-      "near me",
-      "nearby",
-      "मेरे पास",
-      "गुरुग्राम",
-      "गुड़गांव",
-      "फरीदाबाद",
-      "लोकेशन",
-      "एरिया",
-      "सेक्टर"
-    )
-  ) {
-    return TEXT[language].area;
-  }
-
-  if (
-    has(
-      "pigeon",
-      "pigeons",
-      "pigeon net",
-      "bird net",
-      "balcony net",
-      "pigeon nets near me",
-      "kabutar",
-      "कबूतर",
-      "पिजन",
-      "जाली",
-      "पिजन नेट",
-      "बालकनी नेट"
-    )
-  ) {
-    return TEXT[language].pigeon;
-  }
-
-  if (
-    has(
-      "spike",
-      "spikes",
-      "bird spike",
-      "bird spikes",
-      "anti bird",
-      "बर्ड स्पाइक",
-      "स्पाइक्स",
-      "कांटे"
-    )
-  ) {
-    return TEXT[language].spikes;
-  }
-
-  if (
-    has(
-      "invisible grill",
-      "invisible grille",
-      "balcony grill",
-      "safety grill",
-      "child safety",
-      "इनविजिबल ग्रिल",
-      "अदृश्य ग्रिल",
-      "बालकनी ग्रिल"
-    )
-  ) {
-    return TEXT[language].invisible;
-  }
-
-  if (
-    has(
+    includesAny(text, [
       "price",
       "pricing",
       "cost",
@@ -235,82 +501,196 @@ function getResponse(message: string, language: Language): string {
       "रेट",
       "प्राइस",
       "खर्च",
-      "कोटेशन"
-    )
+      "कोटेशन",
+    ])
   ) {
-    return TEXT[language].price;
+    return response.price;
   }
 
   if (
-    has(
+    includesAny(text, [
+      "gurugram",
+      "gurgaon",
+      "faridabad",
+      "location",
+      "sector",
+      "near me",
+      "nearby",
+      "गुरुग्राम",
+      "गुड़गांव",
+      "फरीदाबाद",
+      "लोकेशन",
+      "सेक्टर",
+    ])
+  ) {
+    return response.area;
+  }
+
+  if (
+    includesAny(text, [
+      "children",
+      "child",
+      "kids",
+      "baby",
+      "बाल सुरक्षा",
+      "बच्चों",
+      "चिल्ड्रन",
+    ])
+  ) {
+    return response.children;
+  }
+
+  if (
+    includesAny(text, [
+      "balcony safety",
+      "safety net",
+      "balcony protection",
+      "बालकनी सेफ्टी",
+      "बालकनी सुरक्षा",
+    ])
+  ) {
+    return response.balcony;
+  }
+
+  if (
+    includesAny(text, [
+      "pigeon",
+      "pigeons",
+      "pigeon net",
+      "bird net",
+      "kabutar",
+      "kabootar",
+      "कबूतर",
+      "पिजन",
+    ])
+  ) {
+    return response.pigeon;
+  }
+
+  if (
+    includesAny(text, [
+      "bird spike",
+      "bird spikes",
+      "pigeon spikes",
+      "spikes",
+      "बर्ड स्पाइक्स",
+    ])
+  ) {
+    return response.spikes;
+  }
+
+  if (
+    includesAny(text, [
+      "invisible grill",
+      "invisible grille",
+      "बालकनी ग्रिल",
+      "इनविजिबल ग्रिल",
+    ])
+  ) {
+    return response.invisible;
+  }
+
+  if (
+    includesAny(text, [
+      "solar panel",
+      "solar bird",
+      "सोलर पैनल",
+    ])
+  ) {
+    return response.solar;
+  }
+
+  if (
+    includesAny(text, [
+      "bird control",
+      "pigeon control",
+      "बर्ड कंट्रोल",
+    ])
+  ) {
+    return response.birdControl;
+  }
+
+  if (
+    includesAny(text, [
       "photo",
       "photos",
       "picture",
       "image",
-      "send image",
+      "measurement",
+      "width",
+      "height",
       "फोटो",
       "तस्वीर",
       "माप",
-      "measurement",
-      "measurements",
-      "width",
-      "height"
-    )
+    ])
   ) {
-    return TEXT[language].photo;
+    return response.photos;
   }
 
   if (
-    has(
+    includesAny(text, [
       "professional",
       "installation",
       "install",
       "fitting",
-      "लगवाना",
-      "इंस्टॉलेशन",
       "प्रोफेशनल",
-      "फिटिंग"
-    )
+      "इंस्टॉलेशन",
+      "फिटिंग",
+    ])
   ) {
-    return TEXT[language].professional;
+    return response.professional;
   }
 
   if (
-    has(
+    includesAny(text, [
+      "service",
+      "services",
+      "what do you provide",
+      "सर्विस",
+      "सेवाएं",
+    ])
+  ) {
+    return response.serviceAnswer;
+  }
+
+  if (
+    includesAny(text, [
       "contact",
       "phone",
       "call",
       "whatsapp",
-      "number",
       "संपर्क",
       "फोन",
       "कॉल",
-      "नंबर"
-    )
+    ])
   ) {
-    return TEXT[language].contact;
+    return response.contact;
   }
 
   if (
-    has(
+    includesAny(text, [
       "thank",
       "thanks",
       "धन्यवाद",
-      "शुक्रिया"
-    )
+      "शुक्रिया",
+    ])
   ) {
-    return TEXT[language].thanks;
+    return response.thanks;
   }
 
   if (
-    value === "bye" ||
-    has("goodbye", "अलविदा", "बाय")
+    text === "bye" ||
+    includesAny(text, ["goodbye", "अलविदा", "बाय"])
   ) {
-    return TEXT[language].goodbye;
+    return response.goodbye;
   }
 
-  return TEXT[language].fallback;
+  return response.fallback;
 }
+
+/* =========================================================
+   MAIN CHATBOT COMPONENT
+   ========================================================= */
 
 export default function Chatbot({
   phoneNumber = BUSINESS.phone,
@@ -319,170 +699,234 @@ export default function Chatbot({
   const [language, setLanguage] = useState<Language>("en");
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [messageId, setMessageId] = useState(0);
+  const [isTyping, setIsTyping] = useState(false);
 
-  const t = TEXT[language];
+  const nextId = useRef(1);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null
+  );
 
-  function addMessage(sender: Sender, text: string) {
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const t = CONTENT[language];
+
+  /* -----------------------------------------
+     Scroll automatically to latest message
+     ----------------------------------------- */
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+    });
+  }, [messages, isTyping]);
+
+  /* -----------------------------------------
+     Clean up pending response on unmount
+     ----------------------------------------- */
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, []);
+
+  /* -----------------------------------------
+     Add message to conversation
+     ----------------------------------------- */
+
+  function addMessage(
+    sender: Sender,
+    text: string
+  ) {
+    const id = nextId.current++;
+
     setMessages((previous) => [
       ...previous,
       {
-        id: messageId,
+        id,
         sender,
         text,
       },
     ]);
-
-    setMessageId((previous) => previous + 1);
   }
 
-  function sendMessage(
+  /* -----------------------------------------
+     Send user message and show typing
+     ----------------------------------------- */
+
+  function processMessage(message: string) {
+    const cleaned = message.trim();
+
+    if (!cleaned || isTyping) return;
+
+    const responseLanguage = detectLanguage(
+      cleaned,
+      language
+    );
+
+    const answer = getBotResponse(
+      cleaned,
+      responseLanguage
+    );
+
+    addMessage("user", cleaned);
+
+    setIsTyping(true);
+
+    timerRef.current = setTimeout(() => {
+      addMessage("bot", answer);
+      setIsTyping(false);
+      timerRef.current = null;
+    }, 900 + Math.min(cleaned.length * 12, 900));
+  }
+
+  /* -----------------------------------------
+     Form submission
+     ----------------------------------------- */
+
+  function handleSubmit(
     event: FormEvent<HTMLFormElement>
   ) {
     event.preventDefault();
 
-    const userMessage = input.trim();
+    if (!input.trim()) return;
 
-    if (!userMessage) return;
-
-    const responseLanguage = detectLanguage(userMessage);
-    const response = getResponse(
-      userMessage,
-      responseLanguage
-    );
-
-    setMessages((previous) => [
-      ...previous,
-      {
-        id: messageId,
-        sender: "user",
-        text: userMessage,
-      },
-      {
-        id: messageId + 1,
-        sender: "bot",
-        text: response,
-      },
-    ]);
-
-    setMessageId((previous) => previous + 2);
+    processMessage(input);
     setInput("");
   }
 
-  function sendQuickMessage(message: string) {
-    const response = getResponse(message, language);
+  /* -----------------------------------------
+     Quick reply
+     ----------------------------------------- */
 
-    setMessages((previous) => [
-      ...previous,
-      {
-        id: messageId,
-        sender: "user",
-        text: message,
-      },
-      {
-        id: messageId + 1,
-        sender: "bot",
-        text: response,
-      },
-    ]);
-
-    setMessageId((previous) => previous + 2);
+  function handleQuickReply(message: string) {
+    processMessage(message);
   }
 
-  const whatsappText = encodeURIComponent(
-    "Hello Real Bird Netting, I need a quotation for your services. My location is: "
+  /* -----------------------------------------
+     Clear conversation
+     ----------------------------------------- */
+
+  function clearChat() {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+
+    setMessages([]);
+    setIsTyping(false);
+    nextId.current = 1;
+  }
+
+  /* -----------------------------------------
+     WhatsApp link
+     ----------------------------------------- */
+
+  const whatsappNumber = phoneNumber.replace(/\D/g, "");
+
+  const whatsappMessage = encodeURIComponent(
+    "Hello Real Bird Netting, I need a quotation. My service requirement and location are: "
   );
 
   const whatsappLink =
-    `https://wa.me/${phoneNumber.replace(/\D/g, "")}` +
-    `?text=${whatsappText}`;
+    `https://wa.me/${whatsappNumber}` +
+    `?text=${whatsappMessage}`;
 
-  const quickQuestions = [
-    { label: t.quickServices, message: "services" },
-    { label: t.quickPrice, message: "price" },
-    { label: t.quickArea, message: "location" },
-    { label: t.quickPhoto, message: "send photos" },
+  /* -----------------------------------------
+     Quick question list
+     ----------------------------------------- */
+
+  const quickReplies = [
+    {
+      label: t.services,
+      message: "What services do you provide?",
+    },
+    {
+      label: t.price,
+      message: "How much is the price?",
+    },
+    {
+      label: t.location,
+      message: "Do you provide services in Gurugram or Faridabad?",
+    },
+    {
+      label: t.photos,
+      message: "How can I send balcony photos?",
+    },
   ];
 
+  /* =====================================================
+     RENDER
+     ===================================================== */
+
   return (
-    <div
-      style={{
-        position: "fixed",
-        right: 24,
-        bottom: 24,
-        zIndex: 99999,
-        fontFamily: "Arial, sans-serif",
-      }}
-    >
+    <div className="rb-chat-widget">
+
+      {/* CHAT WINDOW */}
+
       {isOpen && (
         <section
-          aria-label="Real Bird Netting chatbot"
-          style={{
-            width: 360,
-            maxWidth: "calc(100vw - 32px)",
-            height: 550,
-            maxHeight: "calc(100dvh - 110px)",
-            display: "flex",
-            flexDirection: "column",
-            overflow: "hidden",
-            borderRadius: 18,
-            background: "#ffffff",
-            boxShadow: "0 12px 45px rgba(0,0,0,0.22)",
-            border: "1px solid #e5e7eb",
-            marginBottom: 14,
-          }}
+          className="rb-chat-window"
+          aria-label="Real Bird Netting customer support"
+          aria-live="polite"
         >
-          {/* Header */}
-          <header
-            style={{
-              background: "#09264a",
-              color: "#ffffff",
-              padding: 16,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <div>
-              <strong style={{ fontSize: 17 }}>
-                {t.title}
-              </strong>
 
-              <div
-                style={{
-                  fontSize: 12,
-                  marginTop: 5,
-                  color: "#d1fae5",
-                }}
-              >
-                ● {t.online}
+          {/* HEADER */}
+
+          <header className="rb-chat-header">
+            <div className="rb-chat-brand">
+              <div className="rb-chat-avatar">
+                🐦
+              </div>
+
+              <div className="rb-chat-brand-text">
+                <strong>{t.title}</strong>
+
+                <span className="rb-chat-online">
+                  <span className="rb-online-dot" />
+                  {t.online}
+                </span>
               </div>
             </div>
 
-            <button
-              type="button"
-              onClick={() => setIsOpen(false)}
-              aria-label="Close chatbot"
-              style={iconButtonStyle}
-            >
-              ×
-            </button>
+            <div className="rb-chat-header-actions">
+              <button
+                type="button"
+                onClick={clearChat}
+                className="rb-header-action"
+                aria-label={t.clear}
+                title={t.clear}
+              >
+                ↻
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setIsOpen(false)}
+                className="rb-header-action"
+                aria-label={t.close}
+                title={t.close}
+              >
+                ×
+              </button>
+            </div>
           </header>
 
-          {/* Language selector */}
-          <div
-            style={{
-              display: "flex",
-              gap: 8,
-              padding: 10,
-              background: "#f8fafc",
-              borderBottom: "1px solid #e5e7eb",
-            }}
-          >
+          {/* LANGUAGE SELECTOR */}
+
+          <div className="rb-language-bar">
             <button
               type="button"
               onClick={() => setLanguage("en")}
-              style={language === "en" ? activeLanguageStyle : languageStyle}
+              className={
+                language === "en"
+                  ? "rb-language-button active"
+                  : "rb-language-button"
+              }
             >
               English
             </button>
@@ -490,261 +934,186 @@ export default function Chatbot({
             <button
               type="button"
               onClick={() => setLanguage("hi")}
-              style={language === "hi" ? activeLanguageStyle : languageStyle}
+              className={
+                language === "hi"
+                  ? "rb-language-button active"
+                  : "rb-language-button"
+              }
             >
               हिंदी
             </button>
           </div>
 
-          {/* Conversation */}
-          <div
-            aria-live="polite"
-            style={{
-              flex: 1,
-              overflowY: "auto",
-              padding: 14,
-              background: "#f8fafc",
-            }}
-          >
-            <div
-              style={{
-                background: "#ffffff",
-                padding: 12,
-                borderRadius: 14,
-                fontSize: 14,
-                lineHeight: 1.6,
-                color: "#172033",
-                boxShadow: "0 1px 5px rgba(0,0,0,0.06)",
-                marginBottom: 12,
-              }}
-            >
-              {t.welcome}
+          {/* MESSAGE AREA */}
+
+          <div className="rb-chat-messages">
+
+            {/* Welcome message */}
+
+            <div className="rb-message-row bot-row">
+              <div className="rb-message-avatar">
+                🐦
+              </div>
+
+              <div className="rb-message bot-message">
+                {t.welcome}
+              </div>
             </div>
+
+            {/* Conversation messages */}
 
             {messages.map((message) => (
               <div
                 key={message.id}
-                style={{
-                  display: "flex",
-                  justifyContent:
-                    message.sender === "user"
-                      ? "flex-end"
-                      : "flex-start",
-                  marginBottom: 12,
-                }}
+                className={
+                  message.sender === "user"
+                    ? "rb-message-row user-row"
+                    : "rb-message-row bot-row"
+                }
               >
+                {message.sender === "bot" && (
+                  <div className="rb-message-avatar">
+                    🐦
+                  </div>
+                )}
+
                 <div
-                  style={{
-                    maxWidth: "88%",
-                    padding: "11px 13px",
-                    borderRadius: 14,
-                    fontSize: 14,
-                    lineHeight: 1.6,
-                    whiteSpace: "pre-wrap",
-                    overflowWrap: "anywhere",
-                    background:
-                      message.sender === "user"
-                        ? "#0b6bcb"
-                        : "#ffffff",
-                    color:
-                      message.sender === "user"
-                        ? "#ffffff"
-                        : "#172033",
-                    boxShadow: "0 1px 5px rgba(0,0,0,0.06)",
-                  }}
+                  className={
+                    message.sender === "user"
+                      ? "rb-message user-message"
+                      : "rb-message bot-message"
+                  }
                 >
                   {message.text}
                 </div>
               </div>
             ))}
 
-            {/* Quick question buttons */}
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: 7,
-                marginTop: 12,
-              }}
-            >
-              {quickQuestions.map((question) => (
-                <button
-                  key={question.message}
-                  type="button"
-                  onClick={() =>
-                    sendQuickMessage(question.message)
-                  }
-                  style={quickButtonStyle}
+            {/* TYPING INDICATOR */}
+
+            {isTyping && (
+              <div className="rb-message-row bot-row">
+                <div className="rb-message-avatar">
+                  🐦
+                </div>
+
+                <div
+                  className="rb-message bot-message rb-typing-bubble"
+                  aria-label={t.typing}
                 >
-                  {question.label}
-                </button>
-              ))}
-            </div>
+                  <span className="rb-typing-dot" />
+                  <span className="rb-typing-dot" />
+                  <span className="rb-typing-dot" />
+                  <span className="rb-typing-label">
+                    {t.typing}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            <div ref={bottomRef} />
           </div>
 
-          {/* Contact actions */}
-          <div
-            style={{
-              display: "flex",
-              gap: 8,
-              padding: 10,
-              borderTop: "1px solid #e5e7eb",
-              background: "#ffffff",
-            }}
-          >
+          {/* QUICK REPLIES */}
+
+          <div className="rb-quick-replies">
+            {quickReplies.map((item) => (
+              <button
+                key={item.label}
+                type="button"
+                className="rb-quick-button"
+                disabled={isTyping}
+                onClick={() =>
+                  handleQuickReply(item.message)
+                }
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+
+          {/* CONTACT BUTTONS */}
+
+          <div className="rb-contact-actions">
             <a
               href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
-              style={whatsappButtonStyle}
+              className="rb-whatsapp-button"
             >
+              <span>☘</span>
               {t.whatsapp}
             </a>
 
             <a
-              href={`tel:+${phoneNumber.replace(/\D/g, "")}`}
-              style={callButtonStyle}
+              href={`tel:+${whatsappNumber}`}
+              className="rb-call-button"
             >
+              <span>☎</span>
               {t.call}
             </a>
           </div>
 
-          {/* Message form */}
+          {/* MESSAGE INPUT */}
+
           <form
-            onSubmit={sendMessage}
-            style={{
-              display: "flex",
-              gap: 8,
-              padding: 10,
-              background: "#ffffff",
-              borderTop: "1px solid #e5e7eb",
-            }}
+            onSubmit={handleSubmit}
+            className="rb-chat-input-form"
           >
             <input
+              ref={inputRef}
               value={input}
-              onChange={(event) => setInput(event.target.value)}
+              onChange={(event) =>
+                setInput(event.target.value)
+              }
               placeholder={t.placeholder}
               aria-label={t.placeholder}
-              style={inputStyle}
+              autoComplete="off"
+              className="rb-chat-input"
             />
 
             <button
               type="submit"
-              style={sendButtonStyle}
+              disabled={!input.trim() || isTyping}
+              className="rb-send-button"
+              aria-label={t.send}
             >
-              {t.send}
+              ➤
             </button>
           </form>
+
+          <div className="rb-chat-footer">
+            Powered by Real Bird Netting
+          </div>
         </section>
       )}
 
-      {/* Floating launcher */}
+      {/* FLOATING CHAT LAUNCHER */}
+
       <button
         type="button"
-        onClick={() => setIsOpen((previous) => !previous)}
-        aria-label={isOpen ? "Close chat" : "Open chat"}
-        style={{
-          width: 62,
-          height: 62,
-          borderRadius: "50%",
-          border: "none",
-          background: "#08a982",
-          color: "#ffffff",
-          fontSize: 28,
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          marginLeft: "auto",
-          boxShadow: "0 5px 20px rgba(0,0,0,0.25)",
+        className="rb-chat-launcher"
+        onClick={() => {
+          setIsOpen((previous) => !previous);
+
+          if (!isOpen) {
+            setTimeout(() => {
+              inputRef.current?.focus();
+            }, 100);
+          }
         }}
+        aria-label={isOpen ? t.close : t.open}
+        title={isOpen ? t.close : t.open}
       >
-        {isOpen ? "×" : "☏"}
+        {isOpen ? (
+          <span className="rb-launcher-close">×</span>
+        ) : (
+          <>
+            <span className="rb-launcher-icon">☏</span>
+            <span className="rb-launcher-notification" />
+          </>
+        )}
       </button>
     </div>
   );
 }
-
-const iconButtonStyle = {
-  border: "none",
-  background: "transparent",
-  color: "#ffffff",
-  fontSize: 28,
-  cursor: "pointer",
-  lineHeight: 1,
-};
-
-const languageStyle = {
-  flex: 1,
-  border: "1px solid #d1d5db",
-  background: "#ffffff",
-  color: "#334155",
-  borderRadius: 8,
-  padding: "8px 10px",
-  cursor: "pointer",
-  fontSize: 13,
-};
-
-const activeLanguageStyle = {
-  ...languageStyle,
-  background: "#09264a",
-  color: "#ffffff",
-  border: "1px solid #09264a",
-};
-
-const quickButtonStyle = {
-  border: "1px solid #b6d7f5",
-  background: "#ffffff",
-  color: "#0759a5",
-  borderRadius: 20,
-  padding: "7px 10px",
-  fontSize: 12,
-  cursor: "pointer",
-};
-
-const whatsappButtonStyle = {
-  flex: 1,
-  textAlign: "center" as const,
-  textDecoration: "none",
-  background: "#0aa878",
-  color: "#ffffff",
-  padding: 11,
-  borderRadius: 9,
-  fontSize: 13,
-  fontWeight: 600,
-};
-
-const callButtonStyle = {
-  flex: 1,
-  textAlign: "center" as const,
-  textDecoration: "none",
-  background: "#09264a",
-  color: "#ffffff",
-  padding: 11,
-  borderRadius: 9,
-  fontSize: 13,
-  fontWeight: 600,
-};
-
-const inputStyle = {
-  flex: 1,
-  minWidth: 0,
-  border: "1px solid #d1d5db",
-  borderRadius: 9,
-  padding: "11px 12px",
-  fontSize: 14,
-  outline: "none",
-  color: "#172033",
-  background: "#ffffff",
-};
-
-const sendButtonStyle = {
-  border: "none",
-  borderRadius: 9,
-  padding: "0 15px",
-  background: "#09264a",
-  color: "#ffffff",
-  fontSize: 13,
-  fontWeight: 600,
-  cursor: "pointer",
-};
