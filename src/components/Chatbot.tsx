@@ -228,8 +228,8 @@ type ChatContent = {
   services: string;
   priceLabel: string;
   location: string;
-  photos: string;
-  contact: string;
+  photosLabel: string;
+  contactLabel: string;
   greeting: string;
   serviceAnswer: string;
   area: string;
@@ -241,6 +241,8 @@ type ChatContent = {
   birdControl: string;
   solar: string;
   price: string;
+  photos: string;
+  contact: string;
   professional: string;
   thanks: string;
   goodbye: string;
@@ -276,8 +278,8 @@ const CONTENT: Record<ChatLanguage, ChatContent> = {
     priceLabel: "Price / Quotation",
 
     location: "Service Areas",
-    photos: "Send Photos",
-    contact: "Contact Us",
+    photosLabel: "Send Photos",
+    contactLabel: "Contact Us",
 
     // =====================================================
     // CUSTOMER RESPONSES
@@ -363,8 +365,8 @@ const CONTENT: Record<ChatLanguage, ChatContent> = {
     priceLabel: "कीमत / कोटेशन",
 
     location: "सर्विस एरिया",
-    photos: "फोटो भेजें",
-    contact: "संपर्क करें",
+    photosLabel: "फोटो भेजें",
+    contactLabel: "संपर्क करें",
 
     // =====================================================
     // CUSTOMER RESPONSES
@@ -846,7 +848,7 @@ export default function Chatbot({
       message: "What services do you provide?",
     },
     {
-      label: t.price,
+      label: t.priceLabel,
       message: "How much is the price?",
     },
     {
@@ -854,7 +856,7 @@ export default function Chatbot({
       message: "Do you provide services in Gurugram or Faridabad?",
     },
     {
-      label: t.photos,
+      label: t.photosLabel,
       message: "How can I send balcony photos?",
     },
   ];
